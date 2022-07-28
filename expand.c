@@ -6,7 +6,7 @@
 /*   By: lchan <lchan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 11:12:12 by slahlou           #+#    #+#             */
-/*   Updated: 2022/07/28 18:00:00 by lchan            ###   ########.fr       */
+/*   Updated: 2022/07/28 19:22:39 by lchan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ t_splcmd	*__expand(t_splcmd *parser, char **env)
 		__expand_t_list(parser->in.stock, env, 2);
 		__expand_t_list(parser->in.here_buffer, env, 1);
 		__expand_t_list(parser->cmd.cmd_lst, env, 0);
-		__cmdtab_init(parser->cmd.cmd_lst);
+		parser->cmd.cmd_words = __cmdtab_init(parser->cmd.cmd_lst);
 		parser = parser->next;
 	}
 

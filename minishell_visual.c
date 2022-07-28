@@ -6,7 +6,7 @@
 /*   By: lchan <lchan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/09 17:01:10 by lchan             #+#    #+#             */
-/*   Updated: 2022/07/27 13:33:29 by lchan            ###   ########.fr       */
+/*   Updated: 2022/07/28 19:46:43 by lchan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,8 +158,10 @@ void	__visual_print_splcmd(t_splcmd *head, t_llist *lexer)
 	int block_ind = 0;
 	char	*star = "*********************************************";
 
+
 	while (head)
 	{
+		char **cmd_tab_tmp = head->cmd.cmd_words;
 		t_list	*tmp_in_st = head->in.stock,
 		*tmp_out_st = head->out.stock,
 		*tmp_here_d = head->in.here_buffer;
@@ -198,6 +200,7 @@ void	__visual_print_splcmd(t_splcmd *head, t_llist *lexer)
 			printf("\t\t"); printf("cmd_lst[%d] --> %s\n", i + 1,(char *)(tmp_cmd->content));
 			tmp_cmd = tmp_cmd->next;
 		}
+		__visual_print_tab(cmd_tab_tmp);
 		head = head->next;
 		puts("\n");
 	}

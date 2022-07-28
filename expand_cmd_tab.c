@@ -6,7 +6,7 @@
 /*   By: lchan <lchan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/28 15:16:07 by lchan             #+#    #+#             */
-/*   Updated: 2022/07/28 18:21:01 by lchan            ###   ########.fr       */
+/*   Updated: 2022/07/28 19:43:15 by lchan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	__cnt_tablen_str(char *str)
 {
 	int	cnt;
 
-	cnt = -1;
+	cnt = 0;
 	while (1)
 	{
 		while (*str == -1)
@@ -42,7 +42,6 @@ int	__cnt_tablen(t_list *cmd_lst)
 	len = 0;
 	while (cmd_lst)
 	{
-		len++;
 		len += __cnt_tablen_str((char *)(cmd_lst->content));
 		cmd_lst = cmd_lst->next;
 	}
@@ -53,15 +52,15 @@ char	**__split_node(char *str, char **cmd_tab, int nb_wrd)
 {
 	int	i;
 
-	*cmd_tab = str;
-	cmd_tab++;
-	while (*str == -1)
-			str++;
-	while (*str && *str != -1)
-			str++;
-	*str = '\0';
-	str++;
-	//printf("iciciciciiiiiiiiii --> %c\n", *str);
+	// *cmd_tab = str;
+	// cmd_tab++;
+	// while (*str == -1)
+	// 		str++;
+	// while (*str && *str != -1)
+	// 		str++;
+	// *str = '\0';
+	// str++;
+	// printf("iciciciciiiiiiiiii --> %c\n", *str);
 	while (nb_wrd)
 	{
 		i = 0;
@@ -71,6 +70,7 @@ char	**__split_node(char *str, char **cmd_tab, int nb_wrd)
 			i++;
 		str[i] = '\0';
 		*cmd_tab = ft_strdup(str);
+		//printf("iciiiiiiiiiiiiiiiiiiiii --> %s\n", *cmd_tab);
 		str += i + 1;
 		cmd_tab++;
 		nb_wrd--;
@@ -93,20 +93,22 @@ char **__cmdtab_init(t_list *cmd_lst)
 	{
 		nb_wrd = __cnt_tablen_str((char *)(cmd_lst->content));
 		printf("nb_wrd = %d\ntab_len = %d\n", nb_wrd, tab_len);
-		if (nb_wrd == 0)
-		{
-			*cmd_tab = (char *)(cmd_lst->content);
-			cmd_tab++;
-		}
-		else
-			cmd_tab = __split_node((char *)(cmd_lst->content), cmd_tab, nb_wrd);
+		// if (nb_wrd == 0)
+		// {
+		// 	*cmd_tab = (char *)(cmd_lst->content);
+		// 	cmd_tab++;
+		// }
+		// else
+		cmd_tab = __split_node((char *)(cmd_lst->content), cmd_tab, nb_wrd);
+
 		cmd_lst = cmd_lst->next;
 	}
-	cmd_tab -= tab_len;
+	cmd_tab -= (tab_len);
 	int i = 0;
 	while (*cmd_tab)
 	{
-		printf("%d : %s\n", i++, *cmd_tab);
+		if (cmd_tab && *cmd_tab)
+			printf("[%d] %s\n", i++, *cmd_tab);
 		cmd_tab++;
 	}
 	return (cmd_tab - tab_len);

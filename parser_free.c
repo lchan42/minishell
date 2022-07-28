@@ -6,7 +6,7 @@
 /*   By: lchan <lchan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/18 15:12:02 by slahlou           #+#    #+#             */
-/*   Updated: 2022/07/27 12:19:11 by lchan            ###   ########.fr       */
+/*   Updated: 2022/07/28 19:43:32 by lchan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,8 @@ void	__free_cmd(t_cmd cmd_struct)
 
 	if (cmd_struct.cmd_words)
 	{
-		free(cmd_struct.cmd_words);
+		ft_free_strtab(cmd_struct.cmd_words);
+		//free(cmd_struct.cmd_words);
 		cmd_struct.cmd_words = NULL;
 	}
 	if (cmd_struct.cmd_lst)
