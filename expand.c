@@ -6,7 +6,7 @@
 /*   By: lchan <lchan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 11:12:12 by slahlou           #+#    #+#             */
-/*   Updated: 2022/07/28 11:37:26 by lchan            ###   ########.fr       */
+/*   Updated: 2022/07/28 18:00:00 by lchan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,8 @@ void	__expand_t_list(t_list *lst, char **env, int opt)
 				buf[0] = ((char *)lst->content) \
 				[ft_strlen(((char *)lst->content)) + 1];
 			lst->content = __expand_string((char *)lst->content, env, opt);
-			if (opt != 1)
-				lst->content = __remove_quote((char *)lst->content);
+			 if (opt != 1)
+			 	lst->content = __remove_quote((char *)lst->content);
 			if (opt == 2)
 			{
 				((char *)lst->content) \
@@ -79,7 +79,9 @@ t_splcmd	*__expand(t_splcmd *parser, char **env)
 		__expand_t_list(parser->in.stock, env, 2);
 		__expand_t_list(parser->in.here_buffer, env, 1);
 		__expand_t_list(parser->cmd.cmd_lst, env, 0);
+		__cmdtab_init(parser->cmd.cmd_lst);
 		parser = parser->next;
 	}
+
 	return (parser_start);
 }

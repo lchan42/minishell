@@ -6,7 +6,7 @@
 /*   By: lchan <lchan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 15:43:36 by lchan             #+#    #+#             */
-/*   Updated: 2022/07/27 10:57:39 by lchan            ###   ########.fr       */
+/*   Updated: 2022/07/28 17:57:22 by lchan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,6 +196,8 @@ char		*__here_d_unquote_limit(char *arg);
 /*************** expander *******************/
 char		*__expand_string(char *str, char **env, int opt);
 t_splcmd	*__expand(t_splcmd *parser, char **env);
+char **__cmdtab_init(t_list *cmd_lst);
+
 
 /*************** free *********************/
 void		__t_list_free(t_list **lst);

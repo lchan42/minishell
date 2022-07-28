@@ -6,7 +6,7 @@
 /*   By: lchan <lchan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 10:56:55 by lchan             #+#    #+#             */
-/*   Updated: 2022/07/28 13:09:17 by lchan            ###   ########.fr       */
+/*   Updated: 2022/07/28 16:12:26 by lchan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,8 @@ void	__add_exp_split_str(char *str, int start, int len_expand)
 	{
 		if (*expand_start == ' ')
 			*expand_start = -1;
+		else if (*expand_start == '\'')
+			*expand_start = -2;
 		expand_start++;
 	}
 	// printf("in __add_exp_split_str, str = %s\n", str);
