@@ -6,7 +6,7 @@
 /*   By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 17:13:14 by lchan             #+#    #+#             */
-/*   Updated: 2022/07/29 13:59:37 by slahlou          ###   ########.fr       */
+/*   Updated: 2022/07/29 17:34:41 by slahlou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int	main (int ac, char **av, char **envp) //simulation of what should minishell 
 		msh_data.lexer = lexer(msh_data.user_input);
 		msh_data.parser = __parser(msh_data.lexer);
 		msh_data.parser = __expand(msh_data.parser, msh_data.env);
-		__el_imperator(msh_data, msh_data.parser);
+		__el_imperator(&msh_data, msh_data.parser);
 		// if (__redirection(msh_data.parser, msh_data.env))
 		// 	//executor
 		// else
@@ -104,7 +104,20 @@ int	main (int ac, char **av, char **envp) //simulation of what should minishell 
 			ft_free_char(&msh_data.user_input);
 	//}
 	if (msh_data.env)
-			ft_free_strtab((msh_data.env) - 1);
+		ft_free_strtab((msh_data.env) - 1);
+	if (msh_data.fds)
+	{
+		int	fds_open;
+
+		printf("fds* address = %p\n", msh_data.fds);
+		(msh_data.fds)--;
+		fds_open = *(msh_data.fds);
+		printf("fds_open = %d\n", fds_open);
+		while (fds_open)
+			close(msh_data.fds[fds_open--]);
+		free(msh_data.fds);
+		msh_data.fds = NULL;
+	}
 }
 
 //<$USER >$_ <infile >$""USER cmd1 cmd2$USER | $$"|"   "|"       $'"USER"' $"'$USER'" | cat -eaf -qwe $USER

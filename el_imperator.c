@@ -6,7 +6,7 @@
 /*   By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 11:52:17 by slahlou           #+#    #+#             */
-/*   Updated: 2022/07/29 16:05:17 by slahlou          ###   ########.fr       */
+/*   Updated: 2022/07/29 17:41:31 by slahlou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,31 +32,40 @@ int	__get_file_mode(char *filename, int *fd_type)
 	}
 }
 
-void	__cut_useless_files(t_list *save, t_list *files)
+void	__cut_useless_files(t_splcmd *parser, t_list *files)
 {
 	t_list	*tmp;
+	t_list	*save;
 
-	while (save->next != files && files != save)
-		save = save->next;
-	save->next = NULL;
+	save = parser->in.stock;
+	if (files != save)
+	{
+		while (save->next != files && files != save)
+			save = save->next;
+		save->next = NULL;
+	}
+	else
+	{
+		parser->in.stock = NULL;
+		parser->out.stock = NULL;
+	}
 	while (files)
 	{
 		tmp = files;
+		files = files->next;
 		free(tmp->content);
 		free(tmp);
-		tmp = NULL;
-		files = files->next;
 	}
 }
 
-void	__imperial_open_files(t_list *files, int *in_fd, int *out_fd)
+void	__imperial_open_files(t_splcmd *parser, int *in_fd, int *out_fd)
 {
-	t_list	*save;
+	t_list	*files;
 	char	*file_name;
 	int		mode;
 	int		fd_type;
 
-	save = files;
+	files = parser->in.stock;
 	while (files)
 	{
 		file_name = (char *)files->content;
@@ -70,19 +79,20 @@ void	__imperial_open_files(t_list *files, int *in_fd, int *out_fd)
 			if (*out_fd < 0 || *in_fd < 0)
 			{
 				printf("\n\n\nprobleme in __imperial_open_files fd_type = %d, file_name = %s\n", fd_type, file_name);
-				__cut_useless_files(save, files);
+				__cut_useless_files(parser, files);
+				break ;
 			}
 		}
 		files = files->next;
 	}
 }
 
-int	__imperial_redirect(t_io in, t_io out, int *fds, int nb_pipe)
+int	__imperial_redirect( t_splcmd *parser, int *fds, int nb_pipe)
 {
 	(void) fds;
 	(void) nb_pipe;
 	//if (__imperial_open_files(in.stock, &(in.fd), &(out.fd)))
-	__imperial_open_files(in.stock, &(in.fd), &(out.fd));
+	__imperial_open_files(parser, &(parser->in.fd), &(parser->out.fd));
 	// dup fds
 
 	return (0);
@@ -103,11 +113,12 @@ int	*__pipe_army(t_splcmd *parser, int *tab_size)
 	int	i;
 	int	nb_pipe;
 
-	nb_pipe = 0;
+	nb_pipe = 1;
 	while (parser && ++nb_pipe)
 		parser = parser->next;
-	*tab_size = nb_pipe;
-	pipe_army = ft_calloc(sizeof(int),(((nb_pipe + 1)) * 2) + 1);
+	*tab_size = (nb_pipe) * 2;
+	pipe_army = ft_calloc(sizeof(int), *tab_size + 1);
+	pipe_army[0] = *tab_size;
 	pipe_army++;
 	i = 0;
 	while (nb_pipe > 0)
@@ -117,22 +128,23 @@ int	*__pipe_army(t_splcmd *parser, int *tab_size)
 		i += 2;
 		nb_pipe--;
 	}
+
 	return (pipe_army);
 }
 
-int	__el_imperator(t_data msh_data, t_splcmd *parser)
+int	__el_imperator(t_data *msh_data, t_splcmd *parser)
 {
-	int nb_pipe;
+	int nb_pipe; // variable might not be usefull -> is coded inside msh_data.fds - 1
 
-	msh_data.fds = __pipe_army(parser, &nb_pipe);
-	if (!msh_data.fds)
+	msh_data->fds = __pipe_army(parser, &nb_pipe);
+	if (!msh_data->fds)
 		return (0); // check for returning error
 	while (parser)
 	{
-		__imperial_redirect(parser->in, parser->out, msh_data.fds, nb_pipe);
+		__imperial_redirect(parser, msh_data->fds, nb_pipe);
 		// if (__imperial_redirect(parser->in, parser->out, fds, nb_pipe))
 		// 	make_child(parser);
-		//__close(parser->stock);
+		//__imperial_close(parser->stock);
 
 		parser = parser->next;
 	}
