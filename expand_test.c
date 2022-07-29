@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "minishell.h"
 
 #define SINGLE_Q 1
 #define DOUBLE_Q 2
@@ -100,48 +101,64 @@
 // if !quoteflag
 // 	quoteflag |= single
 
-int	__cnt_tablen_str(char *str)
-{
-	int	cnt;
+// int	__cnt_tablen_str(char *str)
+// {
+// 	int	cnt;
 
-	cnt = -1;
-	while (1)
-	{
-		while (*str == -1)
-			str++;
-		if (*str && *str != -1)
-			cnt++;
-		while (*str && *str != -1)
-		{
-			if (*str == -2)
-			*str = '\'';
-			str++;
-		}
-		if (!*str)
-			break;
-	}
-	return (cnt);
-}
+// 	cnt = -1;
+// 	while (1)
+// 	{
+// 		while (*str == -1)
+// 			str++;
+// 		if (*str && *str != -1)
+// 			cnt++;
+// 		while (*str && *str != -1)
+// 		{
+// 			if (*str == -2)
+// 			*str = '\'';
+// 			str++;
+// 		}
+// 		if (!*str)
+// 			break;
+// 	}
+// 	return (cnt);
+// }
+
+// int main (void)
+// {
+// 	// char *str = {
+// 	// 	-1, -1, -1, 'q', 'q', 'q', 'q', -1, 'q', -2 ,'q',-1, -1, '\0'
+// 	// };
+// 	char str[] = "je'        'suis''        ''un'test         ";
+// 	char *tmp = str;
+// 	while (*tmp)
+// 	{
+// 		if (*tmp == ' ')
+// 			*tmp = -1;
+// 		else if (*tmp == '\'')
+// 			*tmp = -2;
+// 		tmp++;
+// 	}
+// 	printf("str = %s\n", str);
+// 	printf("cnt = %d\n", __cnt_tablen_str(str));
+// 	printf("after str = %s\n", str);
+
+// }
+
 
 int main (void)
 {
-	// char *str = {
-	// 	-1, -1, -1, 'q', 'q', 'q', 'q', -1, 'q', -2 ,'q',-1, -1, '\0'
+	// char *tab[] = {
+	// 	"wererwer"
 	// };
-	char str[] = "je'        'suis''        ''un'test         ";
-	char *tmp = str;
-	while (*tmp)
+
+	int fd = open("./test_files/file1", O_RDONLY, 0777);
+	if (fd <0)
 	{
-		if (*tmp == ' ')
-			*tmp = -1;
-		else if (*tmp == '\'')
-			*tmp = -2;
-		tmp++;
+		printf("echec ouverture\n");
+		return (0);
 	}
-	printf("str = %s\n", str);
-	printf("cnt = %d\n", __cnt_tablen_str(str));
-	printf("after str = %s\n", str);
-
+	int test = access("./test_files/file1", R_OK);
+	printf("test = %d\n", test);
+	perror("access");
 }
-
-

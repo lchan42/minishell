@@ -6,7 +6,7 @@
 /*   By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 15:43:36 by lchan             #+#    #+#             */
-/*   Updated: 2022/07/29 09:16:30 by slahlou          ###   ########.fr       */
+/*   Updated: 2022/07/29 15:54:21 by slahlou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,6 +163,7 @@ typedef struct s_splcmd
 typedef struct s_data
 {
 	int				log_fd; //journal d erreur
+	int				*fds;
 	char			**env;
 	char			**expt;
 	char			*user_input;
@@ -198,6 +199,8 @@ char		*__expand_string(char *str, char **env, int opt);
 t_splcmd	*__expand(t_splcmd *parser, char **env);
 char **__cmdtab_init(t_list *cmd_lst);
 
+/*************** imperator********************/
+int	__el_imperator(t_data msh_data, t_splcmd *parser);
 
 /*************** free *********************/
 void		__t_list_free(t_list **lst);

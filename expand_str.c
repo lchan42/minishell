@@ -6,7 +6,7 @@
 /*   By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 10:56:55 by lchan             #+#    #+#             */
-/*   Updated: 2022/07/29 09:31:57 by slahlou          ###   ########.fr       */
+/*   Updated: 2022/07/29 10:48:19 by slahlou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,26 +142,3 @@ char	*__expand_string(char *str, char **env, int opt)
 	}
 	return (str);
 }
-
-/*
-//test'$USER' $"USER" $'USER' "$USER" $ "'$USER'" "$'USER'" $$$USER $"$'USER" "$$$USER" '$$$USER' $"$USER'''" --> input
-//test$USER USER USER slahlou $ 'slahlou' $'USER' 474255slahlou $'USER 474255slahlou $$$USER slahlou''' --> bash output
-//
-// erreur sur :
-// $'USER'
-// "'$USER'"$;
-// "$'USER'"
-// ""$"U'S'ER'$',,,$USER$$'U'SR" --> input
-// U'S'ER'$',,,slahlou474255'U'SR  --> bash output
-// """U'S'ER'$',,,slahlou$$'U'SR" --> minishell output //seems OK
-// "$'USER', U S E'$'R :$'$'$'$'$'$'$'$'$'$'$'$'$'$'$'$'$" --> input
-// $'USER', U S E'$'R :$'$'$'$'$'$'$'$'$'$'$'$'$'$'$'$'$ --> bash output
-// "$'USER', U S E'$'R :$'$'$'$'$'$'$'$'$'$'$'$'$'$'$'$'$" --> minishell output //seems OK
-// $"$'USER" -->input
-// $'USER -->bash output
-// $'USER -->  minishell output //seems OK
-// $2USER
-// $2USER$2USER
-// $2USER'$2USER'
-// $$"USER"
-*/
