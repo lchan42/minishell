@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lchan <lchan@student.42.fr>                +#+  +:+       +#+        */
+/*   By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 11:12:12 by slahlou           #+#    #+#             */
-/*   Updated: 2022/07/28 19:22:39 by lchan            ###   ########.fr       */
+/*   Updated: 2022/07/29 09:30:14 by slahlou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	__expand_t_list(t_list *lst, char **env, int opt)
 			lst = lst->next;
 		else if (opt == 1)
 			return ;
-		while (lst)
+		while (lst && lst->content)
 		{
 			if (opt == 2)
 				buf[0] = ((char *)lst->content) \
@@ -60,10 +60,8 @@ void	__expand_t_list(t_list *lst, char **env, int opt)
 			 if (opt != 1)
 			 	lst->content = __remove_quote((char *)lst->content);
 			if (opt == 2)
-			{
 				((char *)lst->content) \
 				[ft_strlen(((char *)lst->content)) + 1] = buf[0];
-			}
 			lst = lst->next;
 		}
 	}

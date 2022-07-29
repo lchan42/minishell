@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_cmd_tab.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lchan <lchan@student.42.fr>                +#+  +:+       +#+        */
+/*   By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/28 15:16:07 by lchan             #+#    #+#             */
-/*   Updated: 2022/07/28 19:43:15 by lchan            ###   ########.fr       */
+/*   Updated: 2022/07/29 10:01:43 by slahlou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ char **__cmdtab_init(t_list *cmd_lst)
 	while (cmd_lst)
 	{
 		nb_wrd = __cnt_tablen_str((char *)(cmd_lst->content));
-		printf("nb_wrd = %d\ntab_len = %d\n", nb_wrd, tab_len);
+		// printf("nb_wrd = %d\ntab_len = %d\n", nb_wrd, tab_len);
 		// if (nb_wrd == 0)
 		// {
 		// 	*cmd_tab = (char *)(cmd_lst->content);
@@ -103,13 +103,13 @@ char **__cmdtab_init(t_list *cmd_lst)
 
 		cmd_lst = cmd_lst->next;
 	}
-	cmd_tab -= (tab_len);
-	int i = 0;
-	while (*cmd_tab)
-	{
-		if (cmd_tab && *cmd_tab)
-			printf("[%d] %s\n", i++, *cmd_tab);
-		cmd_tab++;
-	}
+	// cmd_tab -= (tab_len);
+	// int i = 0;
+	// while (*cmd_tab)
+	// {
+	// 	if (cmd_tab && *cmd_tab)
+	// 		printf("[%d] %s\n", i++, *cmd_tab);
+	// 	cmd_tab++;
+	// }
 	return (cmd_tab - tab_len);
 }

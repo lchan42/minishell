@@ -6,7 +6,7 @@
 /*   By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/20 15:55:50 by slahlou           #+#    #+#             */
-/*   Updated: 2022/07/26 11:07:51 by slahlou          ###   ########.fr       */
+/*   Updated: 2022/07/29 09:19:55 by slahlou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,32 +16,6 @@ static void	__save_io_arg(t_io *io)
 {
 	ft_lstadd_back(&(io->stock), ft_lstnew(io->arg));
 }
-
-/* old version */
-/*
-static void	__save_here_d(t_io *io)
-{
-	char	*limit;
-	char	buf[BUFFER_S];
-	int		read_ret;
-
-	limit = io->arg;
-	read_ret = 1;
-	if (io->here_buffer)
-		__t_list_free(&(io->here_buffer));
-	while (read_ret)
-	{
-		write(1, "> ", 2);
-		read_ret = read(0, buf, BUFFER_S);
-		buf[read_ret] = '\0';
-		if (!(ft_strncmp(buf, limit, read_ret - 1)))
-			break ;
-		ft_lstadd_back(&(io->here_buffer), ft_lstnew(ft_strdup(buf)));
-	}
-	free(io->arg);
-	io->arg = NULL;
-}
-*/
 
 static void	__here_d_parse_lim(t_io *io)
 {

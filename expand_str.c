@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_str.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lchan <lchan@student.42.fr>                +#+  +:+       +#+        */
+/*   By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 10:56:55 by lchan             #+#    #+#             */
-/*   Updated: 2022/07/28 16:12:26 by lchan            ###   ########.fr       */
+/*   Updated: 2022/07/29 09:31:57 by slahlou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,38 +142,6 @@ char	*__expand_string(char *str, char **env, int opt)
 	}
 	return (str);
 }
-
-// char	*__expand_string(char *str, char **env, int opt)
-// {
-// 	char	quote_flag;
-// 	char	*start;
-// 	char	*end;
-// 	char	*expand;
-
-// 	quote_flag = 0;
-// 	start = str;
-// 	while (start)
-// 	{
-// 		if (opt == 1)
-// 			start = __is_hd_expandable(start);
-// 		else
-// 			start = __is_expandable(start, &quote_flag);
-// 		if (start)
-// 		{
-// 			end = ++start;
-// 			if (!ft_isdigit(*end))
-// 				while (*end && (ft_isalnum(*end) || *end == '_'))
-// 					end++;
-// 			else
-// 				end++;
-// 			expand = __get_expand(start, end - start, env);
-// 			str = __add_exp_to_str(str, &start, end, expand);
-// 		}
-// 		else if (!start)
-// 			quote_flag = 0;
-// 	}
-// 	return (str);
-// }
 
 /*
 //test'$USER' $"USER" $'USER' "$USER" $ "'$USER'" "$'USER'" $$$USER $"$'USER" "$$$USER" '$$$USER' $"$USER'''" --> input

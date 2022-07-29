@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_main.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lchan <lchan@student.42.fr>                +#+  +:+       +#+        */
+/*   By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 17:13:14 by lchan             #+#    #+#             */
-/*   Updated: 2022/07/28 19:24:17 by lchan            ###   ########.fr       */
+/*   Updated: 2022/07/29 09:55:59 by slahlou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	__init_msh(t_data *msh_data)
 {
 	msh_data->log_fd = 0;
 	msh_data->env = NULL;
-	msh_data->exp = NULL;
+	msh_data->expt = NULL;
 	msh_data->user_input = NULL;
 	msh_data->lexer = NULL;
 	msh_data->parser = NULL;

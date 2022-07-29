@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lchan <lchan@student.42.fr>                +#+  +:+       +#+        */
+/*   By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 15:43:36 by lchan             #+#    #+#             */
-/*   Updated: 2022/07/28 17:57:22 by lchan            ###   ########.fr       */
+/*   Updated: 2022/07/29 09:16:30 by slahlou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,10 +135,10 @@ enum	e_parser_cmd_type
 
 typedef struct s_io
 {
-	int		type; // less or dless for in or great dgreat for output
-	char	*arg; //file name or lim (heredoc) max file name linux = 255 but if heredoc, no limits
-	int		fd; //0 by default (in) or 1 by default for (out)
-	t_list	*stock; //heredoc buffer (if in) AND lst of file name that have to be open (if out)
+	int		type;
+	char	*arg;
+	int		fd;
+	t_list	*stock;
 	t_list	*here_buffer;
 }				t_io;
 
@@ -164,7 +164,7 @@ typedef struct s_data
 {
 	int				log_fd; //journal d erreur
 	char			**env;
-	char			**exp;
+	char			**expt;
 	char			*user_input;
 	t_llist			*lexer;
 	t_splcmd		*parser;
