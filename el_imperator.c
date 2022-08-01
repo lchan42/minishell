@@ -6,7 +6,7 @@
 /*   By: lchan <lchan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 11:52:17 by slahlou           #+#    #+#             */
-/*   Updated: 2022/08/01 12:29:42 by lchan            ###   ########.fr       */
+/*   Updated: 2022/08/01 15:05:40 by lchan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,23 @@ int	__imperial_redirect( t_splcmd *parser, int *fds, int nb_pipe)
 {
 	(void) fds;
 	(void) nb_pipe;
-	// if (__imperial_open_files(parser, &(parser->in.fd), &(parser->out.fd)))
-	// 	dup_fds;
-	__imperial_open_files(parser, &(parser->in.fd), &(parser->out.fd));
 
+	// int		ret;
+	// char		buf[2];
+
+	// if (__imperial_open_files(parser, &(parser->in.fd), &(parser->out.fd)))
+	//{
+	//	here_doc;
+	// 	dup_fds;
+	//}
+	__imperial_open_files(parser, &(parser->in.fd), &(parser->out.fd));
+	__imperial_open_heredoc(&(parser->in), fds);
+	// printf("pipe heredoc = \n");
+	// while ((ret = read(fds[0], buf, 1)))
+	// {
+	// 	buf[ret] = '\0';
+	// 	printf("%s", buf);
+	// }
 	return (0);
 }
 

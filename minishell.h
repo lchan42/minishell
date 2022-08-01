@@ -6,7 +6,7 @@
 /*   By: lchan <lchan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 15:43:36 by lchan             #+#    #+#             */
-/*   Updated: 2022/08/01 12:27:39 by lchan            ###   ########.fr       */
+/*   Updated: 2022/08/01 15:03:19 by lchan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -207,8 +207,9 @@ char		**__cmdtab_init(t_list *cmd_lst);
 /*************** imperator********************/
 
 
-int	__imperial_open_files(t_splcmd *parser, int *in_fd, int *out_fd);
-int	__el_imperator(t_data *msh_data, t_splcmd *parser);
+int		__imperial_open_files(t_splcmd *parser, int *in_fd, int *out_fd);
+void	__imperial_open_heredoc(t_io *in, int *fds);
+int		__el_imperator(t_data *msh_data, t_splcmd *parser);
 
 /*************** free *********************/
 void		__t_list_free(t_list **lst);

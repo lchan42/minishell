@@ -6,23 +6,23 @@
 /*   By: lchan <lchan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 12:28:15 by lchan             #+#    #+#             */
-/*   Updated: 2022/08/01 12:59:59 by lchan            ###   ########.fr       */
+/*   Updated: 2022/08/01 15:26:45 by lchan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	__get_file_mode(char *filename, int *fd_type)
+static int	__get_file_mode(char *filename, int *fd_type)
 {
 	if (filename[ft_strlen(filename) + 1] == 'A')
 	{
 		*fd_type = 1;
-		return (O_CREAT | O_WRONLY | O_APPEND);
+		return ( O_APPEND | O_CREAT | O_WRONLY);
 	}
 	else if (filename[ft_strlen(filename) + 1] == 'T')
 	{
 		*fd_type = 1;
-		return (O_CREAT | O_WRONLY | O_TRUNC);
+		return (O_TRUNC | O_CREAT | O_WRONLY);
 	}
 	else
 	{
@@ -31,7 +31,7 @@ int	__get_file_mode(char *filename, int *fd_type)
 	}
 }
 
-void	__closeif_useless (t_list *stock, int fd_type, int in_fd, int out_fd)
+static void	__closeif_useless (t_list *stock, int fd_type, int in_fd, int out_fd)
 {
 	char	*content;
 	int		fd_type_tmp;
@@ -60,7 +60,7 @@ void	__closeif_useless (t_list *stock, int fd_type, int in_fd, int out_fd)
 	}
 }
 
-void	__cut_useless_files(t_splcmd *parser, t_list *files)
+static void	__cut_useless_files(t_splcmd *parser, t_list *files)
 {
 	t_list	*tmp;
 	t_list	*save;
@@ -116,4 +116,24 @@ int	__imperial_open_files(t_splcmd *parser, int *in_fd, int *out_fd)
 		files = files->next;
 	}
 	return (1);
+}
+
+void	__imperial_open_heredoc(t_io *in, int *fds)
+{
+	t_list	*tmp;
+
+	char	*tmp_content;
+
+	if (in->type == HERE_D)
+	{
+		tmp = in->here_buffer->next;
+		while (tmp)
+		{
+			tmp_content = (char *)(tmp->content);
+			write(fds[1], tmp_content, ft_strlen_p(tmp_content));
+			tmp = tmp->next;
+		}
+		__t_list_free(&(in->here_buffer));
+		close(fds[1]);
+	}
 }
