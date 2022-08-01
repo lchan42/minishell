@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lchan <lchan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 15:43:36 by lchan             #+#    #+#             */
-/*   Updated: 2022/07/29 17:34:09 by slahlou          ###   ########.fr       */
+/*   Updated: 2022/08/01 12:27:39 by lchan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,9 +100,9 @@ enum e_lexer_error
 enum e_lexer_type_token
 {
 	TYPE_LEXER_WORD = 1,
-	TYPE_LEXER_OPERATOR_LOGICAL,
-	TYPE_LEXER_OPERATOR_REDIRECT,
-	TYPE_LEXER_SYNTAX_ERR
+	LEX_OP_LOGIC,
+	LEX_OP_REDIR,
+	LEX_SYNTAX_ERR
 };
 
 typedef struct s_lexer_token
@@ -195,11 +195,19 @@ int 		__pars_cmd(t_cmd *cmd, t_llist *lexer);
 char		*__here_d_unquote_limit(char *arg);
 
 /*************** expander *******************/
-char		*__expand_string(char *str, char **env, int opt);
 t_splcmd	*__expand(t_splcmd *parser, char **env);
-char **__cmdtab_init(t_list *cmd_lst);
+char		*__expand_string(char *str, char **env, int opt);
+char		*__get_expand(char *start, int len, char **env);
+char		*__is_expandable(char *str, char *quote_flag);
+char		*__is_hd_expandable(char *str);
+char		*__add_exp_to_str(char *str, char **start, char *end, char *expand);
+void		__add_exp_split_str(char *str, int start, int len_expand);
+char		**__cmdtab_init(t_list *cmd_lst);
 
 /*************** imperator********************/
+
+
+int	__imperial_open_files(t_splcmd *parser, int *in_fd, int *out_fd);
 int	__el_imperator(t_data *msh_data, t_splcmd *parser);
 
 /*************** free *********************/

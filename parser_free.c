@@ -6,7 +6,7 @@
 /*   By: lchan <lchan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/18 15:12:02 by slahlou           #+#    #+#             */
-/*   Updated: 2022/07/28 19:43:32 by lchan            ###   ########.fr       */
+/*   Updated: 2022/08/01 11:33:40 by lchan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	__t_list_free(t_list **lst)
 {
-	t_list  *runner;
+	t_list	*runner;
 
 	if (*lst)
 	{
@@ -41,12 +41,11 @@ void	__free_io(t_io *io_struct)
 
 void	__free_cmd(t_cmd cmd_struct)
 {
-	t_list *tmp;
+	t_list	*tmp;
 
 	if (cmd_struct.cmd_words)
 	{
 		ft_free_strtab(cmd_struct.cmd_words);
-		//free(cmd_struct.cmd_words);
 		cmd_struct.cmd_words = NULL;
 	}
 	if (cmd_struct.cmd_lst)
@@ -64,7 +63,7 @@ void	__free_cmd(t_cmd cmd_struct)
 
 void	__free_parse(t_splcmd **head)
 {
-	t_splcmd *runner;
+	t_splcmd	*runner;
 
 	runner = *head;
 	if (*head)
@@ -72,7 +71,6 @@ void	__free_parse(t_splcmd **head)
 		while (runner)
 		{
 			__free_io(&runner->in);
-			//__free_io(&runner->out);
 			__free_cmd(runner->cmd);
 			runner = runner->next;
 			free(*head);

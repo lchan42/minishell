@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_main.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lchan <lchan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 17:13:14 by lchan             #+#    #+#             */
-/*   Updated: 2022/07/29 17:34:41 by slahlou          ###   ########.fr       */
+/*   Updated: 2022/08/01 11:41:04 by lchan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,9 +84,6 @@ int	main (int ac, char **av, char **envp) //simulation of what should minishell 
 		msh_data.parser = __parser(msh_data.lexer);
 		msh_data.parser = __expand(msh_data.parser, msh_data.env);
 		__el_imperator(&msh_data, msh_data.parser);
-		// if (__redirection(msh_data.parser, msh_data.env))
-		// 	//executor
-		// else
 		// 	//ultimate_free
 		if (msh_data.parser)
 		{

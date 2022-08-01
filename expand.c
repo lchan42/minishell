@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lchan <lchan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 11:12:12 by slahlou           #+#    #+#             */
-/*   Updated: 2022/07/29 09:30:14 by slahlou          ###   ########.fr       */
+/*   Updated: 2022/08/01 11:20:10 by lchan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,48 @@ char	*__remove_quote(char *str)
 	return (start);
 }
 
+char	*__expand_string_bis(
+	char **str, char **start, char **env, int opt_quote)
+{
+	char	*expand;
+	char	*end;
+	int		tmp_start;
+
+	tmp_start = *start - *str;
+	end = ++(*start);
+	if (!ft_isdigit(*end))
+		while (*end && (ft_isalnum(*end) || *end == '_'))
+			end++;
+	else
+		end++;
+	expand = __get_expand(*start, end - *start, env);
+	*str = __add_exp_to_str(*str, start, end, expand);
+	if (opt_quote == 0)
+		__add_exp_split_str(*str, tmp_start, ft_strlen_p(expand));
+	return (*str);
+}
+
+char	*__expand_string(char *str, char **env, int opt)
+{
+	char	quote_flag;
+	char	*start;
+
+	quote_flag = 0;
+	start = str;
+	while (start)
+	{
+		if (opt == 1)
+			start = __is_hd_expandable(start);
+		else
+			start = __is_expandable(start, &quote_flag);
+		if (start)
+			str = __expand_string_bis(&str, &start, env, opt + quote_flag);
+		else if (!start)
+			quote_flag = 0;
+	}
+	return (str);
+}
+
 void	__expand_t_list(t_list *lst, char **env, int opt)
 {
 	char	buf[1];
@@ -57,8 +99,8 @@ void	__expand_t_list(t_list *lst, char **env, int opt)
 				buf[0] = ((char *)lst->content) \
 				[ft_strlen(((char *)lst->content)) + 1];
 			lst->content = __expand_string((char *)lst->content, env, opt);
-			 if (opt != 1)
-			 	lst->content = __remove_quote((char *)lst->content);
+			if (opt != 1)
+				lst->content = __remove_quote((char *)lst->content);
 			if (opt == 2)
 				((char *)lst->content) \
 				[ft_strlen(((char *)lst->content)) + 1] = buf[0];
@@ -80,6 +122,5 @@ t_splcmd	*__expand(t_splcmd *parser, char **env)
 		parser->cmd.cmd_words = __cmdtab_init(parser->cmd.cmd_lst);
 		parser = parser->next;
 	}
-
 	return (parser_start);
 }

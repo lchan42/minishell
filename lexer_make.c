@@ -6,7 +6,7 @@
 /*   By: lchan <lchan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 15:25:32 by lchan             #+#    #+#             */
-/*   Updated: 2022/07/22 20:03:09 by lchan            ###   ########.fr       */
+/*   Updated: 2022/08/01 11:34:57 by lchan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 static int	lexer_syntax_checker(
 	t_lexer_token *current_nod, t_lexer_token *previous_nod)
 {
-	if ((!previous_nod && current_nod->type == TYPE_LEXER_OPERATOR_LOGICAL))
+	if ((!previous_nod && current_nod->type == LEX_OP_LOGIC))
 	{
-		current_nod->type = TYPE_LEXER_SYNTAX_ERR;
+		current_nod->type = LEX_SYNTAX_ERR;
 		return (ERR_SYNTAX);
 	}
 	else if (previous_nod
@@ -25,7 +25,7 @@ static int	lexer_syntax_checker(
 		&& current_nod->type != TYPE_LEXER_WORD
 		&& previous_nod->type - current_nod->type != -1)
 	{
-		current_nod->type = TYPE_LEXER_SYNTAX_ERR;
+		current_nod->type = LEX_SYNTAX_ERR;
 		return (ERR_SYNTAX);
 	}
 	return (0);
@@ -44,9 +44,9 @@ static int	lexer_set_nod(t_lexer_token *tmp_nod)
 	if (ft_strchr_b(METACHAR, *(tmp_nod->start)))
 	{
 		if (ft_strchr_b(LOG_META, *(tmp_nod->start)))
-			tmp_nod->type = TYPE_LEXER_OPERATOR_LOGICAL;
+			tmp_nod->type = LEX_OP_LOGIC;
 		else
-			tmp_nod->type = TYPE_LEXER_OPERATOR_REDIRECT;
+			tmp_nod->type = LEX_OP_REDIR;
 	}
 	else
 		tmp_nod->type = TYPE_LEXER_WORD;

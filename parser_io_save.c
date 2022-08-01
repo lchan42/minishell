@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_io_save.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lchan <lchan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/20 15:55:50 by slahlou           #+#    #+#             */
-/*   Updated: 2022/07/29 09:19:55 by slahlou          ###   ########.fr       */
+/*   Updated: 2022/08/01 11:31:58 by lchan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static void	__here_d_parse_lim(t_io *io)
 		if (ft_strchr_b("\"\'", *tmp++))
 		{
 			quote_flag++;
-			break;
+			break ;
 		}
 	}
 	if (!quote_flag)
@@ -70,9 +70,9 @@ static void	__save_here_d(t_io *io)
 	io->arg = NULL;
 }
 
-static void	__init_stock_mgmt(void(*stock_mgmt[7])(t_io *io))
+static void	__init_stock_mgmt(void (*stock_mgmt[7]) (t_io *io))
 {
-	stock_mgmt[IN_D] =  &__save_io_arg;
+	stock_mgmt[IN_D] = &__save_io_arg;
 	stock_mgmt[HERE_D] = &__save_here_d;
 	stock_mgmt[OUT_D] = &__save_io_arg;
 	stock_mgmt[OUT_D_APP] = &__save_io_arg;
@@ -81,6 +81,7 @@ static void	__init_stock_mgmt(void(*stock_mgmt[7])(t_io *io))
 t_list	*__get_stock(t_io *io, int type)
 {
 	void	(*stock_mgmt[7])(t_io *io);
+
 	__init_stock_mgmt(stock_mgmt);
 	stock_mgmt[type](io);
 	return (io->stock);

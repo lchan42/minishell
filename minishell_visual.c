@@ -6,7 +6,7 @@
 /*   By: lchan <lchan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/09 17:01:10 by lchan             #+#    #+#             */
-/*   Updated: 2022/07/28 19:46:43 by lchan            ###   ########.fr       */
+/*   Updated: 2022/08/01 11:34:57 by lchan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@ void	__visial_print_type(int type)
 {
 	const char	*type_str [] = {
 	[TYPE_LEXER_WORD] = "word",
-	[TYPE_LEXER_OPERATOR_LOGICAL] = "op logical",
-	[TYPE_LEXER_OPERATOR_REDIRECT] = "op redirect",
-	[TYPE_LEXER_SYNTAX_ERR] = "syntax error"
+	[LEX_OP_LOGIC] = "op logical",
+	[LEX_OP_REDIR] = "op redirect",
+	[LEX_SYNTAX_ERR] = "syntax error"
 	};
 
 	printf("type = %s (%d)\n", type_str[type], type);
@@ -100,21 +100,21 @@ void	__visual_print_input(t_llist **runner)
 {
 	if (*runner)
 	{
-		if (((t_lexer_token *)((*runner)->content))->type == TYPE_LEXER_OPERATOR_LOGICAL)
+		if (((t_lexer_token *)((*runner)->content))->type == LEX_OP_LOGIC)
 		{
 			printf("[%.*s] ",
 			((int)((t_lexer_token *)((*runner)->content))->length),
 			((t_lexer_token *)((*runner)->content))->start);
 			*runner = (*runner)->next;
 		}
-		while ( *runner && ((t_lexer_token *)((*runner)->content))->type != TYPE_LEXER_OPERATOR_LOGICAL)
+		while ( *runner && ((t_lexer_token *)((*runner)->content))->type != LEX_OP_LOGIC)
 		{
 			printf("[%.*s] ",
 			((int)((t_lexer_token *)((*runner)->content))->length),
 			((t_lexer_token *)((*runner)->content))->start);
 			*runner = (*runner)->next;
 		}
-		if (*runner && ((t_lexer_token *)((*runner)->content))->type == TYPE_LEXER_OPERATOR_LOGICAL)
+		if (*runner && ((t_lexer_token *)((*runner)->content))->type == LEX_OP_LOGIC)
 			{
 				printf("[%.*s] ",
 				((int)((t_lexer_token *)((*runner)->content))->length),

@@ -6,7 +6,7 @@
 /*   By: lchan <lchan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 15:43:36 by lchan             #+#    #+#             */
-/*   Updated: 2022/07/15 12:30:30 by lchan            ###   ########.fr       */
+/*   Updated: 2022/08/01 11:34:57 by lchan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,8 +93,8 @@ enum e_lexer_type_token
 {
 	TYPE_LEXER_WORD = 1,
 	TYPE_LEXER_OPERATOR,
-	TYPE_LEXER_OPERATOR_LOGICAL,
-	TYPE_LEXER_OPERATOR_REDIRECT,
+	LEX_OP_LOGIC,
+	LEX_OP_REDIR,
 };
 
 typedef struct s_lexer_token

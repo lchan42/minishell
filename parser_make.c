@@ -6,7 +6,7 @@
 /*   By: lchan <lchan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/16 18:05:05 by lchan             #+#    #+#             */
-/*   Updated: 2022/07/27 11:32:53 by lchan            ###   ########.fr       */
+/*   Updated: 2022/08/01 11:34:57 by lchan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,35 +14,31 @@
 
 static t_llist	*__lexer_mover(t_llist *lexer, int type)
 {
-	if  (((t_lexer_token *)lexer)
- 		&& ((t_lexer_token *)lexer->content)->type == type)
-			lexer = lexer->next;
-	while (((t_lexer_token *)lexer)
- 		&& ((t_lexer_token *)lexer->content)->type != type)
+	if (((t_lexer_token *)lexer)
+		&& ((t_lexer_token *)lexer->content)->type == type)
 		lexer = lexer->next;
-	if  (((t_lexer_token *)lexer)
- 		&& ((t_lexer_token *)lexer->content)->type == type)
-			lexer = lexer->next;
+	while (((t_lexer_token *)lexer)
+		&& ((t_lexer_token *)lexer->content)->type != type)
+		lexer = lexer->next;
+	if (((t_lexer_token *)lexer)
+		&& ((t_lexer_token *)lexer->content)->type == type)
+		lexer = lexer->next;
 	return (lexer);
 }
 
-static t_splcmd *__init_splcmd_node(t_splcmd **head, t_splcmd *runner)
+static t_splcmd	*__init_splcmd_node(t_splcmd **head, t_splcmd *runner)
 {
-	t_splcmd *new_node;
+	t_splcmd	*new_node;
 
 	new_node = ft_calloc(1, sizeof(t_splcmd));
 	if (!new_node)
 		return (NULL);
-	//printf("outstock = %p | intstock = %p\n", &(new_node->in.stock),&(new_node->out.stock));
-	//&(new_node->in.stock) = &(new_node->out.stock);
 	if (!(*head))
 		*head = new_node;
 	else
 		runner->next = new_node;
-	//new_node->out.type = STDOUT;
 	return (new_node);
 }
-
 
 t_splcmd	*__parser(t_llist *lexer)
 {
@@ -60,7 +56,7 @@ t_splcmd	*__parser(t_llist *lexer)
 			__free_parse(&head);
 			break ;
 		}
-		lexer = __lexer_mover(lexer, TYPE_LEXER_OPERATOR_LOGICAL);
+		lexer = __lexer_mover(lexer, LEX_OP_LOGIC);
 	}
 	return (head);
 }

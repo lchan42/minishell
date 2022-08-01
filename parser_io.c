@@ -6,7 +6,7 @@
 /*   By: lchan <lchan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/18 15:35:12 by slahlou           #+#    #+#             */
-/*   Updated: 2022/07/27 14:26:31 by lchan            ###   ########.fr       */
+/*   Updated: 2022/08/01 11:34:57 by lchan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ static int	__get_redir_type(t_lexer_token *redir)
 
 static char	*__get_arg(t_lexer_token *word, int type)
 {
-	char *arg;
-	char *tmp;
+	char	*arg;
+	char	*tmp;
 
 	arg = ft_calloc(sizeof(char), (word->length + 2));
 	if (!arg)
@@ -41,7 +41,7 @@ static char	*__get_arg(t_lexer_token *word, int type)
 	tmp = word->start;
 	while (tmp != word->end)
 		*(arg++) = *(tmp++);
-	*(arg)= '\0';
+	*(arg) = '\0';
 	if (type == OUT_D)
 		*(arg + 1) = 'T';
 	else if (type == OUT_D_APP)
@@ -49,9 +49,9 @@ static char	*__get_arg(t_lexer_token *word, int type)
 	return (arg - (word->length));
 }
 
-static int __pars_io_pipe(t_io *i_o, t_lexer_token *token, int pipe_io)
+static int	__pars_io_pipe(t_io *i_o, t_lexer_token *token, int pipe_io)
 {
-	if (token->type == TYPE_LEXER_OPERATOR_LOGICAL)
+	if (token->type == LEX_OP_LOGIC)
 	{
 		if (!i_o->arg)
 			i_o->type = pipe_io;
@@ -61,12 +61,11 @@ static int __pars_io_pipe(t_io *i_o, t_lexer_token *token, int pipe_io)
 	return (0);
 }
 
-
 static int	__pars_io_token(t_io *io, t_io *bis, t_llist *redir, t_llist *word)
 {
 	if (word)
 	{
-		if (((t_lexer_token *)(word->content))->type == TYPE_LEXER_SYNTAX_ERR)
+		if (((t_lexer_token *)(word->content))->type == LEX_SYNTAX_ERR)
 			return (-1);
 		(io)->type = __get_redir_type((t_lexer_token *)(redir->content));
 		(io)->arg = __get_arg((t_lexer_token *)(word->content), (io)->type);
@@ -74,7 +73,7 @@ static int	__pars_io_token(t_io *io, t_io *bis, t_llist *redir, t_llist *word)
 		(io)->stock = __get_stock(io, (io)->type);
 		if (!io->stock && bis->stock)
 			io->stock = bis->stock;
-		else if (!bis->stock && io->stock )
+		else if (!bis->stock && io->stock)
 			bis->stock = io->stock;
 		return (1);
 	}
@@ -85,24 +84,25 @@ static int	__pars_io_token(t_io *io, t_io *bis, t_llist *redir, t_llist *word)
 	}
 }
 
-int __pars_io(t_io *in, t_io *out, t_llist *lexer)
+int	__pars_io(t_io *in, t_io *out, t_llist *lexer)
 {
-	int res;
+	int	res;
 
 	if (lexer->prev)
 		__pars_io_pipe(in, ((t_lexer_token *)lexer->prev->content), PIPE_IN);
 	while (lexer)
 	{
 		res = 0;
-		if (((t_lexer_token *)lexer->content)->type == TYPE_LEXER_OPERATOR_REDIRECT \
+		if (((t_lexer_token *)lexer->content)->type == LEX_OP_REDIR \
 		&& *(((t_lexer_token *)lexer->content)->start) == '<')
 			res = __pars_io_token(in, out, lexer, lexer->next);
-		else if (((t_lexer_token *)lexer->content)->type == TYPE_LEXER_OPERATOR_REDIRECT \
+		else if (((t_lexer_token *)lexer->content)->type == LEX_OP_REDIR \
 		&& *(((t_lexer_token *)lexer->content)->start) == '>')
 			res = __pars_io_token(out, in, lexer, lexer->next);
 		if (res == 1)
 			lexer = lexer->next;
-		else if (res == -1 || ((t_lexer_token *)lexer->content)->type == TYPE_LEXER_SYNTAX_ERR)
+		else if (res == -1
+			|| ((t_lexer_token *)lexer->content)->type == LEX_SYNTAX_ERR)
 			return (-1);
 		if (__pars_io_pipe(out, ((t_lexer_token *)lexer->content), PIPE_OUT))
 			break ;
