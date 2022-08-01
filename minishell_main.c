@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_main.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lchan <lchan@student.42.fr>                +#+  +:+       +#+        */
+/*   By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 17:13:14 by lchan             #+#    #+#             */
-/*   Updated: 2022/08/01 18:02:19 by lchan            ###   ########.fr       */
+/*   Updated: 2022/08/01 19:22:55 by slahlou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int	main (int ac, char **av, char **envp) //simulation of what should minishell 
 	(void) envp;
 	t_data			msh_data;
 //	char			*usr_input;
-
+	msh_data.fds = NULL;
 	__set_msh_data(&msh_data, envp);
 	//while (1)
 	//{
