@@ -6,7 +6,7 @@
 /*   By: lchan <lchan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 12:28:15 by lchan             #+#    #+#             */
-/*   Updated: 2022/08/01 15:26:45 by lchan            ###   ########.fr       */
+/*   Updated: 2022/08/01 17:28:58 by lchan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,7 @@ int	__imperial_open_files(t_splcmd *parser, int *in_fd, int *out_fd)
 				//printf("\n\n\nprobleme in __imperial_open_files fd_type = %d, file_name = %s\n", fd_type, file_name);
 				//add une fonction print error a la fin;
 				__cut_useless_files(parser, files);
+				errno = EPERM;
 				return (0);
 			}
 			__closeif_useless(files->next, fd_type, *in_fd, *out_fd);

@@ -152,7 +152,13 @@ int main (void)
 	// 	"wererwer"
 	// };
 
-	int fd = open("./test_files/file1", O_RDONLY, 0777);
+	int fd = open("./test_files/file11111111111", O_RDONLY, 0777);
+	if (errno)
+	{
+		errno = 1;
+		printf("errno = %d \n", errno);
+		perror("error");
+	}
 	if (fd <0)
 	{
 		printf("echec ouverture\n");

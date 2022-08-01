@@ -6,7 +6,7 @@
 /*   By: lchan <lchan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 15:43:36 by lchan             #+#    #+#             */
-/*   Updated: 2022/08/01 15:03:19 by lchan            ###   ########.fr       */
+/*   Updated: 2022/08/01 17:43:18 by lchan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,9 @@
 # include <signal.h>
 # include <string.h>
 # include <unistd.h>
+# include <errno.h>
 # include <sys/types.h>
+# include <sys/wait.h>
 # include <sys/stat.h>
 # include <fcntl.h>
 # include <readline/readline.h>
@@ -162,6 +164,7 @@ typedef struct s_splcmd
 /*************************** main struct ****************************/
 typedef struct s_data
 {
+	char			*last_status;
 	int				log_fd; //journal d erreur
 	int				*fds;
 	char			**env;
