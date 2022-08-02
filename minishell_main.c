@@ -6,7 +6,7 @@
 /*   By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 17:13:14 by lchan             #+#    #+#             */
-/*   Updated: 2022/08/02 16:45:51 by slahlou          ###   ########.fr       */
+/*   Updated: 2022/08/02 18:33:42 by slahlou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,11 @@ void __set_msh_data(t_data *msh_data, char **envp)
 		}
 		env++;
 		while(*envp)
+		{
+			//if (ft_strncmp("SHLVL=", *envp, 6) == 0)
+			//	printf("%s\n", *envp);
 			*(env++) = ft_strdup(*(envp++));
+		}
 		*env = NULL;
 	}
 	msh_data->env = env - envp_size;

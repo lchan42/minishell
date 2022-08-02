@@ -6,7 +6,7 @@
 /*   By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 11:52:17 by slahlou           #+#    #+#             */
-/*   Updated: 2022/08/02 16:40:23 by slahlou          ###   ########.fr       */
+/*   Updated: 2022/08/02 18:51:42 by slahlou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,34 @@ void	__join_path(char **env, t_cmd *cmd)
 	ft_free_strtab(path_split);
 }
 
+void	__bambino_set_shlvl(char **env)
+{
+	char	buf[20];
+	int		i;
+	int		j;
+	char	*itoa_shlvl;
+	char	*shlvl;
+
+	while (*(env) && ft_strncmp("SHLVL=", *env, 6) != 0)
+		env++;
+	shlvl = *env;
+	if (!shlvl)
+		return ;
+	i = -1;
+	j = 0;
+	itoa_shlvl = NULL;
+	while (shlvl[++i] && !ft_isdigit(shlvl[i]))
+		buf[i] = shlvl[i];
+	if (ft_isdigit(shlvl[i]))
+		itoa_shlvl = ft_itoa(ft_atoi(shlvl + i) + 1);
+	if (itoa_shlvl)
+		while (itoa_shlvl[j])
+			buf[i++] = itoa_shlvl[j++];
+	buf[i] = '\0';
+	free(itoa_shlvl);
+	*env = ft_strdup(buf);
+}
+
 void	__imperial_bambino(t_data *msh_data, t_splcmd *parser, int *fds)
 {
 	dup2(fds[0], 0);
@@ -77,6 +105,8 @@ void	__imperial_bambino(t_data *msh_data, t_splcmd *parser, int *fds)
 	if (errno == 2)
 		__ultimate_free(msh_data, 0, 1);
 	__join_path(msh_data->env, &(parser->cmd));
+	if (msh_data->env)
+		__bambino_set_shlvl(msh_data->env);
 	if (execve(*(parser->cmd.cmd_words), parser->cmd.cmd_words, msh_data->env) < 0)
 		__ultimate_free(msh_data, 0, 127);
 
@@ -98,7 +128,7 @@ int	__los_bambinos_del_imperator(t_data *msh_data, t_splcmd *parser, int *fds)
 
 void	__imperial_dup_fds(t_splcmd *parser, int *fds, int fd_i)
 {
-	if (parser->in.fd == 0 && fd_i == 0)
+	if (parser->in.fd == 0 && parser->in.type != HERE_D && fd_i == 0)
 		dup2(0, fds[fd_i]);
 	else if (parser->in.fd > 0 && parser->in.type != HERE_D)
 	{
