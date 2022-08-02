@@ -6,7 +6,7 @@
 /*   By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 17:13:14 by lchan             #+#    #+#             */
-/*   Updated: 2022/08/02 11:08:08 by slahlou          ###   ########.fr       */
+/*   Updated: 2022/08/02 12:44:00 by slahlou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,38 +86,43 @@ int	main (int ac, char **av, char **envp) //simulation of what should minishell 
 		msh_data.parser = __expand(msh_data.parser, msh_data.env);
 		__el_imperator(&msh_data, msh_data.parser);
 		// 	//ultimate_free
-		if (msh_data.parser)
-		{
-			__visual_print_splcmd(msh_data.parser, msh_data.lexer);
-			__free_parse(&(msh_data.parser));
-		}
-		if (msh_data.lexer)
-		{
-			//__visual_print_lexer(msh_data.lexer_data->lexer);
-			//__visual_print_read_lst(msh_data.lexer_data->read_lst);
-			lexer_free(&msh_data.lexer);
-		}
+		__ultimate_free(&msh_data, 0, 0);
 
-		if (msh_data.user_input)
-			ft_free_char(&msh_data.user_input);
-	//}
-	if (msh_data.env)
-		ft_free_strtab((msh_data.env) - 1);
-	if (msh_data.fds)
-	{
-		int	fds_open;
 
-		printf("fds* address = %p\n", msh_data.fds);
-		(msh_data.fds)--;
-		fds_open = *(msh_data.fds);
-		printf("fds_open = %d\n", fds_open);
-		while (fds_open)
-			close(msh_data.fds[fds_open--]);
-		free(msh_data.fds);
-		msh_data.fds = NULL;
-		if (msh_data.last_status)
-			ft_free_char(&(msh_data.last_status));
-	}
+
+
+	// 	if (msh_data.parser)
+	// 	{
+	// 		__visual_print_splcmd(msh_data.parser, msh_data.lexer);
+	// 		__free_parse(&(msh_data.parser));
+	// 	}
+	// 	if (msh_data.lexer)
+	// 	{
+	// 		//__visual_print_lexer(msh_data.lexer_data->lexer);
+	// 		//__visual_print_read_lst(msh_data.lexer_data->read_lst);
+	// 		lexer_free(&msh_data.lexer);
+	// 	}
+
+	// 	if (msh_data.user_input)
+	// 		ft_free_char(&msh_data.user_input);
+	// //}
+	// if (msh_data.env)
+	// 	ft_free_strtab((msh_data.env) - 1);
+	// if (msh_data.fds)
+	// {
+	// 	int	fds_open;
+
+	// 	printf("fds* address = %p\n", msh_data.fds);
+	// 	(msh_data.fds)--;
+	// 	fds_open = *(msh_data.fds);
+	// 	printf("fds_open = %d\n", fds_open);
+	// 	while (fds_open)
+	// 		close(msh_data.fds[fds_open--]);
+	// 	free(msh_data.fds);
+	// 	msh_data.fds = NULL;
+	// 	if (msh_data.last_status)
+	// 		ft_free_char(&(msh_data.last_status));
+	// }
 }
 
 //<$USER >$_ <infile >$""USER cmd1 cmd2$USER | $$"|"   "|"       $'"USER"' $"'$USER'" | cat -eaf -qwe $USER

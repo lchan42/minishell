@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lchan <lchan@student.42.fr>                +#+  +:+       +#+        */
+/*   By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 15:43:36 by lchan             #+#    #+#             */
-/*   Updated: 2022/08/01 17:43:18 by lchan            ###   ########.fr       */
+/*   Updated: 2022/08/02 12:43:45 by slahlou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 # include <readline/history.h>
 
 # define BUFFER_S 10000
+# define T_DATA_SIZE 7
 # define FIRST_PROMPT "test_prompt : "
 # define LEXER_PROMPT "> "
 # define METACHAR "|<>" 		//dont need to interpreat';'
@@ -164,14 +165,16 @@ typedef struct s_splcmd
 /*************************** main struct ****************************/
 typedef struct s_data
 {
-	char			*last_status;
 	int				log_fd; //journal d erreur
-	int				*fds;
+
+	char			*last_status;
 	char			**env;
 	char			**expt;
+
 	char			*user_input;
 	t_llist			*lexer;
 	t_splcmd		*parser;
+	int				*fds;
 }t_data;
 
 
@@ -187,8 +190,7 @@ int			lexer_type_checker(t_llist **lexer_head, t_lexer_token *tmp_nod);
 //void			lexer_add_history(t_llist *read_lst);
 t_llist	*lexer(char *usr_input);
 
-void		lexer_free(t_llist **lexer);
-void		t_llist_free(t_llist **lexer);
+
 
 /*************** parser *********************/
 t_splcmd	*__parser(t_llist *lexer);
@@ -215,6 +217,10 @@ void	__imperial_open_heredoc(t_io *in, int *fds);
 int		__el_imperator(t_data *msh_data, t_splcmd *parser);
 
 /*************** free *********************/
+//void	__ultimate_free(t_data *msh_data, int exit_opt);
+void	__ultimate_free(t_data *msh_data, int exit_opt, int bambinos);
+void		lexer_free(t_llist **lexer);
+void		t_llist_free(t_llist **lexer);
 void		__t_list_free(t_list **lst);
 void		__free_parse(t_splcmd **head);
 

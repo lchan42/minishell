@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_free_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lchan <lchan@student.42.fr>                +#+  +:+       +#+        */
+/*   By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 15:10:54 by luc_chan          #+#    #+#             */
-/*   Updated: 2022/07/22 19:00:19 by lchan            ###   ########.fr       */
+/*   Updated: 2022/08/02 12:04:09 by slahlou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	lexer_free(t_llist **lexer)
+void	t_llist_free(t_llist **lexer)
 {
 	t_llist	*tmp;
 
@@ -26,7 +26,7 @@ void	lexer_free(t_llist **lexer)
 	*lexer = NULL;
 }
 
-void	t_llist_free(t_llist **lexer)
+void	lexer_free(t_llist **lexer)
 {
 	t_llist	*tmp;
 

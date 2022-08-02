@@ -6,7 +6,7 @@
 /*   By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 11:52:17 by slahlou           #+#    #+#             */
-/*   Updated: 2022/08/02 11:00:32 by slahlou          ###   ########.fr       */
+/*   Updated: 2022/08/02 12:49:46 by slahlou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,7 @@ int	__los_bambinos_del_imperator(t_data *msh_data, t_splcmd *parser, int *fds)
 
 	pid = fork();
 	if (pid < 0)
-	{
-		perror("Forking error"); //adding ultmiate free to exit correctly
-		exit (errno);
-	}
+		__ultimate_free(msh_data, 0, 0);
 	else if (!pid)
 	{
 		dup2(fds[0], 0);
@@ -30,10 +27,7 @@ int	__los_bambinos_del_imperator(t_data *msh_data, t_splcmd *parser, int *fds)
 		dup2(fds[3], 1);
 		close(fds[3]);
 		if (execve(*(parser->cmd.cmd_words), parser->cmd.cmd_words, msh_data->env) < 0)
-		{
-			perror("Execve function: error encountered");
-			exit(errno);		//adding ultmiate free to exit correctly
-		}
+			__ultimate_free(msh_data, 0, 1); //a changer en fonction de l erreur;
 	}
 	close(fds[1]);
 	close(fds[0]);
