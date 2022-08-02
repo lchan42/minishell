@@ -6,7 +6,7 @@
 /*   By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 17:13:14 by lchan             #+#    #+#             */
-/*   Updated: 2022/08/02 12:44:00 by slahlou          ###   ########.fr       */
+/*   Updated: 2022/08/02 15:09:35 by slahlou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,22 +78,22 @@ int	main (int ac, char **av, char **envp) //simulation of what should minishell 
 	t_data			msh_data;
 //	char			*usr_input;
 	__set_msh_data(&msh_data, envp);
-	//while (1)
-	//{
+	while (1)
+	{
 		msh_data.user_input = ft_readline_add_history(FIRST_PROMPT);
 		msh_data.lexer = lexer(msh_data.user_input);
 		msh_data.parser = __parser(msh_data.lexer);
 		msh_data.parser = __expand(msh_data.parser, msh_data.env);
 		__el_imperator(&msh_data, msh_data.parser);
-		// 	//ultimate_free
+ 		//__visual_print_splcmd(msh_data.parser, msh_data.lexer);
+		__ultimate_free(&msh_data, 3, 0);
+	}
 		__ultimate_free(&msh_data, 0, 0);
-
 
 
 
 	// 	if (msh_data.parser)
 	// 	{
-	// 		__visual_print_splcmd(msh_data.parser, msh_data.lexer);
 	// 		__free_parse(&(msh_data.parser));
 	// 	}
 	// 	if (msh_data.lexer)

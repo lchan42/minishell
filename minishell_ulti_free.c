@@ -6,7 +6,7 @@
 /*   By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/02 11:50:54 by slahlou           #+#    #+#             */
-/*   Updated: 2022/08/02 12:47:43 by slahlou          ###   ########.fr       */
+/*   Updated: 2022/08/02 15:10:26 by slahlou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	__free_u_status(t_data *msh_data)
 	ft_free_char(&(msh_data->last_status));
 }
 
-void	__ultimate_free(t_data *msh_data, int exit_opt, int bambinos)
+void	__ultimate_free(t_data *msh_data, int free_opt, int bambinos)
 {
 	void	(*__u_free_funk[T_DATA_SIZE])(t_data *msh_data);
 
@@ -73,32 +73,11 @@ void	__ultimate_free(t_data *msh_data, int exit_opt, int bambinos)
 	__u_free_funk[4] = &__free_u_lexer;
 	__u_free_funk[5] = &__free_u_parse;
 	__u_free_funk[6] = &__free_u_fds;
-	while (exit_opt < T_DATA_SIZE)
+	while (free_opt < T_DATA_SIZE)
 	{
-		(__u_free_funk[exit_opt])(msh_data);
-		exit_opt++;
+		(__u_free_funk[free_opt])(msh_data);
+		free_opt++;
 	}
 	if (bambinos > 0)
 		exit(bambinos);
 }
-
-
-
-
-
-
-
-	// if (msh_data->user_input)
-	// 	__free_u_user_input(msh_data);
-	// if (msh_data->lexer)
-	// 	__free_u_lexer(msh_data);
-	// if (msh_data->parser)
-	// 	__free_u_parse(msh_data);
-	// if (msh_data->fds)
-	// 	__free_u_fds(msh_data);
-	// if (msh_data->env)
-	// 	__free_u_env(msh_data);
-	// if (msh_data->expt)
-	// 	__free_u_expt(msh_data);
-	// if (msh_data->last_status)
-	// 	__free_u_status(msh_data);
