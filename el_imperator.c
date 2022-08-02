@@ -6,7 +6,7 @@
 /*   By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 11:52:17 by slahlou           #+#    #+#             */
-/*   Updated: 2022/08/01 21:06:46 by slahlou          ###   ########.fr       */
+/*   Updated: 2022/08/02 10:33:52 by slahlou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,14 @@ int	__los_bambinos_del_imperator(t_data *msh_data, t_splcmd *parser, int *fds)
 {
 	int	pid;
 
-	close(fds[1]);
 	pid = fork();
-	if (pid)
-		printf("pid = %d\n", pid);
-	else
-	{
-		printf("coucou je suis le parent printf\n");
-		fprintf(stderr, "-----------> coucou je suis le parent\n");
-	}
+	// if (pid)
+	// 	printf("pid = %d\n", pid);
+	// else
+	// {
+	// 	printf("coucou je suis le parent printf\n");
+	// 	fprintf(stderr, "-----------> coucou je suis le parent\n");
+	// }
 	if (pid < 0)
 	{
 		perror("Forking error"); //adding ultmiate free to exit correctly
@@ -43,7 +42,8 @@ int	__los_bambinos_del_imperator(t_data *msh_data, t_splcmd *parser, int *fds)
 			exit(errno);		//adding ultmiate free to exit correctly
 		}
 	}
-
+	close(fds[1]);
+	close(fds[0]);
 	return (pid);
 }
 
@@ -62,9 +62,7 @@ void	__imperial_dup_fds(t_splcmd *parser, int *fds, int fd_i)
 		close(parser->out.fd);
 	}
 	if (!parser->out.fd)
-	{
 		dup2(1, fds[fd_i + 3]);
-	}
 
 }
 
@@ -147,8 +145,8 @@ int	__el_imperator(t_data *msh_data, t_splcmd *parser)
 		__imperial_redirect(parser, msh_data->fds, *(msh_data->fds - 1), fd_i);
 		// if (__imperial_redirect(parser->in, parser->out, fds, nb_pipe))
 		pid = __los_bambinos_del_imperator(msh_data, parser, ((msh_data->fds) + fd_i));
+		printf("first --------------> pid = %d\n", pid);
 		//__imperial_close(parser->stock);
-		printf("COUCOU\n");
 		parser = parser->next;
 		fd_i += 2;
 	}
@@ -156,6 +154,8 @@ int	__el_imperator(t_data *msh_data, t_splcmd *parser)
 	{
 		if (wait(&status) == pid)
 		{
+			printf("second ----------> pid = %d\n", pid);
+			printf("second ----------> status = %s\n", ft_itoa(status >> 8));
 			msh_data->last_status = ft_itoa(status >> 8);
 		}
 		fd_i -= 2;
