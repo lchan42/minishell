@@ -6,7 +6,7 @@
 /*   By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/02 11:50:54 by slahlou           #+#    #+#             */
-/*   Updated: 2022/08/02 15:10:26 by slahlou          ###   ########.fr       */
+/*   Updated: 2022/08/02 16:38:15 by slahlou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,11 @@ void	__ultimate_free(t_data *msh_data, int free_opt, int bambinos)
 		(__u_free_funk[free_opt])(msh_data);
 		free_opt++;
 	}
+
 	if (bambinos > 0)
+	{
+		if (bambinos == 127)
+			ft_putstr_fd("minishell: command not found\n", 2);
 		exit(bambinos);
+	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_visual.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lchan <lchan@student.42.fr>                +#+  +:+       +#+        */
+/*   By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/09 17:01:10 by lchan             #+#    #+#             */
-/*   Updated: 2022/08/01 11:34:57 by lchan            ###   ########.fr       */
+/*   Updated: 2022/08/02 16:41:05 by slahlou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,8 +157,7 @@ void	__visual_print_splcmd(t_splcmd *head, t_llist *lexer)
 {
 	int block_ind = 0;
 	char	*star = "*********************************************";
-
-
+	
 	while (head)
 	{
 		char **cmd_tab_tmp = head->cmd.cmd_words;

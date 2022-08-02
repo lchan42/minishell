@@ -6,7 +6,7 @@
 /*   By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 15:43:36 by lchan             #+#    #+#             */
-/*   Updated: 2022/08/02 12:43:45 by slahlou          ###   ########.fr       */
+/*   Updated: 2022/08/02 16:43:28 by slahlou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
 
 # define BUFFER_S 10000
 # define T_DATA_SIZE 7
-# define FIRST_PROMPT "test_prompt : "
+# define FIRST_PROMPT "minishell-1.0$ "
 # define LEXER_PROMPT "> "
 # define METACHAR "|<>" 		//dont need to interpreat';'
 # define LOG_META "|&"

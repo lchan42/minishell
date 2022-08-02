@@ -6,7 +6,7 @@
 /*   By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 11:52:17 by slahlou           #+#    #+#             */
-/*   Updated: 2022/08/02 15:05:46 by slahlou          ###   ########.fr       */
+/*   Updated: 2022/08/02 16:40:23 by slahlou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,27 +48,38 @@ void	__join_path(char **env, t_cmd *cmd)
 	i = 0;
 	tmp_path = __get_expand("PATH", 4, env);
 	if (!tmp_path)
-	{
-		printf("no path -------------------------------------");
 		return ;
-	}
 	path_split = ft_split(tmp_path, ':');
 	while (*(path_split + i))
 	{
 		__cat_cmd_to_path(buf, *(path_split + i), *(cmd->cmd_words));
 		access_ret = access(buf, X_OK);
-		if ((access_ret) == 0)// || !*(path_split + i))
+		if ((access_ret) == 0)
 			break ;
 		i++;
 	}
 	if (access_ret == 0)
 	{
+		errno = 0;
 		free(*(cmd->cmd_words));
 		*(cmd->cmd_words) = ft_strdup(buf);
 	}
 	ft_free_strtab(path_split);
-	//printf("*(cmd->cmd_words) = %s\n", *(cmd->cmd_words));
-	//exit(1);
+}
+
+void	__imperial_bambino(t_data *msh_data, t_splcmd *parser, int *fds)
+{
+	dup2(fds[0], 0);
+	close(fds[0]);
+	close(fds[1]);
+	dup2(fds[3], 1);
+	close(fds[3]);
+	if (errno == 2)
+		__ultimate_free(msh_data, 0, 1);
+	__join_path(msh_data->env, &(parser->cmd));
+	if (execve(*(parser->cmd.cmd_words), parser->cmd.cmd_words, msh_data->env) < 0)
+		__ultimate_free(msh_data, 0, 127);
+
 }
 
 int	__los_bambinos_del_imperator(t_data *msh_data, t_splcmd *parser, int *fds)
@@ -79,16 +90,7 @@ int	__los_bambinos_del_imperator(t_data *msh_data, t_splcmd *parser, int *fds)
 	if (pid < 0)
 		__ultimate_free(msh_data, 0, 0);
 	else if (!pid)
-	{
-		dup2(fds[0], 0);
-		close(fds[0]);
-		close(fds[1]);
-		dup2(fds[3], 1);
-		close(fds[3]);
-		__join_path(msh_data->env, &(parser->cmd));
-		if (execve(*(parser->cmd.cmd_words), parser->cmd.cmd_words, msh_data->env) < 0)
-			__ultimate_free(msh_data, 0, 1); //a changer en fonction de l erreur;
-	}
+		__imperial_bambino(msh_data, parser, fds);
 	close(fds[1]);
 	close(fds[0]);
 	return (pid);
@@ -187,14 +189,10 @@ int	__el_imperator(t_data *msh_data, t_splcmd *parser)
 	while (parser)
 	{
 		__imperial_redirect(parser, msh_data->fds, fd_i);
-		// if (__imperial_redirect(parser->in, parser->out, fds, nb_pipe))
 		pid = __los_bambinos_del_imperator(msh_data, parser, ((msh_data->fds) + fd_i));
-		printf("first --------------> pid = %d\n", pid);
-		//__imperial_close(parser->stock);
 		parser = parser->next;
 		fd_i += 2;
 	}
 	msh_data->last_status = __imperial_wait(pid, fd_i, msh_data->last_status);
-	printf("msh_data->last_status = %s\n", msh_data->last_status);
 	return (0);
 }

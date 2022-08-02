@@ -6,7 +6,7 @@
 /*   By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 17:13:14 by lchan             #+#    #+#             */
-/*   Updated: 2022/08/02 15:09:35 by slahlou          ###   ########.fr       */
+/*   Updated: 2022/08/02 16:45:51 by slahlou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	__init_msh(t_data *msh_data)
 {
+	errno = 0;
 	msh_data->log_fd = 0;
 	msh_data->fds = NULL;
 	msh_data->last_status = NULL;
@@ -46,13 +47,6 @@ void __set_msh_data(t_data *msh_data, char **envp)
 		*env = NULL;
 	}
 	msh_data->env = env - envp_size;
-	// --(msh_data->env);
-	// printf("ICI %d %d\n", (short)**((msh_data->env)), (short)*(*((msh_data->env)) + 1));
-	// while (*(msh_data->env))
-	// {
-	// 	printf("%s\n", *((msh_data->env)++));
-	// 	//printf("coucou\n");
-	// }
 }
 
 char	*ft_readline_add_history(char *prompt)
@@ -70,13 +64,13 @@ char	*ft_readline_add_history(char *prompt)
 	return (usr_input);
 }
 
-int	main (int ac, char **av, char **envp) //simulation of what should minishell main look like
+int	main (int ac, char **av, char **envp)
 {
 	(void) ac;
 	(void) av;
 	(void) envp;
 	t_data			msh_data;
-//	char			*usr_input;
+
 	__set_msh_data(&msh_data, envp);
 	while (1)
 	{
@@ -85,45 +79,13 @@ int	main (int ac, char **av, char **envp) //simulation of what should minishell 
 		msh_data.parser = __parser(msh_data.lexer);
 		msh_data.parser = __expand(msh_data.parser, msh_data.env);
 		__el_imperator(&msh_data, msh_data.parser);
- 		//__visual_print_splcmd(msh_data.parser, msh_data.lexer);
 		__ultimate_free(&msh_data, 3, 0);
 	}
-		__ultimate_free(&msh_data, 0, 0);
-
-
-
-	// 	if (msh_data.parser)
-	// 	{
-	// 		__free_parse(&(msh_data.parser));
-	// 	}
-	// 	if (msh_data.lexer)
-	// 	{
-	// 		//__visual_print_lexer(msh_data.lexer_data->lexer);
-	// 		//__visual_print_read_lst(msh_data.lexer_data->read_lst);
-	// 		lexer_free(&msh_data.lexer);
-	// 	}
-
-	// 	if (msh_data.user_input)
-	// 		ft_free_char(&msh_data.user_input);
-	// //}
-	// if (msh_data.env)
-	// 	ft_free_strtab((msh_data.env) - 1);
-	// if (msh_data.fds)
-	// {
-	// 	int	fds_open;
-
-	// 	printf("fds* address = %p\n", msh_data.fds);
-	// 	(msh_data.fds)--;
-	// 	fds_open = *(msh_data.fds);
-	// 	printf("fds_open = %d\n", fds_open);
-	// 	while (fds_open)
-	// 		close(msh_data.fds[fds_open--]);
-	// 	free(msh_data.fds);
-	// 	msh_data.fds = NULL;
-	// 	if (msh_data.last_status)
-	// 		ft_free_char(&(msh_data.last_status));
-	// }
+	__ultimate_free(&msh_data, 0, 0);
 }
+/****************** visual ******************/
+ 		//__visual_print_splcmd(msh_data.parser, msh_data.lexer);
+		//printf("msh_data->last_status = %s\n", msh_data.last_status);
 
 //<$USER >$_ <infile >$""USER cmd1 cmd2$USER | $$"|"   "|"       $'"USER"' $"'$USER'" | cat -eaf -qwe $USER
 
