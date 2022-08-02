@@ -6,7 +6,7 @@
 /*   By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 17:13:14 by lchan             #+#    #+#             */
-/*   Updated: 2022/08/02 10:12:26 by slahlou          ###   ########.fr       */
+/*   Updated: 2022/08/02 11:08:08 by slahlou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 void	__init_msh(t_data *msh_data)
 {
 	msh_data->log_fd = 0;
+	msh_data->fds = NULL;
+	msh_data->last_status = NULL;
 	msh_data->env = NULL;
 	msh_data->expt = NULL;
 	msh_data->user_input = NULL;
@@ -75,7 +77,6 @@ int	main (int ac, char **av, char **envp) //simulation of what should minishell 
 	(void) envp;
 	t_data			msh_data;
 //	char			*usr_input;
-	msh_data.fds = NULL;
 	__set_msh_data(&msh_data, envp);
 	//while (1)
 	//{
@@ -114,6 +115,8 @@ int	main (int ac, char **av, char **envp) //simulation of what should minishell 
 			close(msh_data.fds[fds_open--]);
 		free(msh_data.fds);
 		msh_data.fds = NULL;
+		if (msh_data.last_status)
+			ft_free_char(&(msh_data.last_status));
 	}
 }
 

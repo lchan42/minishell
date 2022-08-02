@@ -6,7 +6,7 @@
 /*   By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 11:52:17 by slahlou           #+#    #+#             */
-/*   Updated: 2022/08/02 10:33:52 by slahlou          ###   ########.fr       */
+/*   Updated: 2022/08/02 11:00:32 by slahlou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,6 @@ int	__los_bambinos_del_imperator(t_data *msh_data, t_splcmd *parser, int *fds)
 	int	pid;
 
 	pid = fork();
-	// if (pid)
-	// 	printf("pid = %d\n", pid);
-	// else
-	// {
-	// 	printf("coucou je suis le parent printf\n");
-	// 	fprintf(stderr, "-----------> coucou je suis le parent\n");
-	// }
 	if (pid < 0)
 	{
 		perror("Forking error"); //adding ultmiate free to exit correctly
@@ -49,46 +42,25 @@ int	__los_bambinos_del_imperator(t_data *msh_data, t_splcmd *parser, int *fds)
 
 void	__imperial_dup_fds(t_splcmd *parser, int *fds, int fd_i)
 {
-
 	if (parser->in.fd > 0 && parser->in.type != HERE_D)
 	{
 		dup2(parser->in.fd, fds[fd_i]);
 		close(parser->in.fd);
 	}
-	if (parser->out.fd && parser->out.fd != 1)
-	{
-		dup2(parser->out.fd, fds[fd_i + 3]);
-		printf("OUT --> outfile %d has been dup on fds[%d] = %d\n", parser->out.fd, fd_i + 3, fds[fd_i + 3]);
-		close(parser->out.fd);
-	}
 	if (!parser->out.fd)
 		dup2(1, fds[fd_i + 3]);
-
+	else if (parser->out.fd != 1)
+	{
+		dup2(parser->out.fd, fds[fd_i + 3]);
+		close(parser->out.fd);
+	}
 }
 
-int	__imperial_redirect(t_splcmd *parser, int *fds, int nb_pipe, int fd_i)
+int	__imperial_redirect(t_splcmd *parser, int *fds, int fd_i)
 {
-	(void) fds;
-	(void) nb_pipe;
-
-	// int		ret;
-	// char		buf[2];
-
-	// if (__imperial_open_files(parser, &(parser->in.fd), &(parser->out.fd)))
-	//{
-	//	here_doc;
-	// 	dup_fds;
-	//}
 	__imperial_open_files(parser, &(parser->in.fd), &(parser->out.fd));
 	__imperial_open_heredoc(&(parser->in), fds);
 	__imperial_dup_fds(parser, fds, fd_i);
-
-	// printf("pipe heredoc = \n");
-	// while ((ret = read(fds[0], buf, 1)))
-	// {
-	// 	buf[ret] = '\0';
-	// 	printf("%s", buf);
-	// }
 	return (0);
 }
 
@@ -115,7 +87,6 @@ int	*__pipe_army(t_splcmd *parser)
 	pipe_army = ft_calloc(sizeof(int), nb_pipe + 1);
 	if (pipe_army)
 	{
-		printf("nbr pipe = %d\n", nb_pipe);
 		pipe_army[0] = nb_pipe;
 		pipe_army++;
 		i = 0;
@@ -130,11 +101,24 @@ int	*__pipe_army(t_splcmd *parser)
 	return (pipe_army);
 }
 
+char	*__imperial_wait(int pid, int fd_i)
+{
+	int		status;
+	char	*ret;
+
+	while (fd_i >= 0)
+	{
+		if (wait(&status) == pid)
+			ret = ft_itoa(status >> 8);
+		fd_i -= 2;
+	}
+	return (ret);
+}
+
 int	__el_imperator(t_data *msh_data, t_splcmd *parser)
 {
 	int	fd_i;
 	int	pid;
-	int	status;
 
 	msh_data->fds = __pipe_army(parser);
 	if (!msh_data->fds)
@@ -142,7 +126,7 @@ int	__el_imperator(t_data *msh_data, t_splcmd *parser)
 	fd_i = 0;
 	while (parser)
 	{
-		__imperial_redirect(parser, msh_data->fds, *(msh_data->fds - 1), fd_i);
+		__imperial_redirect(parser, msh_data->fds, fd_i);
 		// if (__imperial_redirect(parser->in, parser->out, fds, nb_pipe))
 		pid = __los_bambinos_del_imperator(msh_data, parser, ((msh_data->fds) + fd_i));
 		printf("first --------------> pid = %d\n", pid);
@@ -150,15 +134,7 @@ int	__el_imperator(t_data *msh_data, t_splcmd *parser)
 		parser = parser->next;
 		fd_i += 2;
 	}
-	while (fd_i >= 0)
-	{
-		if (wait(&status) == pid)
-		{
-			printf("second ----------> pid = %d\n", pid);
-			printf("second ----------> status = %s\n", ft_itoa(status >> 8));
-			msh_data->last_status = ft_itoa(status >> 8);
-		}
-		fd_i -= 2;
-	}
-	return (0); // to change after test
+	msh_data->last_status = __imperial_wait(pid, fd_i);
+	printf("msh_data->last_status = %s\n", msh_data->last_status);
+	return (0);
 }
