@@ -6,7 +6,7 @@
 /*   By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/02 11:50:54 by slahlou           #+#    #+#             */
-/*   Updated: 2022/08/02 19:54:35 by slahlou          ###   ########.fr       */
+/*   Updated: 2022/08/03 12:07:53 by slahlou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,15 @@ void	__free_u_fds(t_data	*msh_data)
 	int	fds_size;
 	int	*tmp_fds;
 
-	tmp_fds = (msh_data->fds) - 1;
-	fds_size = *tmp_fds;
-	while (fds_size)
-		close(tmp_fds[fds_size--]);
-	free(tmp_fds);
-	msh_data->fds = NULL;
+	if (msh_data->fds)
+	{
+		tmp_fds = (msh_data->fds) - 1;
+		fds_size = *tmp_fds;
+		while (fds_size)
+			close(tmp_fds[fds_size--]);
+		free(tmp_fds);
+		msh_data->fds = NULL;
+	}
 }
 
 void	__free_u_env(t_data *msh_data)

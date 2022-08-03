@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_io_save.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lchan <lchan@student.42.fr>                +#+  +:+       +#+        */
+/*   By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/20 15:55:50 by slahlou           #+#    #+#             */
-/*   Updated: 2022/08/01 11:31:58 by lchan            ###   ########.fr       */
+/*   Updated: 2022/08/03 12:36:31 by slahlou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,22 +46,27 @@ static void	__here_d_parse_lim(t_io *io)
 
 static void	__save_here_d(t_io *io)
 {
-	char	*limit;
+	//char	*limit;					if problem, remettre limit (magie noir ... )
 	char	buf[BUFFER_S];
 	int		read_ret;
 
 	if (io->here_buffer)
 		__t_list_free(&(io->here_buffer));
 	__here_d_parse_lim(io);
-	limit = io->arg;
+	//limit = io->arg;
 	read_ret = 1;
 	while (read_ret)
 	{
 		write(1, "> ", 2);
 		read_ret = read(0, buf, BUFFER_S);
+		if (read_ret == 0)
+		{
+			printf("minishell: warning: here-document delimited by end-of-file (wanted `%s')\n", io->arg);
+			break ;
+		}
 		buf[read_ret - 1] = '\0';
 		buf[read_ret] = '\0';
-		if (!(ft_strncmp(buf, limit, read_ret)))
+		if (!(ft_strncmp(buf, io->arg, read_ret)))
 			break ;
 		buf[read_ret - 1] = '\n';
 		ft_lstadd_back(&(io->here_buffer), ft_lstnew(ft_strdup(buf)));

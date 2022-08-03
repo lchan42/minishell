@@ -6,7 +6,7 @@
 /*   By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 17:13:14 by lchan             #+#    #+#             */
-/*   Updated: 2022/08/03 11:29:58 by slahlou          ###   ########.fr       */
+/*   Updated: 2022/08/03 12:09:14 by slahlou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void __set_msh_data(t_data *msh_data, char **envp)
 	msh_data->env = env - envp_size;
 }
 
-char	*ft_readline_add_history(char *prompt)
+char	*__readline_add_history(t_data *msh_data, char *prompt)
 {
 	char	*usr_input;
 
@@ -63,7 +63,12 @@ char	*ft_readline_add_history(char *prompt)
 	while (!usr_input)
 	{
 		usr_input = readline(prompt);
-		if (!*usr_input)
+		if (!usr_input)
+		{
+			write(1, "\n", 1);
+			__ultimate_free(msh_data, 0, 1);
+		}
+		else if (!*usr_input)
 			ft_free_char(&usr_input);
 	}
 	add_history(usr_input);
@@ -80,7 +85,7 @@ int	main (int ac, char **av, char **envp)
 	__set_msh_data(&msh_data, envp);
 	while (1)
 	{
-		msh_data.user_input = ft_readline_add_history(FIRST_PROMPT);
+		msh_data.user_input = __readline_add_history(&msh_data, FIRST_PROMPT);
 		msh_data.lexer = lexer(msh_data.user_input);
 		msh_data.parser = __parser(msh_data.lexer);
 		msh_data.parser = __expand(msh_data.parser, msh_data.env);
