@@ -6,7 +6,7 @@
 /*   By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 11:52:17 by slahlou           #+#    #+#             */
-/*   Updated: 2022/08/03 11:40:28 by slahlou          ###   ########.fr       */
+/*   Updated: 2022/08/03 15:57:24 by slahlou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,10 +118,15 @@ int	__los_bambinos_del_imperator(t_data *msh_data, t_splcmd *parser, int *fds)
 	int	pid;
 
 	pid = fork();
+	if (pid > 0)
+		signal(SIGINT, SIG_IGN);
 	if (pid < 0)
 		__ultimate_free(msh_data, 0, 0);
 	else if (!pid)
+	{
+		signal(SIGINT, SIG_DFL);
 		__imperial_bambino(msh_data, parser, fds);
+	}
 	close(fds[1]);
 	close(fds[0]);
 	return (pid);
@@ -209,6 +214,7 @@ char	*__imperial_wait(int pid, int fd_i, char *old_status)
 		}
 		fd_i -= 2;
 	}
+	signal(SIGINT, &__signal_handler);
 	return (ret);
 }
 
@@ -217,6 +223,8 @@ int	__el_imperator(t_data *msh_data, t_splcmd *parser)
 	int	fd_i;
 	int	pid;
 
+	if (!parser)
+		return (0);
 	msh_data->fds = __pipe_army(parser);
 	if (!msh_data->fds)
 		return (0); // check for returning error

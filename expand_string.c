@@ -6,7 +6,7 @@
 /*   By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 10:56:55 by lchan             #+#    #+#             */
-/*   Updated: 2022/08/03 11:03:53 by slahlou          ###   ########.fr       */
+/*   Updated: 2022/08/03 15:33:55 by slahlou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ char	*__get_expand(char *start, int len, char **env)
 
 	while (*env)
 	{
-		tmp = ft_strlen(*env);
+		tmp = ft_strlen_p(*env);
 		if (tmp >= len && *(*env + len) == '=' && !ft_strncmp(start, *env, len))
 			return (*env + len + 1);
 		env++;

@@ -6,7 +6,7 @@
 /*   By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 17:13:14 by lchan             #+#    #+#             */
-/*   Updated: 2022/08/03 12:09:14 by slahlou          ###   ########.fr       */
+/*   Updated: 2022/08/03 16:03:28 by slahlou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,20 @@ char	*__readline_add_history(t_data *msh_data, char *prompt)
 	return (usr_input);
 }
 
+// typedef void (*sighandler_t)(int);
+
+// sighandler_t signal(int signum, sighandler_t handler);
+void	__signal_handler(int sig)
+{
+	if (sig == SIGINT)
+	{
+		write(1, "\n", 1);
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
+	}
+}
+
 int	main (int ac, char **av, char **envp)
 {
 	(void) ac;
@@ -82,6 +96,7 @@ int	main (int ac, char **av, char **envp)
 	(void) envp;
 	t_data			msh_data;
 
+	signal(SIGINT, &__signal_handler);
 	__set_msh_data(&msh_data, envp);
 	while (1)
 	{
