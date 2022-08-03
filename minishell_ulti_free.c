@@ -6,7 +6,7 @@
 /*   By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/02 11:50:54 by slahlou           #+#    #+#             */
-/*   Updated: 2022/08/02 16:38:15 by slahlou          ###   ########.fr       */
+/*   Updated: 2022/08/02 19:54:35 by slahlou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,9 @@ void	__free_u_expt(t_data *msh_data)
 
 void	__free_u_status(t_data *msh_data)
 {
-	ft_free_char(&(msh_data->last_status));
+	(void) msh_data;
+	//ft_free_char(&(msh_data->last_status));
+	return ;
 }
 
 void	__ultimate_free(t_data *msh_data, int free_opt, int bambinos)

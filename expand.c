@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lchan <lchan@student.42.fr>                +#+  +:+       +#+        */
+/*   By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/23 11:12:12 by slahlou           #+#    #+#             */
-/*   Updated: 2022/08/01 11:20:10 by lchan            ###   ########.fr       */
+/*   Updated: 2022/08/02 19:57:38 by slahlou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ char	*__expand_string_bis(
 	tmp_start = *start - *str;
 	end = ++(*start);
 	if (!ft_isdigit(*end))
-		while (*end && (ft_isalnum(*end) || *end == '_'))
+		while (*end && (ft_isalnum(*end) || *end == '_' || *end == '?'))
 			end++;
 	else
 		end++;

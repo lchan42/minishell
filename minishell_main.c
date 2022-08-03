@@ -6,7 +6,7 @@
 /*   By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 17:13:14 by lchan             #+#    #+#             */
-/*   Updated: 2022/08/02 18:33:42 by slahlou          ###   ########.fr       */
+/*   Updated: 2022/08/03 11:29:58 by slahlou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	__init_msh(t_data *msh_data)
 	errno = 0;
 	msh_data->log_fd = 0;
 	msh_data->fds = NULL;
-	msh_data->last_status = NULL;
+	//msh_data->last_status = ft_strdup("0");
 	msh_data->env = NULL;
 	msh_data->expt = NULL;
 	msh_data->user_input = NULL;
@@ -31,7 +31,7 @@ void __set_msh_data(t_data *msh_data, char **envp)
 	char **env;
 
 	__init_msh(msh_data);
-	envp_size = ft_strtablen(envp);
+	envp_size = (ft_strtablen(envp) + 1);
 	env = ft_calloc(sizeof(char *), envp_size + 2);
 	if (env)
 	{
@@ -42,11 +42,13 @@ void __set_msh_data(t_data *msh_data, char **envp)
 			*(*(env + 0) + 1) |= envp_size >> 8;
 		}
 		env++;
+		*(env) = ft_strdup("?=0");
+		env++;
 		while(*envp)
 		{
-			//if (ft_strncmp("SHLVL=", *envp, 6) == 0)
-			//	printf("%s\n", *envp);
-			*(env++) = ft_strdup(*(envp++));
+			*(env) = ft_strdup(*(envp));
+			env++;
+			envp++;
 		}
 		*env = NULL;
 	}

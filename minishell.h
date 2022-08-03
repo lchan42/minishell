@@ -6,7 +6,7 @@
 /*   By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 15:43:36 by lchan             #+#    #+#             */
-/*   Updated: 2022/08/02 16:43:28 by slahlou          ###   ########.fr       */
+/*   Updated: 2022/08/03 11:21:15 by slahlou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,7 +167,7 @@ typedef struct s_data
 {
 	int				log_fd; //journal d erreur
 
-	char			*last_status;
+	//char			*last_status;
 	char			**env;
 	char			**expt;
 

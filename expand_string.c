@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_string.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lchan <lchan@student.42.fr>                +#+  +:+       +#+        */
+/*   By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 10:56:55 by lchan             #+#    #+#             */
-/*   Updated: 2022/08/01 11:20:34 by lchan            ###   ########.fr       */
+/*   Updated: 2022/08/03 11:03:53 by slahlou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ char	*__is_expandable(char *str, char *quote_flag)
 	if ((*quote_flag) == 0 || (*quote_flag) == '\"')
 		(*quote_flag) ^= (*str == '\"') * '\"';
 	if (*str == '$'
-		&& (ft_isalnum((*(str + 1))) || ft_strchr_b("_\"\'", *(str + 1)))
+		&& (ft_isalnum((*(str + 1))) || ft_strchr_b("_\"\'?", *(str + 1)))
 		&& *(str + 1) && (*quote_flag) != '\'')
 	{
 		if (!(*(str + 1) == (*quote_flag)))
@@ -92,9 +92,12 @@ char	*__is_expandable(char *str, char *quote_flag)
 
 char	*__get_expand(char *start, int len, char **env)
 {
+	int	tmp;
+
 	while (*env)
 	{
-		if (*(*env + len) == '=' && !ft_strncmp(start, *env, len))
+		tmp = ft_strlen(*env);
+		if (tmp >= len && *(*env + len) == '=' && !ft_strncmp(start, *env, len))
 			return (*env + len + 1);
 		env++;
 	}

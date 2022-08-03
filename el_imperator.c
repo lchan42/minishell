@@ -6,7 +6,7 @@
 /*   By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 11:52:17 by slahlou           #+#    #+#             */
-/*   Updated: 2022/08/02 18:51:42 by slahlou          ###   ########.fr       */
+/*   Updated: 2022/08/03 11:40:28 by slahlou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	__join_path(char **env, t_cmd *cmd)
 	int		access_ret;
 
 	i = 0;
-	tmp_path = __get_expand("PATH", 4, env);
+	tmp_path = __get_expand("PATH=", 4, env);
 	if (!tmp_path)
 		return ;
 	path_split = ft_split(tmp_path, ':');
@@ -92,6 +92,7 @@ void	__bambino_set_shlvl(char **env)
 			buf[i++] = itoa_shlvl[j++];
 	buf[i] = '\0';
 	free(itoa_shlvl);
+	free(*env);
 	*env = ft_strdup(buf);
 }
 
@@ -105,9 +106,9 @@ void	__imperial_bambino(t_data *msh_data, t_splcmd *parser, int *fds)
 	if (errno == 2)
 		__ultimate_free(msh_data, 0, 1);
 	__join_path(msh_data->env, &(parser->cmd));
-	if (msh_data->env)
-		__bambino_set_shlvl(msh_data->env);
-	if (execve(*(parser->cmd.cmd_words), parser->cmd.cmd_words, msh_data->env) < 0)
+	//if (msh_data->env)
+	//	__bambino_set_shlvl(msh_data->env);
+	if (execve(*(parser->cmd.cmd_words), parser->cmd.cmd_words, msh_data->env + 1) < 0)
 		__ultimate_free(msh_data, 0, 127);
 
 }
@@ -193,6 +194,7 @@ char	*__imperial_wait(int pid, int fd_i, char *old_status)
 {
 	int		status;
 	char	*ret;
+	char	*tmp;
 
 	while (fd_i >= 0)
 	{
@@ -201,6 +203,9 @@ char	*__imperial_wait(int pid, int fd_i, char *old_status)
 			if (old_status)
 				free(old_status);
 			ret = ft_itoa(status >> 8);
+			tmp = ret;
+			ret = ft_strjoin("?=", ret);
+			free(tmp);
 		}
 		fd_i -= 2;
 	}
@@ -223,6 +228,6 @@ int	__el_imperator(t_data *msh_data, t_splcmd *parser)
 		parser = parser->next;
 		fd_i += 2;
 	}
-	msh_data->last_status = __imperial_wait(pid, fd_i, msh_data->last_status);
+	*(msh_data->env) = __imperial_wait(pid, fd_i, *(msh_data->env));
 	return (0);
 }
