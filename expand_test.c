@@ -151,20 +151,5 @@ int main (void)
 	// char *tab[] = {
 	// 	"wererwer"
 	// };
-
-	int fd = open("./test_files/file11111111111", O_RDONLY, 0777);
-	if (errno)
-	{
-		errno = 1;
-		printf("errno = %d \n", errno);
-		perror("error");
-	}
-	if (fd <0)
-	{
-		printf("echec ouverture\n");
-		return (0);
-	}
-	int test = access("./test_files/file1", R_OK);
-	printf("test = %d\n", test);
-	perror("access");
+	printf("EOF = %d\n", EOF);
 }

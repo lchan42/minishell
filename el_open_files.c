@@ -6,7 +6,7 @@
 /*   By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 12:28:15 by lchan             #+#    #+#             */
-/*   Updated: 2022/08/02 16:22:00 by slahlou          ###   ########.fr       */
+/*   Updated: 2022/08/03 18:11:16 by slahlou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,17 +43,11 @@ static void	__closeif_useless (t_list *stock, int fd_type, int in_fd, int out_fd
 		if (fd_type == fd_type_tmp)
 		{
 			if (fd_type == 1)
-			{
-				printf("closing out_fd = %d\n", in_fd);
 				if (close (out_fd) == -1)
 					perror("Minishell close");
-			}
 			if (fd_type == 2)
-			{
-				printf("closing in_fd = %d\n", in_fd);
 				if (close (in_fd))
 					perror("Minishell close");
-			}
 			return ;
 		}
 		stock = stock->next;

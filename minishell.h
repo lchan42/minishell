@@ -6,7 +6,7 @@
 /*   By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 15:43:36 by lchan             #+#    #+#             */
-/*   Updated: 2022/08/03 16:47:02 by slahlou          ###   ########.fr       */
+/*   Updated: 2022/08/03 18:09:24 by slahlou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@
 # include <signal.h>
 
 # define BUFFER_S 100000
-# define T_DATA_SIZE 7
+# define T_DATA_SIZE 8
+# define T_DATA_HALF 4
 # define FIRST_PROMPT "minishell-1.0$ "
 # define LEXER_PROMPT "> "
 # define METACHAR "|<>" 		//dont need to interpreat';'
@@ -51,7 +52,6 @@
 
 //recode function strtok_r
 // ast tree node type ; https://github.com/vorpaljs/bash-parser/blob/master/documents/ast.md
-
 
 //char *readline (const char *prompt); (need to be compile with the flag -lreadline)
 // rl_clear_history, rl_on_new_line, rl_replace_line, rl_redisplay, add_history,
@@ -228,7 +228,7 @@ void		__free_parse(t_splcmd **head);
 /*********** signal ************/
 void	__signal_handler(int sig);
 void	__signal_handler2(int sig);
-
+void	__signal_handler3(int sig);
 
 
 

@@ -6,7 +6,7 @@
 /*   By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 17:13:14 by lchan             #+#    #+#             */
-/*   Updated: 2022/08/03 16:44:26 by slahlou          ###   ########.fr       */
+/*   Updated: 2022/08/03 18:20:15 by slahlou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,8 @@ char	*__readline_add_history(t_data *msh_data, char *prompt)
 // typedef void (*sighandler_t)(int);
 
 // sighandler_t signal(int signum, sighandler_t handler);
+
+
 void	__signal_handler2(int sig)
 {
 	if (sig == SIGINT)
@@ -147,3 +149,28 @@ int	main (int ac, char **av, char **envp)
 
 
 //wdljfskv;.`1@;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;.wE/
+//valgrind --trace-children=yes --track-fds=yes --suppressions=sup_rl_error ./minishell < /dev/urandom
+//valgrind --trace-children=yes --track-fds=yes --suppressions=sup_rl_error --show-leak-kinds=all ./minishell < /dev/urandom
+
+// {
+//    ignore_libreadline
+//    Memcheck:Leak
+//    ...
+//   obj:/usr/lib/x86_64-linux-gnu/libreadline.so.8.0
+// }
+
+// {
+//    leak readline
+//    Memcheck:Leak
+//    match-leak-kinds: reachable
+//    ...
+//    fun:readline
+// }
+
+// {
+//    leak history
+//    Memcheck:Leak
+//    match-leak-kinds: reachable
+//    ...
+//    fun:add_history
+// }
