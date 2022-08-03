@@ -6,7 +6,7 @@
 /*   By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 11:52:17 by slahlou           #+#    #+#             */
-/*   Updated: 2022/08/03 15:57:24 by slahlou          ###   ########.fr       */
+/*   Updated: 2022/08/03 16:37:11 by slahlou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,8 +109,11 @@ void	__imperial_bambino(t_data *msh_data, t_splcmd *parser, int *fds)
 	//if (msh_data->env)
 	//	__bambino_set_shlvl(msh_data->env);
 	if (execve(*(parser->cmd.cmd_words), parser->cmd.cmd_words, msh_data->env + 1) < 0)
+	{
+		close(0);
+		close(1);
 		__ultimate_free(msh_data, 0, 127);
-
+	}
 }
 
 int	__los_bambinos_del_imperator(t_data *msh_data, t_splcmd *parser, int *fds)
@@ -119,7 +122,7 @@ int	__los_bambinos_del_imperator(t_data *msh_data, t_splcmd *parser, int *fds)
 
 	pid = fork();
 	if (pid > 0)
-		signal(SIGINT, SIG_IGN);
+		signal(SIGINT, &__signal_handler2);
 	if (pid < 0)
 		__ultimate_free(msh_data, 0, 0);
 	else if (!pid)

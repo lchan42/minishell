@@ -6,7 +6,7 @@
 /*   By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 15:43:36 by lchan             #+#    #+#             */
-/*   Updated: 2022/08/03 15:54:24 by slahlou          ###   ########.fr       */
+/*   Updated: 2022/08/03 16:47:02 by slahlou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 # include <readline/history.h>
 # include <signal.h>
 
-# define BUFFER_S 10000
+# define BUFFER_S 100000
 # define T_DATA_SIZE 7
 # define FIRST_PROMPT "minishell-1.0$ "
 # define LEXER_PROMPT "> "
@@ -227,6 +227,7 @@ void		__free_parse(t_splcmd **head);
 
 /*********** signal ************/
 void	__signal_handler(int sig);
+void	__signal_handler2(int sig);
 
 
 
