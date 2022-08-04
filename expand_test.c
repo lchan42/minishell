@@ -169,7 +169,7 @@ int	__child_fill_pipe(int *hd_pipe, char *limiter)
 		read_ret = read(0, buf, BUFFER_S);
 		if (read_ret == 0)
 		{
-			printf("minishell: warning: here-document delimited by end-of-file (wanted `%s')\n", io->arg);
+			printf("minishell: warning: here-document delimited by end-of-file (wanted `%s')\n", limiter);
 			break ;
 		}
 		buf[read_ret - 1] = '\0';
@@ -189,14 +189,13 @@ static void	__save_here_d(t_io *io)
 	int		pid;
 	char	*gnl_ret;
 
-	if (io->here_buffer)
-		__t_list_free(&(io->here_buffer));
+	//if (io->here_buffer)
+	//	__t_list_free(&(io->here_buffer));
 	//__here_d_parse_lim(io);
-	pipe(&hd_pipe);
+	pipe(hd_pipe);
 	pid = fork();
 	if (!pid)
 		__child_fill_pipe(hd_pipe, io->arg);
-	read_ret = 1;
 	close(hd_pipe[1]);
 	while (1)
 	{
@@ -222,7 +221,7 @@ int main (void)
 
 	while(test.here_buffer)
 	{
-		printf("%s", test.here_buffer);
+		printf("%s", (char *)(test.here_buffer->content));
 		test.here_buffer = test.here_buffer->next;
 	}
 	return (0);
