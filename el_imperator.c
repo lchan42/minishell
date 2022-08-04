@@ -6,7 +6,7 @@
 /*   By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 11:52:17 by slahlou           #+#    #+#             */
-/*   Updated: 2022/08/04 12:35:49 by slahlou          ###   ########.fr       */
+/*   Updated: 2022/08/04 18:58:06 by slahlou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ int	__el_imperator(t_data *msh_data, t_splcmd *parser)
 		fd_i += 2;
 	}
 	close((msh_data->fds)[fd_i + 1]);
-	*(msh_data->env) = __imperial_wait(pid, fd_i, *(msh_data->env));
+	if (!(msh_data->parser->cmd.type == CMD_OUT) && *((msh_data->fds) - 1) == 4)
+		*(msh_data->env) = __imperial_wait(pid, fd_i, *(msh_data->env));
 	return (0);
 }

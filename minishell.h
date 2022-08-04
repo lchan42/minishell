@@ -6,7 +6,7 @@
 /*   By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 15:43:36 by lchan             #+#    #+#             */
-/*   Updated: 2022/08/04 15:23:22 by slahlou          ###   ########.fr       */
+/*   Updated: 2022/08/04 18:39:05 by slahlou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,8 +133,14 @@ enum	e_parser_io_type
 
 enum	e_parser_cmd_type
 {
-	CMD_IN = 1,
 	CMD_OUT,
+	CMD_ECHO,
+	CMD_CD,
+	CMD_PWD,
+	CMD_EXP,
+	CMD_UNSET,
+	CMD_ENV,
+	CMD_EXIT,
 	CMD_ERR
 };
 
@@ -228,7 +234,8 @@ void		__signal_handler(int sig);
 void		__signal_handler2(int sig);
 void		__signal_handler3(int sig);
 
-
+/*********** builtins ************/
+void	__execve_builtin(t_data *msh_data, t_splcmd *parser, int opt);
 
 /************* visual functions ****************/
 void	__visual_print_tab(char **tab);

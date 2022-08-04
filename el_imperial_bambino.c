@@ -6,7 +6,7 @@
 /*   By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 12:26:23 by slahlou           #+#    #+#             */
-/*   Updated: 2022/08/04 16:01:04 by slahlou          ###   ########.fr       */
+/*   Updated: 2022/08/04 18:45:32 by slahlou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,22 +124,67 @@ void	__imperial_bambino(
 	}
 }
 
+int	__cmd_is_builtin(t_splcmd *parser)
+{
+	int			i;
+	char		*cmd_wds;
+	const char	*builtin_dico[] = {
+		"echo", "cd", "pwd", "export", "unset", "env", "exit", NULL};
+
+	if (parser && parser->cmd.cmd_words)
+	{
+		i = 0;
+		cmd_wds = *(parser->cmd.cmd_words);
+		while (*(builtin_dico + i))
+		{
+			if (!ft_strncmp(cmd_wds, *(builtin_dico + i), ft_strlen_p(cmd_wds)))
+			{
+				parser->cmd.type = i + 1;
+				return (1);
+			}
+			i++;
+		}
+	}
+	return (0);
+}
+
+int	__lonely_builtin(t_data *msh_data, t_splcmd *parser, int *fds, int size)
+{
+
+	if (__cmd_is_builtin(parser) && size == 4)
+	{
+		__execve_builtin(msh_data, parser, 0);
+		close(fds[0]);
+		close(fds[1]);
+		close(fds[2]);
+		close(fds[3]);
+		return (1);
+	}
+	return (0);
+}
+
+
 int	__los_bambinos_del_imperator(
 	t_data *msh_data, t_splcmd *parser, int *fds, int left_size)
 {
 	int	pid;
 
-	pid = fork();
-	if (pid > 0)
-		signal(SIGINT, &__signal_handler2);
-	if (pid < 0)
-		__ultimate_free(msh_data, 0, 0);
-	else if (!pid)
+	if (!__lonely_builtin(msh_data, msh_data->parser, msh_data->fds, *((msh_data->fds) - 1)))
 	{
-		signal(SIGINT, SIG_DFL);
-		__imperial_bambino(msh_data, parser, fds, left_size);
+			pid = fork();
+		if (pid > 0)
+			signal(SIGINT, &__signal_handler2);
+		if (pid < 0)
+			__ultimate_free(msh_data, 0, 0);
+		else if (!pid)
+		{
+			signal(SIGINT, SIG_DFL);
+			if (!parser->cmd.cmd_words)
+				parser->cmd.type = CMD_ERR;
+			__imperial_bambino(msh_data, parser, fds, left_size);
+		}
+		close(fds[1]);
+		close(fds[0]);
 	}
-	close(fds[1]);
-	close(fds[0]);
 	return (pid);
 }

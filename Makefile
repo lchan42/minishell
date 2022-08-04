@@ -6,7 +6,7 @@
 #    By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/02 20:57:58 by lchan             #+#    #+#              #
-#    Updated: 2022/08/04 12:30:04 by slahlou          ###   ########.fr        #
+#    Updated: 2022/08/04 18:39:29 by slahlou          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,6 +33,7 @@ SRCS	=	lexer_main.c\
 			el_imperator.c\
 			minishell_ulti_free.c\
 			minishell_main.c\
+			builtins.c\
 			minishell_visual.c
 
 SRCSBONUS =
