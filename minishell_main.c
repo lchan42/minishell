@@ -6,7 +6,7 @@
 /*   By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 17:13:14 by lchan             #+#    #+#             */
-/*   Updated: 2022/08/03 18:20:15 by slahlou          ###   ########.fr       */
+/*   Updated: 2022/08/04 09:55:07 by slahlou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ char	*__readline_add_history(t_data *msh_data, char *prompt)
 		usr_input = readline(prompt);
 		if (!usr_input)
 		{
-			write(1, "\n", 1);
+			write(1, "exit\n", 5);
 			__ultimate_free(msh_data, 0, 1);
 		}
 		else if (!*usr_input)
@@ -74,11 +74,6 @@ char	*__readline_add_history(t_data *msh_data, char *prompt)
 	add_history(usr_input);
 	return (usr_input);
 }
-
-// typedef void (*sighandler_t)(int);
-
-// sighandler_t signal(int signum, sighandler_t handler);
-
 
 void	__signal_handler2(int sig)
 {
