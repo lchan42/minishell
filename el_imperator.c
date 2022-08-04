@@ -6,7 +6,7 @@
 /*   By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 11:52:17 by slahlou           #+#    #+#             */
-/*   Updated: 2022/08/03 16:37:11 by slahlou          ###   ########.fr       */
+/*   Updated: 2022/08/04 11:32:36 by slahlou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,13 +96,16 @@ void	__bambino_set_shlvl(char **env)
 	*env = ft_strdup(buf);
 }
 
-void	__imperial_bambino(t_data *msh_data, t_splcmd *parser, int *fds)
+void	__imperial_bambino(t_data *msh_data, t_splcmd *parser, int *fds, int left_size)
 {
 	dup2(fds[0], 0);
-	close(fds[0]);
-	close(fds[1]);
+	//close(fds[0]);
+	//close(fds[1]);
 	dup2(fds[3], 1);
-	close(fds[3]);
+	//close(fds[3]);
+	printf("left_size = %d\n", left_size);
+	while (left_size--)
+		close(*(fds++));
 	if (errno == 2)
 		__ultimate_free(msh_data, 0, 1);
 	__join_path(msh_data->env, &(parser->cmd));
@@ -116,19 +119,19 @@ void	__imperial_bambino(t_data *msh_data, t_splcmd *parser, int *fds)
 	}
 }
 
-int	__los_bambinos_del_imperator(t_data *msh_data, t_splcmd *parser, int *fds)
+int	__los_bambinos_del_imperator(t_data *msh_data, t_splcmd *parser, int *fds, int left_size)
 {
 	int	pid;
 
 	pid = fork();
-	if (pid > 0)
-		signal(SIGINT, &__signal_handler2);
+	// if (pid > 0)
+	// 	signal(SIGINT, &__signal_handler2);
 	if (pid < 0)
 		__ultimate_free(msh_data, 0, 0);
 	else if (!pid)
 	{
-		signal(SIGINT, SIG_DFL);
-		__imperial_bambino(msh_data, parser, fds);
+		//signal(SIGINT, SIG_DFL);
+		__imperial_bambino(msh_data, parser, fds, left_size);
 	}
 	close(fds[1]);
 	close(fds[0]);
@@ -145,7 +148,10 @@ void	__imperial_dup_fds(t_splcmd *parser, int *fds, int fd_i)
 		close(parser->in.fd);
 	}
 	if (!parser->out.fd)
+	{
 		dup2(1, fds[fd_i + 3]);
+		close(fds[fd_i + 2]);
+	}
 	else if (parser->out.fd != 1)
 	{
 		dup2(parser->out.fd, fds[fd_i + 3]);
@@ -217,7 +223,7 @@ char	*__imperial_wait(int pid, int fd_i, char *old_status)
 		}
 		fd_i -= 2;
 	}
-	signal(SIGINT, &__signal_handler);
+	//signal(SIGINT, &__signal_handler);
 	return (ret);
 }
 
@@ -234,11 +240,14 @@ int	__el_imperator(t_data *msh_data, t_splcmd *parser)
 	fd_i = 0;
 	while (parser)
 	{
+		printf("in el_imperator : %d\n", *((msh_data->fds) - 1) - fd_i);
 		__imperial_redirect(parser, msh_data->fds, fd_i);
-		pid = __los_bambinos_del_imperator(msh_data, parser, ((msh_data->fds) + fd_i));
+		pid = __los_bambinos_del_imperator(msh_data, parser, ((msh_data->fds) + fd_i),
+		(*((msh_data->fds) - 1) - fd_i));
 		parser = parser->next;
 		fd_i += 2;
 	}
+	close((msh_data->fds)[fd_i + 1]);
 	*(msh_data->env) = __imperial_wait(pid, fd_i, *(msh_data->env));
 	return (0);
 }

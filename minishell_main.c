@@ -6,7 +6,7 @@
 /*   By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 17:13:14 by lchan             #+#    #+#             */
-/*   Updated: 2022/08/04 09:55:07 by slahlou          ###   ########.fr       */
+/*   Updated: 2022/08/04 11:10:56 by slahlou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ int	main (int ac, char **av, char **envp)
 	(void) envp;
 	t_data			msh_data;
 
-	signal(SIGINT, &__signal_handler);
+	//signal(SIGINT, &__signal_handler);
 	__set_msh_data(&msh_data, envp);
 	while (1)
 	{

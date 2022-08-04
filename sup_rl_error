@@ -1,16 +1,6 @@
 {
-   leak readline
+   ignore_libreadline
    Memcheck:Leak
-   match-leak-kinds: reachable
    ...
-   fun:readline
+   obj:/usr/lib/x86_64-linux-gnu/libreadline.so.8.0
 }
-
-{
-   leak history
-   Memcheck:Leak
-   match-leak-kinds: reachable
-   ...
-   fun:add_history
-}
-
