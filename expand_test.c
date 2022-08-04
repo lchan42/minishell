@@ -189,9 +189,9 @@ static void	__save_here_d(t_io *io)
 	int		pid;
 	char	*gnl_ret;
 
-	//if (io->here_buffer)
-	//	__t_list_free(&(io->here_buffer));
-	//__here_d_parse_lim(io);
+	// if (io->here_buffer)
+	// 	__t_list_free(&(io->here_buffer));
+	// __here_d_parse_lim(io);
 	pipe(hd_pipe);
 	pid = fork();
 	if (!pid)

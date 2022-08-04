@@ -6,7 +6,7 @@
 /*   By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 12:26:23 by slahlou           #+#    #+#             */
-/*   Updated: 2022/08/04 12:46:31 by slahlou          ###   ########.fr       */
+/*   Updated: 2022/08/04 16:01:04 by slahlou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	__cat_cmd_to_path(char *buf, char *path, char *cmd)
 		buf[i] = '/';
 		i++;
 	}
-	while (*cmd)
+	while (cmd && *cmd)
 	{
 		buf[i] = *cmd;
 		i++;
@@ -47,7 +47,7 @@ void	__join_path(char **env, t_cmd *cmd)
 
 	i = -1;
 	tmp_path = __get_expand("PATH=", 4, env);
-	if (!tmp_path)
+	if (!tmp_path || !cmd->cmd_words)
 		return ;
 	path_split = ft_split(tmp_path, ':');
 	while (*(path_split + (++i)))
@@ -108,6 +108,12 @@ void	__imperial_bambino(
 	__join_path(msh_data->env, &(parser->cmd));
 	//if (msh_data->env)
 	//	__bambino_set_shlvl(msh_data->env);
+	if (parser->cmd.type == CMD_ERR)
+	{
+		close(0);
+		close(1);
+		__ultimate_free(msh_data, 0, 1);
+	}
 	if (execve(
 			*(parser->cmd.cmd_words),
 			parser->cmd.cmd_words, msh_data->env + 1) < 0)

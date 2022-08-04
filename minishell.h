@@ -6,7 +6,7 @@
 /*   By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 15:43:36 by lchan             #+#    #+#             */
-/*   Updated: 2022/08/04 12:49:24 by slahlou          ###   ########.fr       */
+/*   Updated: 2022/08/04 15:23:22 by slahlou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,8 +133,9 @@ enum	e_parser_io_type
 
 enum	e_parser_cmd_type
 {
-	BUILTOUT = 1,
-	BUILTIN
+	CMD_IN = 1,
+	CMD_OUT,
+	CMD_ERR
 };
 
 typedef struct s_io

@@ -6,7 +6,7 @@
 /*   By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/20 15:55:50 by slahlou           #+#    #+#             */
-/*   Updated: 2022/08/03 18:09:13 by slahlou          ###   ########.fr       */
+/*   Updated: 2022/08/04 15:09:51 by slahlou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,38 +41,104 @@ static void	__here_d_parse_lim(t_io *io)
 		free(tmp);
 		ft_lstadd_back(&(io->here_buffer), ft_lstnew(ft_strdup(HD_NOT_EXP)));
 	}
-	printf("limiteur = [%s]\n", io->arg);
 }
 
-static void	__save_here_d(t_io *io)
-{
-	//char	*limit;					if problem, remettre limit (magie noir ... )
-	char	buf[BUFFER_S];
-	int		read_ret;
+// static void	__save_here_d(t_io *io)
+// {
+// 	//char	*limit;					if problem, remettre limit (magie noir ... )
+// 	char	buf[BUFFER_S];
+// 	int		read_ret;
 
-	if (io->here_buffer)
-		__t_list_free(&(io->here_buffer));
-	__here_d_parse_lim(io);
-	//limit = io->arg;
+// 	if (io->here_buffer)
+// 		__t_list_free(&(io->here_buffer));
+// 	__here_d_parse_lim(io);
+// 	//limit = io->arg;
+// 	read_ret = 1;
+// 	while (read_ret)
+// 	{
+// 		write(1, "> ", 2);
+// 		read_ret = read(0, buf, BUFFER_S);
+// 		if (read_ret == 0)
+// 		{
+// 			printf("minishell: warning: here-document delimited by end-of-file (wanted `%s')\n", io->arg);
+// 			break ;
+// 		}
+// 		buf[read_ret - 1] = '\0';
+// 		buf[read_ret] = '\0';
+// 		if (!(ft_strncmp(buf, io->arg, read_ret)))
+// 			break ;
+// 		buf[read_ret - 1] = '\n';
+// 		ft_lstadd_back(&(io->here_buffer), ft_lstnew(ft_strdup(buf)));
+// 	}
+// 	free(io->arg);
+// 	io->arg = NULL;
+// }
+
+int	__child_fill_pipe(int *hd_pipe, char *limiter)
+{
+	int		read_ret;
+	char	buf[BUFFER_S];
+
 	read_ret = 1;
+	signal(SIGINT, SIG_DFL);
+	close(hd_pipe[0]);
 	while (read_ret)
 	{
 		write(1, "> ", 2);
 		read_ret = read(0, buf, BUFFER_S);
 		if (read_ret == 0)
 		{
-			printf("minishell: warning: here-document delimited by end-of-file (wanted `%s')\n", io->arg);
+			printf("minishell: warning: here-document delimited by end-of-file (wanted `%s')\n", limiter);
 			break ;
 		}
 		buf[read_ret - 1] = '\0';
 		buf[read_ret] = '\0';
-		if (!(ft_strncmp(buf, io->arg, read_ret)))
+		if (!(ft_strncmp(buf, limiter, read_ret)))
 			break ;
 		buf[read_ret - 1] = '\n';
-		ft_lstadd_back(&(io->here_buffer), ft_lstnew(ft_strdup(buf)));
+		write(hd_pipe[1], buf, ft_strlen_p(buf));
 	}
+	close(hd_pipe[1]);
+	exit(0);
+}
+
+static void	__save_here_d(t_io *io)
+{
+	int		hd_pipe[2];
+	int		pid;
+	int		status;
+	char	*gnl_ret;
+
+	if (io->here_buffer)
+		__t_list_free(&(io->here_buffer));
+	__here_d_parse_lim(io);
+	pipe(hd_pipe);
+	pid = fork();
+	if (pid)
+	{
+		signal(SIGINT, &__signal_handler2);
+		if (wait(&status) == -1 || WIFSIGNALED(status))
+		{
+			signal(SIGINT, &__signal_handler);
+			return ;
+		}
+		signal(SIGINT, &__signal_handler);
+
+	}
+	if (!pid)
+		__child_fill_pipe(hd_pipe, io->arg);
+	close(hd_pipe[1]);
+	while (1)
+	{
+		gnl_ret = get_next_line(hd_pipe[0]);
+		if (!gnl_ret)
+			break ;
+		ft_lstadd_back(&(io->here_buffer), ft_lstnew(gnl_ret));
+	}
+	close(hd_pipe[0]);
 	free(io->arg);
 	io->arg = NULL;
+
 }
 
 static void	__init_stock_mgmt(void (*stock_mgmt[7]) (t_io *io))

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_cmd_tab.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lchan <lchan@student.42.fr>                +#+  +:+       +#+        */
+/*   By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/28 15:16:07 by lchan             #+#    #+#             */
-/*   Updated: 2022/08/01 11:21:26 by lchan            ###   ########.fr       */
+/*   Updated: 2022/08/04 15:54:56 by slahlou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,8 @@ char	**__cmdtab_init(t_list *cmd_lst)
 	char	**cmd_tab;
 	int		nb_wrd;
 
+	if (!cmd_lst)
+		return (NULL);
 	tab_len = __cnt_tablen(cmd_lst);
 	cmd_tab = ft_calloc(sizeof(char *), tab_len + 1);
 	if (!cmd_tab)

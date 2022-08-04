@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_free.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lchan <lchan@student.42.fr>                +#+  +:+       +#+        */
+/*   By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 14:14:27 by lchan             #+#    #+#             */
-/*   Updated: 2022/07/16 14:06:26 by lchan            ###   ########.fr       */
+/*   Updated: 2022/08/04 15:40:13 by slahlou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ void	ft_free_strtab(char **tab)
 	char	**tmp;
 
 	tmp = tab;
+	if (!tab)
+		return ;
 	while (*tmp)
 	{
 		free(*tmp);

@@ -6,7 +6,7 @@
 /*   By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 12:28:15 by lchan             #+#    #+#             */
-/*   Updated: 2022/08/04 12:41:08 by slahlou          ###   ########.fr       */
+/*   Updated: 2022/08/04 15:23:44 by slahlou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ static int	__cut_useless_files(t_splcmd *parser, t_list *files)
 	t_list	*save;
 
 	perror("minishell");
+	parser->cmd.type = CMD_ERR;
 	save = parser->in.stock;
 	if (files != save)
 	{
