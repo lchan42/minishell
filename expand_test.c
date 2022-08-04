@@ -146,10 +146,84 @@
 // }
 
 
+// int main (void)
+// {
+// 	// char *tab[] = {
+// 	// 	"wererwer"
+// 	// };
+// 	printf("EOF = %d\n", EOF);
+// }
+
+
+int	__child_fill_pipe(int *hd_pipe, char *limiter)
+{
+	int		read_ret;
+	char	buf[BUFFER_S];
+
+	read_ret = 1;
+	signal(SIGINT, SIG_DFL);
+	close(hd_pipe[0]);
+	while (read_ret)
+	{
+		write(1, "> ", 2);
+		read_ret = read(0, buf, BUFFER_S);
+		if (read_ret == 0)
+		{
+			printf("minishell: warning: here-document delimited by end-of-file (wanted `%s')\n", io->arg);
+			break ;
+		}
+		buf[read_ret - 1] = '\0';
+		buf[read_ret] = '\0';
+		if (!(ft_strncmp(buf, limiter, read_ret)))
+			break ;
+		buf[read_ret - 1] = '\n';
+		write(hd_pipe[1], buf, ft_strlen_p(buf));
+	}
+	close(hd_pipe[1]);
+	exit(0);
+}
+
+static void	__save_here_d(t_io *io)
+{
+	int		hd_pipe[2];
+	int		pid;
+	char	*gnl_ret;
+
+	if (io->here_buffer)
+		__t_list_free(&(io->here_buffer));
+	//__here_d_parse_lim(io);
+	pipe(&hd_pipe);
+	pid = fork();
+	if (!pid)
+		__child_fill_pipe(hd_pipe, io->arg);
+	read_ret = 1;
+	close(hd_pipe[1]);
+	while (1)
+	{
+		gnl_ret = get_next_line(hd_pipe[0]);
+		if (!gnl_ret)
+			break ;
+		ft_lstadd_back(&(io->here_buffer), ft_lstnew(gnl_ret));
+	}
+	close(hd_pipe[0]);
+	free(io->arg);
+	io->arg = NULL;
+}
+
+
 int main (void)
 {
-	// char *tab[] = {
-	// 	"wererwer"
-	// };
-	printf("EOF = %d\n", EOF);
+	t_io test;
+
+	signal(SIGINT, SIG_IGN);
+	test.arg = ft_strdup("limit");
+	test.here_buffer = NULL;
+	__save_here_d(&test);
+
+	while(test.here_buffer)
+	{
+		printf("%s", test.here_buffer);
+		test.here_buffer = test.here_buffer->next;
+	}
+	return (0);
 }

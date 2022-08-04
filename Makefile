@@ -6,7 +6,7 @@
 #    By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/02 20:57:58 by lchan             #+#    #+#              #
-#    Updated: 2022/08/02 12:31:22 by slahlou          ###   ########.fr        #
+#    Updated: 2022/08/04 12:30:04 by slahlou          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,9 @@ SRCS	=	lexer_main.c\
 			expand.c\
 			expand_string.c\
 			expand_cmd_tab.c\
-			el_open_files.c\
+			el_imperial_open_files.c\
+			el_imperial_redir.c\
+			el_imperial_bambino.c\
 			el_imperator.c\
 			minishell_ulti_free.c\
 			minishell_main.c\

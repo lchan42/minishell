@@ -6,7 +6,7 @@
 /*   By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 17:13:14 by lchan             #+#    #+#             */
-/*   Updated: 2022/08/04 11:10:56 by slahlou          ###   ########.fr       */
+/*   Updated: 2022/08/04 12:21:35 by slahlou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ int	main (int ac, char **av, char **envp)
 	(void) envp;
 	t_data			msh_data;
 
-	//signal(SIGINT, &__signal_handler);
+	signal(SIGINT, &__signal_handler);
 	__set_msh_data(&msh_data, envp);
 	while (1)
 	{
@@ -108,10 +108,29 @@ int	main (int ac, char **av, char **envp)
 		msh_data.parser = __parser(msh_data.lexer);
 		msh_data.parser = __expand(msh_data.parser, msh_data.env);
 		__el_imperator(&msh_data, msh_data.parser);
-		__ultimate_free(&msh_data, 3, 0);
+		__ultimate_free(&msh_data, T_DATA_HALF, 0);
 	}
 	__ultimate_free(&msh_data, 0, 0);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /****************** visual ******************/
  		//__visual_print_splcmd(msh_data.parser, msh_data.lexer);
 		//printf("msh_data->last_status = %s\n", msh_data.last_status);

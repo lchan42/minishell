@@ -6,7 +6,7 @@
 /*   By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 15:43:36 by lchan             #+#    #+#             */
-/*   Updated: 2022/08/03 18:09:24 by slahlou          ###   ########.fr       */
+/*   Updated: 2022/08/04 12:49:24 by slahlou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@
 # include <signal.h>
 
 # define BUFFER_S 100000
-# define T_DATA_SIZE 8
-# define T_DATA_HALF 4
+# define T_DATA_SIZE 7
+# define T_DATA_HALF 3
 # define FIRST_PROMPT "minishell-1.0$ "
 # define LEXER_PROMPT "> "
 # define METACHAR "|<>" 		//dont need to interpreat';'
@@ -168,7 +168,6 @@ typedef struct s_data
 {
 	int				log_fd; //journal d erreur
 
-	//char			*last_status;
 	char			**env;
 	char			**expt;
 
@@ -189,9 +188,7 @@ int			lexer_error(int error_id, t_lexer_token *current);
 int			lexer_type_checker(t_llist **lexer_head, t_lexer_token *tmp_nod);
 
 //void			lexer_add_history(t_llist *read_lst);
-t_llist	*lexer(char *usr_input);
-
-
+t_llist		*lexer(char *usr_input);
 
 /*************** parser *********************/
 t_splcmd	*__parser(t_llist *lexer);
@@ -211,24 +208,24 @@ void		__add_exp_split_str(char *str, int start, int len_expand);
 char		**__cmdtab_init(t_list *cmd_lst);
 
 /*************** imperator********************/
-
-
-int		__imperial_open_files(t_splcmd *parser, int *in_fd, int *out_fd);
-void	__imperial_open_heredoc(t_io *in, int *fds);
-int		__el_imperator(t_data *msh_data, t_splcmd *parser);
+int			__los_bambinos_del_imperator(t_data *msh_data, t_splcmd *parser, int *fds, int left_size);
+int			__imperial_open_files(t_splcmd *parser, int *in_fd, int *out_fd);
+void		__imperial_open_heredoc(t_io *in, int *fds);
+int			__imperial_redirect(t_splcmd *parser, int *fds, int fd_i);
+int			__el_imperator(t_data *msh_data, t_splcmd *parser);
 
 /*************** free *********************/
 //void	__ultimate_free(t_data *msh_data, int exit_opt);
-void	__ultimate_free(t_data *msh_data, int exit_opt, int bambinos);
+void		__ultimate_free(t_data *msh_data, int exit_opt, int bambinos);
 void		lexer_free(t_llist **lexer);
 void		t_llist_free(t_llist **lexer);
 void		__t_list_free(t_list **lst);
 void		__free_parse(t_splcmd **head);
 
 /*********** signal ************/
-void	__signal_handler(int sig);
-void	__signal_handler2(int sig);
-void	__signal_handler3(int sig);
+void		__signal_handler(int sig);
+void		__signal_handler2(int sig);
+void		__signal_handler3(int sig);
 
 
 

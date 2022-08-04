@@ -6,7 +6,7 @@
 /*   By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/02 11:50:54 by slahlou           #+#    #+#             */
-/*   Updated: 2022/08/03 17:40:53 by slahlou          ###   ########.fr       */
+/*   Updated: 2022/08/04 12:20:53 by slahlou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,13 +67,6 @@ void	__free_u_expt(t_data *msh_data)
 	}
 }
 
-void	__free_u_status(t_data *msh_data)
-{
-	(void) msh_data;
-	//ft_free_char(&(msh_data->last_status));
-	return ;
-}
-
 void	__ultimate_free(t_data *msh_data, int free_opt, int bambinos)
 {
 	void	(*__u_free_funk[T_DATA_SIZE])(t_data *msh_data);
@@ -81,11 +74,10 @@ void	__ultimate_free(t_data *msh_data, int free_opt, int bambinos)
 	__u_free_funk[0] = &__free_u_rl_history;
 	__u_free_funk[1] = &__free_u_env;
 	__u_free_funk[2] = &__free_u_expt;
-	__u_free_funk[3] = &__free_u_status;
-	__u_free_funk[4] = &__free_u_user_input;
-	__u_free_funk[5] = &__free_u_lexer;
-	__u_free_funk[6] = &__free_u_parse;
-	__u_free_funk[7] = &__free_u_fds;
+	__u_free_funk[3] = &__free_u_user_input;
+	__u_free_funk[4] = &__free_u_lexer;
+	__u_free_funk[5] = &__free_u_parse;
+	__u_free_funk[6] = &__free_u_fds;
 	while (free_opt < T_DATA_SIZE)
 	{
 		(__u_free_funk[free_opt])(msh_data);
