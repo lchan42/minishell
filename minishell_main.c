@@ -6,7 +6,7 @@
 /*   By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 17:13:14 by lchan             #+#    #+#             */
-/*   Updated: 2022/08/05 10:29:05 by slahlou          ###   ########.fr       */
+/*   Updated: 2022/08/05 12:49:16 by slahlou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,15 @@ char	*__readline_add_history(t_data *msh_data, char *prompt)
 	return (usr_input);
 }
 
+void	__signal_handler3(int sig)
+{
+	if (sig == SIGINT)
+	{
+		__ultimate_free((t_data *)glob_ptr, 0, 0);
+		exit(0);
+	}
+}
+
 void	__signal_handler2(int sig)
 {
 	if (sig == SIGINT)
@@ -101,6 +110,7 @@ int	main (int ac, char **av, char **envp)
 
 	signal(SIGINT, &__signal_handler);
 	__set_msh_data(&msh_data, envp);
+	glob_ptr = &msh_data;
 	while (1)
 	{
 		msh_data.user_input = __readline_add_history(&msh_data, FIRST_PROMPT);

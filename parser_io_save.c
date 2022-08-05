@@ -6,7 +6,7 @@
 /*   By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/20 15:55:50 by slahlou           #+#    #+#             */
-/*   Updated: 2022/08/04 15:09:51 by slahlou          ###   ########.fr       */
+/*   Updated: 2022/08/05 12:47:51 by slahlou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int	__child_fill_pipe(int *hd_pipe, char *limiter)
 	char	buf[BUFFER_S];
 
 	read_ret = 1;
-	signal(SIGINT, SIG_DFL);
+	signal(SIGINT, &__signal_handler3);
 	close(hd_pipe[0]);
 	while (read_ret)
 	{
@@ -99,6 +99,8 @@ int	__child_fill_pipe(int *hd_pipe, char *limiter)
 		write(hd_pipe[1], buf, ft_strlen_p(buf));
 	}
 	close(hd_pipe[1]);
+	free(limiter);
+	__ultimate_free((t_data *)glob_ptr, 0, 0);
 	exit(0);
 }
 
@@ -123,7 +125,6 @@ static void	__save_here_d(t_io *io)
 			return ;
 		}
 		signal(SIGINT, &__signal_handler);
-
 	}
 	if (!pid)
 		__child_fill_pipe(hd_pipe, io->arg);

@@ -6,12 +6,11 @@
 /*   By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/02 11:50:54 by slahlou           #+#    #+#             */
-/*   Updated: 2022/08/04 12:20:53 by slahlou          ###   ########.fr       */
+/*   Updated: 2022/08/05 12:17:08 by slahlou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 void	__free_u_rl_history(t_data *msh_data)
 {
@@ -83,7 +82,6 @@ void	__ultimate_free(t_data *msh_data, int free_opt, int bambinos)
 		(__u_free_funk[free_opt])(msh_data);
 		free_opt++;
 	}
-
 	if (bambinos > 0)
 	{
 		if (bambinos == 127)
