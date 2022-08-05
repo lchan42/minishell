@@ -6,7 +6,7 @@
 /*   By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 18:13:06 by slahlou           #+#    #+#             */
-/*   Updated: 2022/08/05 18:16:14 by slahlou          ###   ########.fr       */
+/*   Updated: 2022/08/05 19:07:39 by slahlou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,6 +174,14 @@ int	__export_funk(t_data *msh_data, t_splcmd *parser, int opt)
 }
 
 
+
+
+
+
+
+
+
+
 int	__get_env_size(char *env_size)
 {
 	int	size;
@@ -203,17 +211,51 @@ int	__built_unset_var(char **env, char **arg)
  		}
 		arg ++;
 	}
+	free(*(env - 1));
 	return (cnt);
 }
 
-int	__built_unset(t_data *msh_data, char **tmp_args, int size)
+char	**__built_unset(t_data *msh_data, char **env, char **tmp_args, int size)
 {
 	int	cnt;
-	(void) size;
+	int	new_size;
+	char **new_env;
 
-	cnt = __built_unset_var(msh_data->env, tmp_args);
-	printf("in __built_unset cnt = %d\n", cnt);
-	return (0); //temporaire;
+	cnt = __built_unset_var(env, tmp_args);
+	new_size = size - cnt;
+	new_env = ft_calloc(sizeof(char *), new_size + 2);
+	if (new_env)
+	{
+		*new_env = ft_calloc(sizeof(char), 2);
+		if (*new_env)
+		{
+			*(*(new_env + 0) + 0) |= new_size;
+			*(*(new_env + 0) + 1) |= new_size >> 8;
+		}
+		new_env++;
+		while(*env)
+		{
+			if (**env)
+			{
+				*new_env = *env;
+				new_env++;
+			}
+			else
+				free(*env);
+			env++;
+		}
+		*new_env = NULL;
+	}
+	free((msh_data->env) - 1);
+
+
+	return (new_env - new_size);
+	// char **tmp = new_env - new_size;
+	// while (*tmp)
+	// {
+	// 	printf("%s\n", *tmp);
+	// 	tmp++;
+	// }
 }
 
 int	__unset_funk(t_data *msh_data, t_splcmd *parser, int opt)
@@ -223,9 +265,27 @@ int	__unset_funk(t_data *msh_data, t_splcmd *parser, int opt)
 
 	tmp_args = (parser->cmd.cmd_words) + 1;
 	if (tmp_args)
-		__built_unset(msh_data, tmp_args, __get_env_size(*((msh_data->env) - 1)));
+		msh_data->env = __built_unset(msh_data, msh_data->env, tmp_args, __get_env_size(*((msh_data->env) - 1)));
 	return (0);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 int	__built_env(char **env, int fd)
 {
