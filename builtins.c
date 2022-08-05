@@ -6,7 +6,7 @@
 /*   By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 18:13:06 by slahlou           #+#    #+#             */
-/*   Updated: 2022/08/04 18:52:40 by slahlou          ###   ########.fr       */
+/*   Updated: 2022/08/05 11:34:24 by slahlou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,35 +72,54 @@ int	built_echo(char **args, int fd)
 	return (0);
 }
 
-void	__echo_funk(t_data *msh_data, t_splcmd *parser, int opt)
+int	__echo_funk(t_data *msh_data, t_splcmd *parser, int opt)
 {
-	int	ret;
+	int		ret;
+	(void)	msh_data;
 
-	(void)msh_data;
+	ret = 1;
 	if (parser->cmd.cmd_words)
 	{
-		printf("ON EST DANS LE BUILTIN ECHO !!!\n\n");
 		if (opt == 0)
 		{
 			if (parser->out.fd == 0)
 				ret = built_echo(parser->cmd.cmd_words, 1);
 			else
-				ret = built_echo(parser->cmd.cmd_words, parser->out.fd);
-			// changer env $? a la mano
+				ret = built_echo(parser->cmd.cmd_words, msh_data->fds[3]);
 		}
 		else if (opt)
-		{
 			ret = built_echo(parser->cmd.cmd_words, 1);
-			exit (ret);
-		}
 	}
+	return (ret);
+}
+void	__set_status_builtin(int ret, t_data *msh_data)
+{
+	char	*tmp;
+	char	*tmp2;
+	char	*old_status;
+
+	if (!msh_data->env)
+		return ;
+	old_status = *(msh_data->env);
+	if (old_status)
+			free(old_status);
+	tmp = ft_itoa(ret);
+	tmp2 = tmp;
+	tmp = ft_strjoin("?=", tmp2);
+	free(tmp2);
+	*(msh_data->env) = tmp;
 }
 
 void	__execve_builtin(t_data *msh_data, t_splcmd *parser, int opt)
 {
-	void	(*__u_free_funk[1])(t_data *msh_data, t_splcmd *parser, int opt);
+	int ret;
+	int	(*__u_free_funk[1])(t_data *msh_data, t_splcmd *parser, int opt);
 
 	__u_free_funk[0] = &__echo_funk;
 
-	__u_free_funk[0](msh_data, parser, opt); //parser->cmd.type - 1 a mettre a la place du 0;
+	ret = __u_free_funk[0](msh_data, parser, opt); //parser->cmd.type - 1 a mettre a la place du 0;
+	if (opt)
+		exit(ret);
+	else
+		__set_status_builtin(ret, msh_data);
 }

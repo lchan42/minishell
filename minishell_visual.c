@@ -6,7 +6,7 @@
 /*   By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/09 17:01:10 by lchan             #+#    #+#             */
-/*   Updated: 2022/08/02 16:41:05 by slahlou          ###   ########.fr       */
+/*   Updated: 2022/08/05 10:32:37 by slahlou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,9 +145,15 @@ void	__vparser_print_type_io(int type)
 void	__vparser_print_type_cmd(int type)
 {
 	const char	*type_str [] = {
-		NULL,
-	"BUILTOUT",
-	"BUILTIN",
+	"CMD_OUT",
+	"CMD_ECHO",
+	"CMD_CD",
+	"CMD_PWD",
+	"CMD_EXP",
+	"CMD_UNSET",
+	"CMD_ENV",
+	"CMD_EXIT",
+	"CMD_ERR"
 	};
 
 	printf("	>>>type = %s(%d)<<<\n", type_str[type], type);
@@ -157,7 +163,7 @@ void	__visual_print_splcmd(t_splcmd *head, t_llist *lexer)
 {
 	int block_ind = 0;
 	char	*star = "*********************************************";
-	
+
 	while (head)
 	{
 		char **cmd_tab_tmp = head->cmd.cmd_words;
