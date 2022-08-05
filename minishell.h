@@ -6,7 +6,7 @@
 /*   By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 15:43:36 by lchan             #+#    #+#             */
-/*   Updated: 2022/08/05 14:17:48 by slahlou          ###   ########.fr       */
+/*   Updated: 2022/08/05 16:20:51 by slahlou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <signal.h>
+#include <limits.h>
+
 
 # define BUFFER_S 100000
 # define T_DATA_SIZE 7

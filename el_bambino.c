@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   el_imperial_bambino.c                              :+:      :+:    :+:   */
+/*   el_bambino.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 12:26:23 by slahlou           #+#    #+#             */
-/*   Updated: 2022/08/05 10:26:07 by slahlou          ###   ########.fr       */
+/*   Updated: 2022/08/05 16:58:22 by slahlou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,7 +170,7 @@ int	__los_bambinos_del_imperator(
 	int	pid;
 
 	pid = 0;
-	if (!__lonely_builtin(msh_data, msh_data->parser, msh_data->fds, *((msh_data->fds) - 1)))
+	if (!__lonely_builtin(msh_data, parser, msh_data->fds, *((msh_data->fds) - 1)))
 	{
 		pid = fork();
 		if (pid > 0)
