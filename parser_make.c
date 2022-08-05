@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_make.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lchan <lchan@student.42.fr>                +#+  +:+       +#+        */
+/*   By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/16 18:05:05 by lchan             #+#    #+#             */
-/*   Updated: 2022/08/01 11:34:57 by lchan            ###   ########.fr       */
+/*   Updated: 2022/08/05 14:17:48 by slahlou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,23 +40,23 @@ static t_splcmd	*__init_splcmd_node(t_splcmd **head, t_splcmd *runner)
 	return (new_node);
 }
 
-t_splcmd	*__parser(t_llist *lexer)
+t_splcmd	*__parser(t_llist *lexer, t_splcmd **parser)
 {
 	t_splcmd	*runner;
-	t_splcmd	*head;
+	//t_splcmd	*head;
 
 	runner = NULL;
-	head = NULL;
+	//head = NULL;
 	while (lexer)
 	{
-		runner = __init_splcmd_node(&head, runner);
+		runner = __init_splcmd_node(parser/*&head*/, runner);
 		if ((__pars_io(&(runner->in), &(runner->out), lexer) == -1) \
 		|| __pars_cmd(&(runner->cmd), lexer) == -1)
 		{
-			__free_parse(&head);
+			__free_parse(parser);
 			break ;
 		}
 		lexer = __lexer_mover(lexer, LEX_OP_LOGIC);
 	}
-	return (head);
+	return (*parser);
 }

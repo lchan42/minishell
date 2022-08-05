@@ -6,7 +6,7 @@
 /*   By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 15:43:36 by lchan             #+#    #+#             */
-/*   Updated: 2022/08/05 12:02:21 by slahlou          ###   ########.fr       */
+/*   Updated: 2022/08/05 14:17:48 by slahlou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,7 +200,7 @@ int			lexer_type_checker(t_llist **lexer_head, t_lexer_token *tmp_nod);
 t_llist		*lexer(char *usr_input);
 
 /*************** parser *********************/
-t_splcmd	*__parser(t_llist *lexer);
+t_splcmd	*__parser(t_llist *lexer, t_splcmd **parser);
 int			__pars_io(t_io *in, t_io *out, t_llist *lexer);
 t_list		*__get_stock(t_io *io, int type);
 int 		__pars_cmd(t_cmd *cmd, t_llist *lexer);

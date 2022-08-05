@@ -6,7 +6,7 @@
 /*   By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 17:13:14 by lchan             #+#    #+#             */
-/*   Updated: 2022/08/05 12:49:16 by slahlou          ###   ########.fr       */
+/*   Updated: 2022/08/05 14:15:16 by slahlou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,9 @@ int	main (int ac, char **av, char **envp)
 	{
 		msh_data.user_input = __readline_add_history(&msh_data, FIRST_PROMPT);
 		msh_data.lexer = lexer(msh_data.user_input);
-		msh_data.parser = __parser(msh_data.lexer);
+		msh_data.parser = __parser(msh_data.lexer, &msh_data.parser);
+		//msh_data.parser = __parser(msh_data.lexer);
+
 		msh_data.parser = __expand(msh_data.parser, msh_data.env);
 
 		__el_imperator(&msh_data, msh_data.parser);
