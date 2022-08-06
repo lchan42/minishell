@@ -6,7 +6,7 @@
 /*   By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 18:13:06 by slahlou           #+#    #+#             */
-/*   Updated: 2022/08/06 12:05:22 by slahlou          ###   ########.fr       */
+/*   Updated: 2022/08/06 13:22:56 by slahlou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,6 +166,12 @@ int	__pwd_funk(t_data *msh_data, t_splcmd *parser, int opt)
 
 
 
+
+
+
+
+
+
 void	__child_print_expt(char **tab)
 {
 	int		i;
@@ -185,9 +191,6 @@ void	__child_print_expt(char **tab)
 		}
 	}
 }
-
-
-
 
 void	__print_expt(char **tab, int fd)
 {
@@ -219,6 +222,62 @@ void	__print_expt(char **tab, int fd)
 	}
 }
 
+int	__check_syntax(char *var)
+{
+	if (!ft_isdigit(*var))
+	{
+		while (*var != '=')
+		{
+			if (!ft_isalnum(*var) && *var != '_')
+				return (0);
+			var++;
+		}
+		return (1);
+	}
+	return (0)
+}
+
+char	*__check_if_exist(char	*var, char **tab)
+{
+	char	*tmp;
+	int		arg_len;
+
+	tmp = NULL;
+	arg_len = ft_strchr();
+
+	arg_len =  ft_strlen_p(*arg);
+	__get_e
+
+	return (tmp);
+}
+
+void	__add_var(char	*var, char **tab)
+{
+	char	**new_tab;
+	int		size;
+	char	*exist;
+
+	exist = __check_if_exist(var, tab);
+	size = __get_env_size(tab - 1) + (exist == NULL);
+}
+
+void	__export_var(char **args, t_data *msh_data)
+{
+	int syntax;
+
+	while (*args)
+	{
+		syntax = __check_syntax(*args);
+		if (ft_strchr(*args, '=') && syntax)
+			__add_var(*args, msh_data->env);
+		else if (syntax)
+			__add_var(*args, msh_data->expt);
+		else
+			write(2, "Minishell: export: not a valid identifier\n", 42);
+		args++
+	}
+}
+
 int	__built_export(t_data *msh_data, char **cmd_words, int fd)
 {
 	char	**env;
@@ -233,6 +292,8 @@ int	__built_export(t_data *msh_data, char **cmd_words, int fd)
 		__print_expt(env, fd);
 		__print_expt(expt, fd);
 	}
+	else
+		__export_var(*(cmd_words + 1), msh_data);
 	return (0);
 }
 
@@ -261,11 +322,7 @@ int	__export_funk(t_data *msh_data, t_splcmd *parser, int opt)
 
 
 
-
-
-
-
-int	__get_env_size(char *env_size)
+int	__get_env_size(char *env_size) //used in all function that remalloc env
 {
 	int	size;
 
@@ -275,6 +332,12 @@ int	__get_env_size(char *env_size)
 	size |= (int) *env_size;
 	return (size);
 }
+
+
+
+
+
+
 
 int	__built_unset_var(char **env, char **arg)
 {
@@ -330,8 +393,6 @@ char	**__built_unset(t_data *msh_data, char **env, char **tmp_args, int size)
 		*new_env = NULL;
 	}
 	free((msh_data->env) - 1);
-
-
 	return (new_env - new_size);
 	// char **tmp = new_env - new_size;
 	// while (*tmp)
