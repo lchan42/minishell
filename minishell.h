@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lchan <lchan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 15:43:36 by lchan             #+#    #+#             */
-/*   Updated: 2022/08/05 16:20:51 by slahlou          ###   ########.fr       */
+/*   Updated: 2022/08/06 18:29:59 by lchan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <signal.h>
-#include <limits.h>
+# include <limits.h>
 
 
 # define BUFFER_S 100000
@@ -239,6 +239,18 @@ void		__signal_handler2(int sig);
 void		__signal_handler3(int sig);
 
 /*********** builtins ************/
+
+int		__echo_funk(t_data *msh_data, t_splcmd *parser, int opt);
+int		__cd_funk(t_data *msh_data, t_splcmd *parser, int opt);
+int		__pwd_funk(t_data *msh_data, t_splcmd *parser, int opt);
+int		__export_funk(t_data *msh_data, t_splcmd *parser, int opt);
+void	__export_var(char **args, t_data *msh_data);
+int		__unset_funk(t_data *msh_data, t_splcmd *parser, int opt);
+int		__env_funk(t_data *msh_data, t_splcmd *parser, int opt);
+
+
+
+int		__get_env_size(char *env_size);
 void	__execve_builtin(t_data *msh_data, t_splcmd *parser, int opt);
 
 /************* visual functions ****************/

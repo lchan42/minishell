@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_main.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lchan <lchan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 17:13:14 by lchan             #+#    #+#             */
-/*   Updated: 2022/08/06 13:12:20 by slahlou          ###   ########.fr       */
+/*   Updated: 2022/08/06 17:10:42 by lchan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	__init_expt(t_data *msh_data)
 	if (msh_data->expt)
 		*msh_data->expt = ft_calloc(sizeof(char), 2);
 	msh_data->expt++;
-	*msh_data->expt = NULL;
+	*(msh_data->expt) = NULL;
 }
 
 void	__init_env(t_data *msh_data, char **envp)
@@ -65,9 +65,6 @@ void	__init_env(t_data *msh_data, char **envp)
 
 void	__set_msh_data(t_data *msh_data, char **envp)
 {
-	int		envp_size;
-	char	**env;
-
 	__init_msh(msh_data);
 	__init_env(msh_data, envp);
 	__init_expt(msh_data);

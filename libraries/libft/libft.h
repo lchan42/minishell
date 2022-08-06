@@ -6,7 +6,7 @@
 /*   By: lchan <lchan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/28 17:12:17 by lchan             #+#    #+#             */
-/*   Updated: 2022/07/16 14:36:57 by lchan            ###   ########.fr       */
+/*   Updated: 2022/08/06 16:00:14 by lchan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,7 @@ t_llist		*ft_llstmap(t_llist *lst, void *(*f)(void *), void (*del)(void *));
 
 //own
 size_t		ft_strlen_p(const char *s);
+int			ft_strlen_c(char *s, char c);
 int			ft_strtablen(char **tab);
 char		**ft_tabdup(char **tab);
 long int	ft_atol(const char *str);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   el_bambino.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lchan <lchan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 12:26:23 by slahlou           #+#    #+#             */
-/*   Updated: 2022/08/05 16:58:22 by slahlou          ###   ########.fr       */
+/*   Updated: 2022/08/06 17:23:36 by lchan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,7 @@ int	__cmd_is_builtin(t_splcmd *parser)
 		cmd_wds = *(parser->cmd.cmd_words);
 		while (*(builtin_dico + i))
 		{
-			if (!ft_strncmp(cmd_wds, *(builtin_dico + i), ft_strlen_p(cmd_wds)))
+			if (!ft_strncmp(cmd_wds, *(builtin_dico + i), ft_strlen_p(*(builtin_dico + i))))
 			{
 				parser->cmd.type = i + 1;
 				return (1);

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+         #
+#    By: lchan <lchan@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/02 20:57:58 by lchan             #+#    #+#              #
-#    Updated: 2022/08/05 11:29:32 by slahlou          ###   ########.fr        #
+#    Updated: 2022/08/06 18:32:25 by lchan            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,6 +33,12 @@ SRCS	=	lexer_main.c\
 			el_imperator.c\
 			minishell_ulti_free.c\
 			minishell_main.c\
+			builtin_echo.c\
+			builtin_env.c\
+			builtin_export.c\
+			builtin_export2.c\
+			builtin_pwd.c\
+			builtin_unset.c\
 			builtins.c\
 			minishell_visual.c
 

@@ -6,7 +6,7 @@
 /*   By: lchan <lchan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 19:22:14 by lchan             #+#    #+#             */
-/*   Updated: 2022/07/22 18:55:42 by lchan            ###   ########.fr       */
+/*   Updated: 2022/08/06 17:38:41 by lchan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,4 +66,18 @@ int	ft_strtablen(char **tab)
 		return (tmp - tab);
 	}
 	return (0);
+}
+
+
+/********************
+ * count until it meets c
+ * ******************/
+int	ft_strlen_c(char *s, char c)
+{
+	char	*start;
+
+	start = s;
+	while (*s && *s != c)
+		s++;
+	return (s - start);
 }
