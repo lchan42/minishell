@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   el_bambino.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lchan <lchan@student.42.fr>                +#+  +:+       +#+        */
+/*   By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 12:26:23 by slahlou           #+#    #+#             */
-/*   Updated: 2022/08/06 17:23:36 by lchan            ###   ########.fr       */
+/*   Updated: 2022/08/07 10:32:06 by slahlou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,40 @@ void	__bambino_set_shlvl(char **env)
 	*env = ft_strdup(buf);
 }
 */
+
+
+
+// void	__imperial_bambino(
+// 	t_data *msh_data, t_splcmd *parser, int *fds, int left_size)
+// {
+// 	dup2(fds[0], 0);
+// 	dup2(fds[3], 1);
+// 	while (left_size--)
+// 		close(*(fds++));
+// 	if (errno == 2)
+// 		__ultimate_free(msh_data, 0, 1);
+// 	__join_path(msh_data->env, &(parser->cmd));
+// 	//if (msh_data->env)
+// 	//	__bambino_set_shlvl(msh_data->env);
+// 	if (parser->cmd.type == CMD_ERR)
+// 	{
+// 		close(0);
+// 		close(1);
+// 		__ultimate_free(msh_data, 0, 1);
+// 	}
+// 	if (execve(
+// 			*(parser->cmd.cmd_words),
+// 			parser->cmd.cmd_words, msh_data->env + 1) < 0)
+// 	{
+// 		close(0);
+// 		close(1);
+// 		__ultimate_free(msh_data, 0, 127);
+// 	}
+// }
+
+
+
+
 void	__imperial_bambino(
 	t_data *msh_data, t_splcmd *parser, int *fds, int left_size)
 {
@@ -105,6 +139,8 @@ void	__imperial_bambino(
 		close(*(fds++));
 	if (errno == 2)
 		__ultimate_free(msh_data, 0, 1);
+	if (parser->cmd.type >= CMD_ECHO && parser->cmd.type <= CMD_EXIT)
+		__execve_builtin(msh_data, parser, 1);
 	__join_path(msh_data->env, &(parser->cmd));
 	//if (msh_data->env)
 	//	__bambino_set_shlvl(msh_data->env);
@@ -123,6 +159,11 @@ void	__imperial_bambino(
 		__ultimate_free(msh_data, 0, 127);
 	}
 }
+
+
+
+
+
 
 int	__cmd_is_builtin(t_splcmd *parser)
 {
@@ -150,7 +191,6 @@ int	__cmd_is_builtin(t_splcmd *parser)
 
 int	__lonely_builtin(t_data *msh_data, t_splcmd *parser, int *fds, int size)
 {
-
 	if (__cmd_is_builtin(parser) && size == 4)
 	{
 		__execve_builtin(msh_data, parser, 0);

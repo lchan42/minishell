@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lchan <lchan@student.42.fr>                +#+  +:+       +#+        */
+/*   By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 18:13:06 by slahlou           #+#    #+#             */
-/*   Updated: 2022/08/06 18:38:36 by lchan            ###   ########.fr       */
+/*   Updated: 2022/08/07 10:37:05 by slahlou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,10 @@ void	__execve_builtin(t_data *msh_data, t_splcmd *parser, int opt)
 	__u___built_funk[6] = &__exit_funk;
 	ret = __u___built_funk[parser->cmd.type - 1](msh_data, parser, opt);
 	if (opt)
+	{
+		__ultimate_free(msh_data, 0, ret);
 		exit(ret);
+	}
 	else
 		__set_status_builtin(ret, msh_data);
 }

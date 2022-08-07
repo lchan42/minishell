@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_main.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lchan <lchan@student.42.fr>                +#+  +:+       +#+        */
+/*   By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 17:13:14 by lchan             #+#    #+#             */
-/*   Updated: 2022/08/06 17:10:42 by lchan            ###   ########.fr       */
+/*   Updated: 2022/08/07 10:51:20 by slahlou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,10 +149,17 @@ int	main (int ac, char **av, char **envp)
 	__ultimate_free(&msh_data, 0, 0);
 }
 
+// lier builtin et child --> done DONE
+// unset doit ausssi unset dans l export
+// fermer fd 0 et 1 dans les childs apres les avoir dup
 
+// message d'erreur doivent tous imprimer dans strerr
+// unset : voir si on peut utiliser la meme fonction check syntax que export
 
-
-
+// relecture
+// test
+// norme
+//push
 
 
 
