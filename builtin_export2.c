@@ -6,12 +6,11 @@
 /*   By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/06 17:47:33 by lchan             #+#    #+#             */
-/*   Updated: 2022/08/07 10:49:52 by slahlou          ###   ########.fr       */
+/*   Updated: 2022/08/07 13:09:15 by slahlou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 int	__check_syntax(char *var)
 {
@@ -36,14 +35,18 @@ char	**__check_if_exist(char	*var, char **tab, int opt)
 	arg_len = ((opt == 1) * ft_strlen_p(var)) + ((opt == 0) * ft_strlen_c(var, '='));
 	while (*tab)
 	{
-		cmp = ((opt == 1) * ft_strlen_p(*tab)) + ((opt == 0) * ft_strlen_c(*tab, '='));
-		if (cmp == arg_len && !ft_strncmp(*tab, var, arg_len))
+		if (opt < 2)
+		{
+			cmp = ((opt == 1) * ft_strlen_p(*tab)) + ((opt == 0) * ft_strlen_c(*tab, '='));
+			if (cmp == arg_len && !ft_strncmp(*tab, var, arg_len))
+				return (tab);
+		}
+		else if (cmp == 0 && !ft_strncmp(*tab, var, ft_strlen_p(var)))
 			return (tab);
 		tab++;
 	}
 	return (tab);
 }
-
 
 char **	__creat_new_tab(char *var, char **tab, int size)
 {
@@ -63,11 +66,7 @@ char **	__creat_new_tab(char *var, char **tab, int size)
 		new_tab++;
 	}
 	while (*(tab + i))
-	{
 		*(new_tab++) = *(tab + (i++));
-		//new_tab++;
-		//i++;
-	}
 	*(new_tab) = ft_strdup(var);
 	new_tab++;
 	*new_tab = NULL;
@@ -101,6 +100,8 @@ void	__export_var(char **args, t_data *msh_data)
 		syntax = __check_syntax(*args);
 		if (ft_strchr(*args, '=') && syntax)
 			msh_data->env = __add_var(*args, msh_data->env, 0); // 0 is env
+		else if (syntax && !*(__check_if_exist(*args ,msh_data->env, 1)))
+			return ;
 		else if (syntax)
 			msh_data->expt = __add_var(*args, msh_data->expt, 1); // 1 is expt
 		else
