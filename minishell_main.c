@@ -6,7 +6,7 @@
 /*   By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 17:13:14 by lchan             #+#    #+#             */
-/*   Updated: 2022/08/07 10:51:20 by slahlou          ###   ########.fr       */
+/*   Updated: 2022/08/07 14:27:14 by slahlou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,7 +150,7 @@ int	main (int ac, char **av, char **envp)
 }
 
 // lier builtin et child --> done DONE
-// unset doit ausssi unset dans l export
+// unset doit ausssi unset dans l export DONE
 // fermer fd 0 et 1 dans les childs apres les avoir dup
 
 // message d'erreur doivent tous imprimer dans strerr

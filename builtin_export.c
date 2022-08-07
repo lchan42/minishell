@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_export.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lchan <lchan@student.42.fr>                +#+  +:+       +#+        */
+/*   By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/06 17:46:17 by lchan             #+#    #+#             */
-/*   Updated: 2022/08/06 17:46:40 by lchan            ###   ########.fr       */
+/*   Updated: 2022/08/07 14:54:39 by slahlou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int	__built_export(t_data *msh_data, char **cmd_words, int fd)
 		return (1);
 	if (*(cmd_words + 1) == NULL)
 	{
-		__print_expt(env + 1, fd);
+		__print_expt(env, fd);
 		__print_expt(expt, fd);
 	}
 	else

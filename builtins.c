@@ -6,7 +6,7 @@
 /*   By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 18:13:06 by slahlou           #+#    #+#             */
-/*   Updated: 2022/08/07 10:37:05 by slahlou          ###   ########.fr       */
+/*   Updated: 2022/08/07 14:28:00 by slahlou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,8 @@ void	__execve_builtin(t_data *msh_data, t_splcmd *parser, int opt)
 	if (opt)
 	{
 		__ultimate_free(msh_data, 0, ret);
+		close(0);
+		close(1);
 		exit(ret);
 	}
 	else

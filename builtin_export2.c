@@ -6,7 +6,7 @@
 /*   By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/06 17:47:33 by lchan             #+#    #+#             */
-/*   Updated: 2022/08/07 13:09:15 by slahlou          ###   ########.fr       */
+/*   Updated: 2022/08/07 14:46:00 by slahlou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ char	**__check_if_exist(char	*var, char **tab, int opt)
 	int		cmp;
 
 	arg_len = ((opt == 1) * ft_strlen_p(var)) + ((opt == 0) * ft_strlen_c(var, '='));
+	cmp = 0;
 	while (*tab)
 	{
 		if (opt < 2)
@@ -42,7 +43,10 @@ char	**__check_if_exist(char	*var, char **tab, int opt)
 				return (tab);
 		}
 		else if (cmp == 0 && !ft_strncmp(*tab, var, ft_strlen_p(var)))
+		{
+
 			return (tab);
+		}
 		tab++;
 	}
 	return (tab);
@@ -97,14 +101,16 @@ void	__export_var(char **args, t_data *msh_data)
 
 	while (*args)
 	{
+		char *test = (*(__check_if_exist(*args ,msh_data->env, 2)));
 		syntax = __check_syntax(*args);
 		if (ft_strchr(*args, '=') && syntax)
 			msh_data->env = __add_var(*args, msh_data->env, 0); // 0 is env
-		else if (syntax && !*(__check_if_exist(*args ,msh_data->env, 1)))
-			return ;
-		else if (syntax)
-			msh_data->expt = __add_var(*args, msh_data->expt, 1); // 1 is expt
-		else
+		else if (syntax && !(test))
+		{
+			printf("test ============ %s\n", test);
+			msh_data->expt = __add_var(*args, msh_data->expt, 1);
+		}
+		else if (!syntax)
 			write(2, "Minishell: export: not a valid identifier\n", 42);
 		args++;
 	}

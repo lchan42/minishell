@@ -6,7 +6,7 @@
 /*   By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 12:26:23 by slahlou           #+#    #+#             */
-/*   Updated: 2022/08/07 10:32:06 by slahlou          ###   ########.fr       */
+/*   Updated: 2022/08/07 14:57:19 by slahlou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,7 +191,7 @@ int	__cmd_is_builtin(t_splcmd *parser)
 
 int	__lonely_builtin(t_data *msh_data, t_splcmd *parser, int *fds, int size)
 {
-	if (__cmd_is_builtin(parser) && size == 4)
+	if (parser->cmd.type != CMD_ERR && __cmd_is_builtin(parser) && size == 4)
 	{
 		__execve_builtin(msh_data, parser, 0);
 		close(fds[0]);
