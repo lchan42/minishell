@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lchan <lchan@student.42.fr>                +#+  +:+       +#+        */
+/*   By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 15:43:36 by lchan             #+#    #+#             */
-/*   Updated: 2022/08/06 18:29:59 by lchan            ###   ########.fr       */
+/*   Updated: 2022/08/07 17:34:57 by slahlou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -244,9 +244,11 @@ int		__echo_funk(t_data *msh_data, t_splcmd *parser, int opt);
 int		__cd_funk(t_data *msh_data, t_splcmd *parser, int opt);
 int		__pwd_funk(t_data *msh_data, t_splcmd *parser, int opt);
 int		__export_funk(t_data *msh_data, t_splcmd *parser, int opt);
-void	__export_var(char **args, t_data *msh_data);
+int		__export_var(char **args, t_data *msh_data);
+char	**__add_var(char *var, char **tab, int opt);
 int		__unset_funk(t_data *msh_data, t_splcmd *parser, int opt);
 int		__env_funk(t_data *msh_data, t_splcmd *parser, int opt);
+int		__check_syntax(char *var);
 
 
 

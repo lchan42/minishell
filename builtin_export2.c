@@ -6,7 +6,7 @@
 /*   By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/06 17:47:33 by lchan             #+#    #+#             */
-/*   Updated: 2022/08/07 14:46:00 by slahlou          ###   ########.fr       */
+/*   Updated: 2022/08/07 17:34:39 by slahlou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,23 +95,26 @@ char	**__add_var(char *var, char **tab, int opt)
 	return(__creat_new_tab(var, tab, size));
 }
 
-void	__export_var(char **args, t_data *msh_data)
+int	__export_var(char **args, t_data *msh_data)
 {
-	int syntax;
+	int	syntax;
+	int	err_flag;
 
+	err_flag = 0;
 	while (*args)
 	{
 		char *test = (*(__check_if_exist(*args ,msh_data->env, 2)));
 		syntax = __check_syntax(*args);
 		if (ft_strchr(*args, '=') && syntax)
-			msh_data->env = __add_var(*args, msh_data->env, 0); // 0 is env
+			msh_data->env = __add_var(*args, msh_data->env, 0);
 		else if (syntax && !(test))
-		{
-			printf("test ============ %s\n", test);
 			msh_data->expt = __add_var(*args, msh_data->expt, 1);
-		}
 		else if (!syntax)
+		{
 			write(2, "Minishell: export: not a valid identifier\n", 42);
+			err_flag = 1;
+		}
 		args++;
 	}
+	return (err_flag);
 }

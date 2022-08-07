@@ -6,7 +6,7 @@
 /*   By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/06 17:46:17 by lchan             #+#    #+#             */
-/*   Updated: 2022/08/07 14:54:39 by slahlou          ###   ########.fr       */
+/*   Updated: 2022/08/07 16:57:20 by slahlou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int	__built_export(t_data *msh_data, char **cmd_words, int fd)
 		__print_expt(expt, fd);
 	}
 	else
-		__export_var((cmd_words + 1), msh_data);
+		return (__export_var((cmd_words + 1), msh_data));
 	return (0);
 }
 

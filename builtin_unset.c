@@ -6,7 +6,7 @@
 /*   By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/06 17:48:40 by lchan             #+#    #+#             */
-/*   Updated: 2022/08/07 12:46:48 by slahlou          ###   ########.fr       */
+/*   Updated: 2022/08/07 16:54:25 by slahlou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,36 +23,32 @@ char	*__check_wich_tab(char	*var, char **tab, int opt)
 	{
 		cmp = ((opt == 1) * ft_strlen_p(*tab)) + ((opt == 0) * ft_strlen_c(*tab, '='));
 		if (cmp == arg_len && !ft_strncmp(*tab, var, arg_len))
-		{
-			//printf("in_check_wich_tab ----------------> %s\n", *tab);
 			return (*tab);
-		}
 		tab++;
 	}
 	return (*tab);
 }
 
-
-
+//else if (!__check_syntax(*arg))
+//			write(2, "bash: unset: not a valid identifier\n", 36);
+//
 int	__built_unset_var(t_data *msh_data, char **tab, char **arg)
 {
-	int	cnt;
-	//int	arg_len;
+	int		cnt;
+	int		opt;
 	char	*tmp_tab;
 
 	cnt = 0;
-	while (*arg) // ATTENTION : il y a des cas ou arg n'est pas valide (bash: unset: `SHLVL=': not a valid identifier)
+	tmp_tab = NULL;
+	while (*arg)
 	{
-		//arg_len =  ft_strlen_p(*arg);
-		if (*(msh_data->env) == *(tab))
-			tmp_tab = __check_wich_tab(*arg, tab, 0);
-		else if (*(msh_data->expt) == *(tab))
-			tmp_tab = __check_wich_tab(*arg, tab, 1);
+		opt = (*(msh_data->expt) == *(tab));
+		tmp_tab = __check_wich_tab(*arg, tab, opt);
 		if (tmp_tab)
 		{
 			*(tmp_tab) = '\0';
- 			cnt++;
- 		}
+			cnt++;
+		}
 		arg++;
 	}
 	return (cnt);
@@ -101,18 +97,30 @@ char	**__built_unset(t_data *msh_data, char **tab, char **tmp_args, int size)
 	return (new_tab - new_size);
 }
 
+int	__unset_error_handler(char **tmp_args, int *opt)
+{
+	*opt = 0;
+	while (*tmp_args)
+	{
+		if (!__check_syntax(*tmp_args))
+		{
+			*opt = 1;
+			write(2, "minishell: unset: not a valid identifier\n", 41);
+		}
+		tmp_args++;
+	}
+	return (1);
+}
+
 int	__unset_funk(t_data *msh_data, t_splcmd *parser, int opt)
 {
 	char	**tmp_args;
 	char	**tmp_env;
 	char	**tmp_expt;
-	(void)	opt;
 
 	tmp_args = (parser->cmd.cmd_words) + 1;
-	if (tmp_args)
+	if (tmp_args && __unset_error_handler(tmp_args, &opt))
 	{
-		tmp_env = NULL;
-		tmp_expt = NULL;
 		tmp_env = __built_unset(msh_data, msh_data->env, tmp_args, __get_env_size(*((msh_data->env) - 1)));
 		if (tmp_env)
 		{
@@ -126,6 +134,5 @@ int	__unset_funk(t_data *msh_data, t_splcmd *parser, int opt)
 			msh_data->expt = tmp_expt;
 		}
 	}
-	return (0);
+	return (opt);
 }
-
