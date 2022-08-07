@@ -6,7 +6,7 @@
 /*   By: lchan <lchan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 18:26:44 by lchan             #+#    #+#             */
-/*   Updated: 2022/08/01 11:36:16 by lchan            ###   ########.fr       */
+/*   Updated: 2022/08/07 18:12:16 by lchan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	__lexer_end_pipe_check(t_llist **lexer)
 		return ;
 	if (((t_lexer_token *)tmp->content)->type == LEX_OP_LOGIC)
 	{
-		printf("minishell: unilateral pipe not supported\n");
+		write(2, "minishell: unilateral pipe not supported\n", 41);
 		lexer_free(lexer);
 	}
 }

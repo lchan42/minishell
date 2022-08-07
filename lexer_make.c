@@ -6,7 +6,7 @@
 /*   By: lchan <lchan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 15:25:32 by lchan             #+#    #+#             */
-/*   Updated: 2022/08/01 11:34:57 by lchan            ###   ########.fr       */
+/*   Updated: 2022/08/07 18:21:30 by lchan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,10 +84,13 @@ int	lexer_error(int error_id, t_lexer_token *current)
 	else
 	{
 		if (error_id == ERR_SOLO_QUOTE)
-			printf("minishell: unclosed quotation not supported\n");
+			ft_putstr_fd("minishell: unclosed quotation not supported\n", 2);
 		if (error_id == ERR_SYNTAX)
-			printf("minishell: syntax error near unexpected token '%.*s'\n",
-				(int)(current->length), current->start);
+		{
+			ft_putstr_fd("minishell: syntax error near unexpected token '", 2);
+			write(2, current->start, (int)(current->length));
+			write(2, "'\n", 2);
+		}
 	}
 	return (error_id);
 }
