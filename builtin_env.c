@@ -3,20 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_env.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lchan <lchan@student.42.fr>                +#+  +:+       +#+        */
+/*   By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/06 17:50:10 by lchan             #+#    #+#             */
-/*   Updated: 2022/08/06 17:50:20 by lchan            ###   ########.fr       */
+/*   Updated: 2022/08/08 13:08:57 by slahlou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+char	*__size_shifter(int size)
+{
+	char	*tmp;
+
+	tmp = ft_calloc(sizeof(char), 2);
+	if (tmp)
+	{
+		*(tmp + 0) |= size;
+		*(tmp + 1) |= size >> 8;
+	}
+	return (tmp);
+}
+
 int	__built_env(char **env, int fd)
 {
 	char	*tmp;
 
-	while(env && *env)
+	while (env && *env)
 	{
 		tmp = ft_strjoin(*env, "\n");
 		if (tmp)
@@ -32,8 +45,8 @@ int	__built_env(char **env, int fd)
 int	__env_funk(t_data *msh_data, t_splcmd *parser, int opt)
 {
 	int	ret;
-	(void) parser;
 
+	(void) parser;
 	ret = 1;
 	if (opt == 0)
 	{

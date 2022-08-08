@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_echo.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lchan <lchan@student.42.fr>                +#+  +:+       +#+        */
+/*   By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/06 17:39:48 by lchan             #+#    #+#             */
-/*   Updated: 2022/08/06 17:40:13 by lchan            ###   ########.fr       */
+/*   Updated: 2022/08/08 12:52:21 by slahlou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,8 @@ int	__built_echo(char **args, int fd)
 int	__echo_funk(t_data *msh_data, t_splcmd *parser, int opt)
 {
 	int		ret;
-	(void)	msh_data;
 
+	(void) msh_data;
 	ret = 1;
 	if (parser->cmd.cmd_words)
 	{

@@ -6,7 +6,7 @@
 #    By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/02 20:57:58 by lchan             #+#    #+#              #
-#    Updated: 2022/08/08 10:35:32 by slahlou          ###   ########.fr        #
+#    Updated: 2022/08/08 13:04:46 by slahlou          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,7 @@ SRCS	=	lexer_main.c\
 			parser_make.c\
 			parser_io.c\
 			parser_io_save.c\
+			parser_io_save2.c\
 			parser_cmd.c\
 			parser_free.c\
 			parser_io_here_d_quote.c\
@@ -30,9 +31,11 @@ SRCS	=	lexer_main.c\
 			el_open_files.c\
 			el_redir.c\
 			el_bambino.c\
+			el_bambino_path.c\
 			el_imperator.c\
 			minishell_ulti_free.c\
 			minishell_main.c\
+			builtin_cd.c\
 			builtin_echo.c\
 			builtin_env.c\
 			builtin_export.c\

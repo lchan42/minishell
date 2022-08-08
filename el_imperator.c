@@ -6,7 +6,7 @@
 /*   By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 11:52:17 by slahlou           #+#    #+#             */
-/*   Updated: 2022/08/05 10:41:41 by slahlou          ###   ########.fr       */
+/*   Updated: 2022/08/08 12:50:55 by slahlou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int	__el_imperator(t_data *msh_data, t_splcmd *parser)
 		return (0);
 	msh_data->fds = __pipe_army(parser);
 	if (!msh_data->fds)
-		return (0); // check for returning error
+		return (0);
 	fd_i = 0;
 	while (parser)
 	{

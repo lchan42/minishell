@@ -6,7 +6,7 @@
 /*   By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 15:43:36 by lchan             #+#    #+#             */
-/*   Updated: 2022/08/08 10:43:47 by slahlou          ###   ########.fr       */
+/*   Updated: 2022/08/08 13:17:11 by slahlou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@
 # define DQUOTE '\"'			//same as single, expect for $ sign;
 # define DOLLAR "$"				//if followed by a string, go in the env
 
-extern void	*glob_ptr;
+extern void	*g_lob_ptr;
 
 //recode function strtok_r
 // ast tree node type ; https://github.com/vorpaljs/bash-parser/blob/master/documents/ast.md
@@ -207,6 +207,9 @@ int			__pars_io(t_io *in, t_io *out, t_llist *lexer);
 t_list		*__get_stock(t_io *io, int type);
 int 		__pars_cmd(t_cmd *cmd, t_llist *lexer);
 char		*__here_d_unquote_limit(char *arg);
+void		__here_d_parse_lim(t_io *io);
+void		__save_io_arg(t_io *io);
+
 
 /*************** expander *******************/
 t_splcmd	*__expand(t_splcmd *parser, char **env);
@@ -220,6 +223,7 @@ char		**__cmdtab_init(t_list *cmd_lst);
 
 /*************** imperator********************/
 int			__los_bambinos_del_imperator(t_data *msh_data, t_splcmd *parser, int *fds, int left_size);
+void		__join_path(char **env, t_cmd *cmd);
 int			__imperial_open_files(t_splcmd *parser, int *in_fd, int *out_fd);
 void		__imperial_open_heredoc(t_io *in, int *fds);
 int			__imperial_redirect(t_splcmd *parser, int *fds, int fd_i);
@@ -242,6 +246,7 @@ void		__signal_handler3(int sig);
 
 int		__echo_funk(t_data *msh_data, t_splcmd *parser, int opt);
 int		__cd_funk(t_data *msh_data, t_splcmd *parser, int opt);
+char	*__size_shifter(int size);
 int		__pwd_funk(t_data *msh_data, t_splcmd *parser, int opt);
 int		__export_funk(t_data *msh_data, t_splcmd *parser, int opt);
 int		__export_var(char **args, t_data *msh_data);

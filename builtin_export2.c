@@ -6,7 +6,7 @@
 /*   By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/06 17:47:33 by lchan             #+#    #+#             */
-/*   Updated: 2022/08/07 17:34:39 by slahlou          ###   ########.fr       */
+/*   Updated: 2022/08/08 12:56:29 by slahlou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,27 +32,26 @@ char	**__check_if_exist(char	*var, char **tab, int opt)
 	int		arg_len;
 	int		cmp;
 
-	arg_len = ((opt == 1) * ft_strlen_p(var)) + ((opt == 0) * ft_strlen_c(var, '='));
+	arg_len = ((opt == 1) * ft_strlen_p(var)) + \
+	((opt == 0) * ft_strlen_c(var, '='));
 	cmp = 0;
 	while (*tab)
 	{
 		if (opt < 2)
 		{
-			cmp = ((opt == 1) * ft_strlen_p(*tab)) + ((opt == 0) * ft_strlen_c(*tab, '='));
+			cmp = ((opt == 1) * ft_strlen_p(*tab)) + \
+			((opt == 0) * ft_strlen_c(*tab, '='));
 			if (cmp == arg_len && !ft_strncmp(*tab, var, arg_len))
 				return (tab);
 		}
 		else if (cmp == 0 && !ft_strncmp(*tab, var, ft_strlen_p(var)))
-		{
-
 			return (tab);
-		}
 		tab++;
 	}
 	return (tab);
 }
 
-char **	__creat_new_tab(char *var, char **tab, int size)
+char	**__creat_new_tab(char *var, char **tab, int size)
 {
 	char	**new_tab;
 	int		i;
@@ -92,18 +91,19 @@ char	**__add_var(char *var, char **tab, int opt)
 		*exist = ft_strdup(var);
 		return (tab);
 	}
-	return(__creat_new_tab(var, tab, size));
+	return (__creat_new_tab(var, tab, size));
 }
 
 int	__export_var(char **args, t_data *msh_data)
 {
-	int	syntax;
-	int	err_flag;
+	int		syntax;
+	int		err_flag;
+	char	*test;
 
 	err_flag = 0;
 	while (*args)
 	{
-		char *test = (*(__check_if_exist(*args ,msh_data->env, 2)));
+		test = (*(__check_if_exist(*args, msh_data->env, 2)));
 		syntax = __check_syntax(*args);
 		if (ft_strchr(*args, '=') && syntax)
 			msh_data->env = __add_var(*args, msh_data->env, 0);

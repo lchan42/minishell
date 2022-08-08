@@ -6,22 +6,23 @@
 /*   By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/06 17:48:40 by lchan             #+#    #+#             */
-/*   Updated: 2022/08/07 16:54:25 by slahlou          ###   ########.fr       */
+/*   Updated: 2022/08/08 13:08:47 by slahlou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 char	*__check_wich_tab(char	*var, char **tab, int opt)
 {
 	int		arg_len;
 	int		cmp;
 
-	arg_len = ((opt == 1) * ft_strlen_p(var)) + ((opt == 0) * ft_strlen_c(var, '='));
+	arg_len = ((opt == 1) * ft_strlen_p(var)) + \
+	((opt == 0) * ft_strlen_c(var, '='));
 	while (*tab)
 	{
-		cmp = ((opt == 1) * ft_strlen_p(*tab)) + ((opt == 0) * ft_strlen_c(*tab, '='));
+		cmp = ((opt == 1) * ft_strlen_p(*tab)) + \
+		((opt == 0) * ft_strlen_c(*tab, '='));
 		if (cmp == arg_len && !ft_strncmp(*tab, var, arg_len))
 			return (*tab);
 		tab++;
@@ -29,9 +30,6 @@ char	*__check_wich_tab(char	*var, char **tab, int opt)
 	return (*tab);
 }
 
-//else if (!__check_syntax(*arg))
-//			write(2, "bash: unset: not a valid identifier\n", 36);
-//
 int	__built_unset_var(t_data *msh_data, char **tab, char **arg)
 {
 	int		cnt;
@@ -54,25 +52,11 @@ int	__built_unset_var(t_data *msh_data, char **tab, char **arg)
 	return (cnt);
 }
 
-char	*__size_shifter(int size)
-{
-	char	*tmp;
-
-	tmp = ft_calloc(sizeof(char), 2);
-	if (tmp)
-	{
-		*(tmp + 0) |= size;
-		*(tmp + 1) |= size >> 8;
-	}
-	return (tmp);
-}
-
-
 char	**__built_unset(t_data *msh_data, char **tab, char **tmp_args, int size)
 {
-	int	cnt;
-	int	new_size;
-	char **new_tab;
+	int		cnt;
+	int		new_size;
+	char	**new_tab;
 
 	cnt = __built_unset_var(msh_data, tab, tmp_args);
 	if (cnt == 0)
@@ -84,7 +68,7 @@ char	**__built_unset(t_data *msh_data, char **tab, char **tmp_args, int size)
 	{
 		*new_tab = __size_shifter(new_size);
 		new_tab++;
-		while(*tab)
+		while (*tab)
 		{
 			if (**tab)
 				*(new_tab++) = *tab;
@@ -121,13 +105,15 @@ int	__unset_funk(t_data *msh_data, t_splcmd *parser, int opt)
 	tmp_args = (parser->cmd.cmd_words) + 1;
 	if (tmp_args && __unset_error_handler(tmp_args, &opt))
 	{
-		tmp_env = __built_unset(msh_data, msh_data->env, tmp_args, __get_env_size(*((msh_data->env) - 1)));
+		tmp_env = __built_unset(msh_data, msh_data->env, \
+		tmp_args, __get_env_size(*((msh_data->env) - 1)));
 		if (tmp_env)
 		{
 			free(msh_data->env - 1);
 			msh_data->env = tmp_env;
 		}
-		tmp_expt =  __built_unset(msh_data, msh_data->expt, tmp_args, __get_env_size(*((msh_data->expt) - 1)));
+		tmp_expt = __built_unset(msh_data, msh_data->expt, \
+		tmp_args, __get_env_size(*((msh_data->expt) - 1)));
 		if (tmp_expt)
 		{
 			free(msh_data->expt - 1);
