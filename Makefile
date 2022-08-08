@@ -6,7 +6,7 @@
 #    By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/02 20:57:58 by lchan             #+#    #+#              #
-#    Updated: 2022/08/08 13:36:22 by slahlou          ###   ########.fr        #
+#    Updated: 2022/08/08 15:03:07 by slahlou          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -61,7 +61,7 @@ OBJSBONUS	= ${SRCSBONUS:.c=.o}
 CC			= gcc
 MAKE		= make
 RM			= rm -f
-CFLAGS		= -Wall  -Wextra -g3
+CFLAGS		= -Wall -Wextra -Werror -g3
 DEBUGFLAGS	= -g3 -fsanitize=address
 
 all:		${NAME}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lchan <lchan@student.42.fr>                +#+  +:+       +#+        */
+/*   By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/28 18:11:28 by lchan             #+#    #+#             */
-/*   Updated: 2022/07/22 18:55:16 by lchan            ###   ########.fr       */
+/*   Updated: 2022/08/08 14:56:58 by slahlou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,8 @@ char	*ft_strjoin(char const *s1, char const *s2)
  * @param s1
  * @param s2
  * @return pointer toward malloc of joined s1  and s2.
- * difference If !s1 || !s2 act as ft_strdup. Also if !s1 && !s2, returns "\0"
+ * difference If !s1 || !s2 act as ft_strdup.
+ * Also if !s1 && !s2, returns "\0"
  */
 char	*ft_strjoin_free(char **s1, char **s2)
 {
