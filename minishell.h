@@ -6,7 +6,7 @@
 /*   By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 15:43:36 by lchan             #+#    #+#             */
-/*   Updated: 2022/08/08 13:36:41 by slahlou          ###   ########.fr       */
+/*   Updated: 2022/08/08 19:08:16 by slahlou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,6 +133,7 @@ typedef struct s_data
 
 /**************** msh_data init *********************/
 void		__set_msh_data(t_data *msh_data, char **envp);
+void		__parser_update_status(t_data *msh_data, int status);
 
 /*************** lexer *********************/
 int			lexer_set_ptrs(char **start, char **end);

@@ -6,11 +6,24 @@
 /*   By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 13:19:05 by slahlou           #+#    #+#             */
-/*   Updated: 2022/08/08 13:24:04 by slahlou          ###   ########.fr       */
+/*   Updated: 2022/08/08 19:08:49 by slahlou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	__parser_update_status(t_data *msh_data, int status)
+{
+	char	*ret;
+	char	*tmp;
+
+	ret = ft_itoa(status);
+	tmp = ret;
+	ret = ft_strjoin("?=", ret);
+	free(tmp);
+	free(*(msh_data->env));
+	*(msh_data->env) = ret;
+}
 
 void	__init_msh(t_data *msh_data)
 {

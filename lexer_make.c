@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_make.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lchan <lchan@student.42.fr>                +#+  +:+       +#+        */
+/*   By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 15:25:32 by lchan             #+#    #+#             */
-/*   Updated: 2022/08/07 18:21:30 by lchan            ###   ########.fr       */
+/*   Updated: 2022/08/08 19:10:13 by slahlou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,9 +84,13 @@ int	lexer_error(int error_id, t_lexer_token *current)
 	else
 	{
 		if (error_id == ERR_SOLO_QUOTE)
+		{
+			__parser_update_status((t_data *)g_lob_ptr, 2);
 			ft_putstr_fd("minishell: unclosed quotation not supported\n", 2);
+		}
 		if (error_id == ERR_SYNTAX)
 		{
+			__parser_update_status((t_data *)g_lob_ptr, 2);
 			ft_putstr_fd("minishell: syntax error near unexpected token '", 2);
 			write(2, current->start, (int)(current->length));
 			write(2, "'\n", 2);

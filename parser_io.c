@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_io.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lchan <lchan@student.42.fr>                +#+  +:+       +#+        */
+/*   By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/18 15:35:12 by slahlou           #+#    #+#             */
-/*   Updated: 2022/08/01 11:34:57 by lchan            ###   ########.fr       */
+/*   Updated: 2022/08/08 19:11:12 by slahlou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ static int	__pars_io_token(t_io *io, t_io *bis, t_llist *redir, t_llist *word)
 	else
 	{
 		printf("Minishell: syntax error near unexpected token `newline'\n");
+		__parser_update_status((t_data *)g_lob_ptr, 2);
 		return (-1);
 	}
 }
