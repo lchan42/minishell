@@ -6,7 +6,7 @@
 /*   By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 13:19:05 by slahlou           #+#    #+#             */
-/*   Updated: 2022/08/08 13:19:34 by slahlou          ###   ########.fr       */
+/*   Updated: 2022/08/08 13:24:04 by slahlou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 void	__init_msh(t_data *msh_data)
 {
 	errno = 0;
-	msh_data->log_fd = 0;
 	msh_data->fds = NULL;
 	msh_data->env = NULL;
 	msh_data->expt = NULL;

@@ -6,7 +6,7 @@
 /*   By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 15:43:36 by lchan             #+#    #+#             */
-/*   Updated: 2022/08/08 13:17:11 by slahlou          ###   ########.fr       */
+/*   Updated: 2022/08/08 13:36:41 by slahlou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,73 +30,20 @@
 # include <signal.h>
 # include <limits.h>
 
-
 # define BUFFER_S 100000
 # define T_DATA_SIZE 7
 # define T_DATA_HALF 3
 # define FIRST_PROMPT "minishell-1.0$ "
 # define LEXER_PROMPT "> "
-# define METACHAR "|<>" 		//dont need to interpreat';'
+# define METACHAR "|<>"
 # define LOG_META "|&"
 # define RED_META "<>"
 # define HD_EXP "1\n"
 # define HD_NOT_EXP "0\n"
 
-
-
-# define AND_IF "&&"				// if left true, do right
-# define OR_IF "||"					// if left faulse do right
-
-
-# define SQUOTE '\''			//meta char in simple quote should be interpreted as normal char
-# define DQUOTE '\"'			//same as single, expect for $ sign;
-# define DOLLAR "$"				//if followed by a string, go in the env
-
 extern void	*g_lob_ptr;
 
-//recode function strtok_r
-// ast tree node type ; https://github.com/vorpaljs/bash-parser/blob/master/documents/ast.md
-
-//char *readline (const char *prompt); (need to be compile with the flag -lreadline)
-// rl_clear_history, rl_on_new_line, rl_replace_line, rl_redisplay, add_history,
-
-// signal, typedef void (*sighandler_t)(int);
-// sigaction,
-// sigemptyset,
-// sigaddset,
-// kill,        int kill(pid_t pid, int sig);
-
-// getcwd,
-// chdir,
-
-// stat, get stat of a
-// lstat,
-// fstat,
-
-// opendir, open directory
-// readdir, read directory
-// closedir, close directory
-
-// isatty,
-// ttyname,
-// ttyslot,
-// ioctl,
-
-// getenv, char *getenv(const char *name) --> for the $USER
-
-// tcsetattr,
-// tcgetattr,
-// tgetent,
-// tgetflag,
-// tgetnum,
-// tgetstr,
-// tgoto,
-// tputs
-//void	__make_token (char *str, const char delim);
-
-
-
-/**********************************lexer struct*****************************************/
+/**************************lexer struct********************************/
 enum e_lexer_error
 {
 	ERR_SET_PTR = 1,
@@ -122,16 +69,14 @@ typedef struct s_lexer_token
 	size_t			length;
 }				t_lexer_token;
 
-/**********************************parsing struct*****************************************/
+/***************************parsing struct****************************/
 enum	e_parser_io_type
 {
-	//STDIN,
-	//STDOUT,
-	IN_D = 1, // basic infile redirect
-	HERE_D, // here_doc
+	IN_D = 1,
+	HERE_D,
 	PIPE_IN,
-	OUT_D, // basic outfile redirect
-	OUT_D_APP, // append redirect mode
+	OUT_D,
+	OUT_D_APP,
 	PIPE_OUT
 };
 
@@ -159,9 +104,9 @@ typedef struct s_io
 
 typedef struct s_cmd
 {
-	int		type; //builtin or not
-	int		size; //len of cmd_words (number of lines)
-	char	**cmd_words; //contains 0 path (path + cmd ex: /usr/bin/cat) followed by one arg per line
+	int		type;
+	int		size;
+	char	**cmd_words;
 	t_list	*cmd_lst;
 }				t_cmd;
 
@@ -173,25 +118,22 @@ typedef struct s_splcmd
 	struct s_splcmd	*next;
 }	t_splcmd;
 
-
 /*************************** main struct ****************************/
 typedef struct s_data
 {
-	int				log_fd; //journal d erreur
-
 	char			**env;
 	char			**expt;
-
 	char			*user_input;
 	t_llist			*lexer;
 	t_splcmd		*parser;
 	int				*fds;
 }t_data;
 
+/************************ function proto *************************/
 
+/**************** msh_data init *********************/
+void		__set_msh_data(t_data *msh_data, char **envp);
 
-
-/*************************** function proto ****************************/
 /*************** lexer *********************/
 int			lexer_set_ptrs(char **start, char **end);
 void		lexer_make(t_llist **lexer, char *str);
@@ -205,11 +147,10 @@ t_llist		*lexer(char *usr_input);
 t_splcmd	*__parser(t_llist *lexer, t_splcmd **parser);
 int			__pars_io(t_io *in, t_io *out, t_llist *lexer);
 t_list		*__get_stock(t_io *io, int type);
-int 		__pars_cmd(t_cmd *cmd, t_llist *lexer);
+int			__pars_cmd(t_cmd *cmd, t_llist *lexer);
 char		*__here_d_unquote_limit(char *arg);
 void		__here_d_parse_lim(t_io *io);
 void		__save_io_arg(t_io *io);
-
 
 /*************** expander *******************/
 t_splcmd	*__expand(t_splcmd *parser, char **env);
@@ -222,7 +163,8 @@ void		__add_exp_split_str(char *str, int start, int len_expand);
 char		**__cmdtab_init(t_list *cmd_lst);
 
 /*************** imperator********************/
-int			__los_bambinos_del_imperator(t_data *msh_data, t_splcmd *parser, int *fds, int left_size);
+int			__los_bambinos_del_imperator(t_data *msh_data,
+				t_splcmd *parser, int *fds, int left_size);
 void		__join_path(char **env, t_cmd *cmd);
 int			__imperial_open_files(t_splcmd *parser, int *in_fd, int *out_fd);
 void		__imperial_open_heredoc(t_io *in, int *fds);
@@ -230,8 +172,11 @@ int			__imperial_redirect(t_splcmd *parser, int *fds, int fd_i);
 int			__el_imperator(t_data *msh_data, t_splcmd *parser);
 
 /*************** free *********************/
-//void	__ultimate_free(t_data *msh_data, int exit_opt);
 void		__ultimate_free(t_data *msh_data, int exit_opt, int bambinos);
+void		__free_u_parse(t_data *msh_data);
+void		__free_u_lexer(t_data *msh_data);
+void		__free_u_user_input(t_data *msh_data);
+void		__free_u_rl_history(t_data *msh_data);
 void		lexer_free(t_llist **lexer);
 void		t_llist_free(t_llist **lexer);
 void		__t_list_free(t_list **lst);
@@ -244,52 +189,17 @@ void		__signal_handler3(int sig);
 
 /*********** builtins ************/
 
-int		__echo_funk(t_data *msh_data, t_splcmd *parser, int opt);
-int		__cd_funk(t_data *msh_data, t_splcmd *parser, int opt);
-char	*__size_shifter(int size);
-int		__pwd_funk(t_data *msh_data, t_splcmd *parser, int opt);
-int		__export_funk(t_data *msh_data, t_splcmd *parser, int opt);
-int		__export_var(char **args, t_data *msh_data);
-char	**__add_var(char *var, char **tab, int opt);
-int		__unset_funk(t_data *msh_data, t_splcmd *parser, int opt);
-int		__env_funk(t_data *msh_data, t_splcmd *parser, int opt);
-int		__check_syntax(char *var);
-
-
-
-int		__get_env_size(char *env_size);
-void	__execve_builtin(t_data *msh_data, t_splcmd *parser, int opt);
-
-/************* visual functions ****************/
-void	__visual_print_tab(char **tab);
-void	__visual_print_lexer(t_llist *lst);
-void	__visual_print_read_lst(t_llist *usr_input);
-void	__reverse_visual_print_lexer(t_llist *lst);
-//void	__visual_print_splcmd(t_splcmd *head);
-void	__visual_print_splcmd(t_splcmd *head, t_llist *lexer);
+int			__echo_funk(t_data *msh_data, t_splcmd *parser, int opt);
+int			__cd_funk(t_data *msh_data, t_splcmd *parser, int opt);
+char		*__size_shifter(int size);
+int			__pwd_funk(t_data *msh_data, t_splcmd *parser, int opt);
+int			__export_funk(t_data *msh_data, t_splcmd *parser, int opt);
+int			__export_var(char **args, t_data *msh_data);
+char		**__add_var(char *var, char **tab, int opt);
+int			__unset_funk(t_data *msh_data, t_splcmd *parser, int opt);
+int			__env_funk(t_data *msh_data, t_splcmd *parser, int opt);
+int			__check_syntax(char *var);
+int			__get_env_size(char *env_size);
+void		__execve_builtin(t_data *msh_data, t_splcmd *parser, int opt);
 
 #endif
-
-
-
-
-
-
-
-
-
-//test1 | test2 | test 4 | test
-//<<LIMIT test1 | test2 | test 4 | test
-//<<LIMIT <<a <<b test1 >LIMIT2 | <a <c test2 | test 4 >>g | test >>s
-//<<LIMIT <<a <<b test1 >OUT1 | <a <c test2 >OUT2
-// for lldb	//print ((t_lexer_token *)(lexer->content))->start
-//test >>1 <<2 | >>3 <<4 test5
-//<infile1 <infile2 <infile3 >outfile1 >outfile2 > outfile3| >>3 <<2 test5
-//<<| / <<<
-//<<
-
-
-/********Observation
- * les messages d'erreur doivent etre imprime sur la sortie erreur
- * exit imprime exit sur sortie erreur
- * */

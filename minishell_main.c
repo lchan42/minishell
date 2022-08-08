@@ -6,17 +6,13 @@
 /*   By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 17:13:14 by lchan             #+#    #+#             */
-/*   Updated: 2022/08/08 13:19:28 by slahlou          ###   ########.fr       */
+/*   Updated: 2022/08/08 13:27:42 by slahlou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 void	*g_lob_ptr;
-
-
-
-/*******************************************************************/
 
 char	*__readline_add_history(t_data *msh_data, char *prompt)
 {
@@ -38,33 +34,7 @@ char	*__readline_add_history(t_data *msh_data, char *prompt)
 	return (usr_input);
 }
 
-void	__signal_handler3(int sig)
-{
-	if (sig == SIGINT)
-	{
-		__ultimate_free((t_data *)g_lob_ptr, 0, 0);
-		exit(0);
-	}
-}
-
-void	__signal_handler2(int sig)
-{
-	if (sig == SIGINT)
-		write(1, "\n", 1);
-}
-
-void	__signal_handler(int sig)
-{
-	if (sig == SIGINT)
-	{
-		write(1, "\n", 1);
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_redisplay();
-	}
-}
-
-int	main (int ac, char **av, char **envp)
+int	main(int ac, char **av, char **envp)
 {
 	t_data	msh_data;
 
@@ -84,4 +54,3 @@ int	main (int ac, char **av, char **envp)
 	}
 	__ultimate_free(&msh_data, 0, 0);
 }
-

@@ -6,31 +6,11 @@
 /*   By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/02 11:50:54 by slahlou           #+#    #+#             */
-/*   Updated: 2022/08/05 12:17:08 by slahlou          ###   ########.fr       */
+/*   Updated: 2022/08/08 13:30:18 by slahlou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	__free_u_rl_history(t_data *msh_data)
-{
-	(void) msh_data;
-	rl_clear_history();
-}
-
-void	__free_u_user_input(t_data *msh_data)
-{
-	ft_free_char(&msh_data->user_input);
-}
-void	__free_u_lexer(t_data *msh_data)
-{
-	lexer_free(&msh_data->lexer);
-}
-
-void	__free_u_parse(t_data *msh_data)
-{
-	__free_parse(&msh_data->parser);
-}
 
 void	__free_u_fds(t_data	*msh_data)
 {
@@ -52,7 +32,7 @@ void	__free_u_env(t_data *msh_data)
 {
 	if (msh_data->env)
 	{
-		ft_free_strtab((msh_data->env) - 1); //le set a null si besoin
+		ft_free_strtab((msh_data->env) - 1);
 		msh_data->env = NULL;
 	}
 }
@@ -61,7 +41,7 @@ void	__free_u_expt(t_data *msh_data)
 {
 	if (msh_data->expt)
 	{
-		ft_free_strtab((msh_data->expt) - 1); //le set a null si besoin
+		ft_free_strtab((msh_data->expt) - 1);
 		msh_data->env = NULL;
 	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lchan <lchan@student.42.fr>                +#+  +:+       +#+        */
+/*   By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 15:43:36 by lchan             #+#    #+#             */
-/*   Updated: 2022/08/01 11:34:57 by lchan            ###   ########.fr       */
+/*   Updated: 2022/08/08 13:36:51 by slahlou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,4 +123,26 @@ void	lexer_data_free(t_lexer_data *lexer_data);
 int		lexer_error(t_lexer_data *lexer_data, int error_id, t_lexer_token *tmp_nod);
 int		lexer_type_checker(t_llist **lexer_head, t_lexer_token *tmp_nod);
 void	lexer_loop(t_lexer_data *t_data);
+
+
+/************* visual functions ****************/
+void		__visual_print_tab(char **tab);
+void		__visual_print_lexer(t_llist *lst);
+void		__visual_print_read_lst(t_llist *usr_input);
+void		__reverse_visual_print_lexer(t_llist *lst);
+void		__visual_print_splcmd(t_splcmd *head, t_llist *lexer);
+
+
 #endif
+
+
+
+//test1 | test2 | test 4 | test
+//<<LIMIT test1 | test2 | test 4 | test
+//<<LIMIT <<a <<b test1 >LIMIT2 | <a <c test2 | test 4 >>g | test >>s
+//<<LIMIT <<a <<b test1 >OUT1 | <a <c test2 >OUT2
+// for lldb	//print ((t_lexer_token *)(lexer->content))->start
+//test >>1 <<2 | >>3 <<4 test5
+//<infile1 <infile2 <infile3 >outfile1 >outfile2 > outfile3| >>3 <<2 test5
+//<<| / <<<
+//<<

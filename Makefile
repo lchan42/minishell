@@ -6,7 +6,7 @@
 #    By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/02 20:57:58 by lchan             #+#    #+#              #
-#    Updated: 2022/08/08 13:04:46 by slahlou          ###   ########.fr        #
+#    Updated: 2022/08/08 13:36:22 by slahlou          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,8 +33,6 @@ SRCS	=	lexer_main.c\
 			el_bambino.c\
 			el_bambino_path.c\
 			el_imperator.c\
-			minishell_ulti_free.c\
-			minishell_main.c\
 			builtin_cd.c\
 			builtin_echo.c\
 			builtin_env.c\
@@ -43,7 +41,11 @@ SRCS	=	lexer_main.c\
 			builtin_pwd.c\
 			builtin_unset.c\
 			builtins.c\
-			minishell_visual.c
+			minishell_ulti_free.c\
+			minishell_ulti_free2.c\
+			minishell_sig_handler.c\
+			minishell_init.c\
+			minishell_main.c
 
 SRCSBONUS =
 
