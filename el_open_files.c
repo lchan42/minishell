@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   el_open_files.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lchan <lchan@student.42.fr>                +#+  +:+       +#+        */
+/*   By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 12:28:15 by lchan             #+#    #+#             */
-/*   Updated: 2022/08/07 20:46:05 by lchan            ###   ########.fr       */
+/*   Updated: 2022/08/08 11:01:34 by slahlou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,17 +115,22 @@ void	__imperial_open_heredoc(t_io *in, int *fds)
 {
 	t_list	*tmp;
 	char	*tmp_content;
+	int		hd_fd[2];
 
 	if (in->type == HERE_D)
 	{
+		pipe(hd_fd);
 		tmp = in->here_buffer->next;
 		while (tmp)
 		{
 			tmp_content = (char *)(tmp->content);
-			write(fds[1], tmp_content, ft_strlen_p(tmp_content));
+			write(hd_fd[1], tmp_content, ft_strlen_p(tmp_content));
 			tmp = tmp->next;
 		}
 		__t_list_free(&(in->here_buffer));
 		close(fds[1]);
+		dup2(hd_fd[0], fds[0]);
+		close(hd_fd[0]);
+		close(hd_fd[1]);
 	}
 }

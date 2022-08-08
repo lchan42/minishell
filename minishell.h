@@ -6,7 +6,7 @@
 /*   By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 15:43:36 by lchan             #+#    #+#             */
-/*   Updated: 2022/08/07 17:34:57 by slahlou          ###   ########.fr       */
+/*   Updated: 2022/08/08 10:43:47 by slahlou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@
 # define DQUOTE '\"'			//same as single, expect for $ sign;
 # define DOLLAR "$"				//if followed by a string, go in the env
 
-void	*glob_ptr;
+extern void	*glob_ptr;
 
 //recode function strtok_r
 // ast tree node type ; https://github.com/vorpaljs/bash-parser/blob/master/documents/ast.md

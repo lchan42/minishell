@@ -6,11 +6,13 @@
 /*   By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/06 17:46:17 by lchan             #+#    #+#             */
-/*   Updated: 2022/08/07 16:57:20 by slahlou          ###   ########.fr       */
+/*   Updated: 2022/08/08 10:56:02 by slahlou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+//void	*glob_ptr;
 
 void	__child_print_expt(char **tab)
 {

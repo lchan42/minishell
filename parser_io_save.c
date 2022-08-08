@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_io_save.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lchan <lchan@student.42.fr>                +#+  +:+       +#+        */
+/*   By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/20 15:55:50 by slahlou           #+#    #+#             */
-/*   Updated: 2022/08/07 19:38:08 by lchan            ###   ########.fr       */
+/*   Updated: 2022/08/08 10:36:20 by slahlou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,7 @@ int	__child_fill_pipe(int *hd_pipe, char *limiter)
 		free(tmp);
 	}
 	close(hd_pipe[1]);
-	__ultimate_free((t_data *)glob_ptr, 0, 0);
+	//__ultimate_free((t_data *)glob_ptr, 0, 0);
 	free(limiter);
 	exit(0);
 }
