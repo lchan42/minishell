@@ -6,7 +6,7 @@
 /*   By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/06 17:39:48 by lchan             #+#    #+#             */
-/*   Updated: 2022/08/08 12:52:21 by slahlou          ###   ########.fr       */
+/*   Updated: 2022/08/08 16:16:06 by slahlou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ void	ft_print_args(char **arg, int opt_arg, int fd)
 	int	i;
 
 	i = 0;
+	if (!*(arg + i) && !opt_arg)
+		write(fd, "\n", 1);
 	while (*(arg + i))
 	{
 		write(fd, *(arg + i), ft_strlen(*(arg + i)));

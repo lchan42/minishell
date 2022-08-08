@@ -6,7 +6,7 @@
 /*   By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/28 15:16:07 by lchan             #+#    #+#             */
-/*   Updated: 2022/08/04 15:54:56 by slahlou          ###   ########.fr       */
+/*   Updated: 2022/08/08 15:37:20 by slahlou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int	__cnt_tablen_str(char *str)
 	int	cnt;
 
 	cnt = 0;
+	if (str && *str == '\0')
+		cnt++;
 	while (1)
 	{
 		while (*str == -1)

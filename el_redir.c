@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   el_redir.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lchan <lchan@student.42.fr>                +#+  +:+       +#+        */
+/*   By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 12:27:07 by slahlou           #+#    #+#             */
-/*   Updated: 2022/08/07 20:40:43 by lchan            ###   ########.fr       */
+/*   Updated: 2022/08/08 15:11:12 by slahlou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,11 @@ void	__imperial_dup_fds(t_splcmd *parser, int *fds, int fd_i)
 	}
 	if (!parser->out.fd)
 	{
-		printf("COUCOU JE SUIS LE HEREDOC dans !parser->out.fd\n");
 		dup2(1, fds[fd_i + 3]);
 		close(fds[fd_i + 2]);
 	}
 	else if (parser->out.fd != 1)
 	{
-		printf("COUCOU JE SUIS LE HEREDOC dans parser->out.fd != 1)\n");
 		dup2(parser->out.fd, fds[fd_i + 3]);
 		close(parser->out.fd);
 	}

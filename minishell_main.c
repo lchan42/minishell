@@ -6,7 +6,7 @@
 /*   By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 17:13:14 by lchan             #+#    #+#             */
-/*   Updated: 2022/08/08 13:27:42 by slahlou          ###   ########.fr       */
+/*   Updated: 2022/08/08 16:31:37 by slahlou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ int	main(int ac, char **av, char **envp)
 	(void) ac;
 	(void) av;
 	signal(SIGINT, &__signal_handler);
+	signal(SIGQUIT, SIG_IGN);
 	__set_msh_data(&msh_data, envp);
 	g_lob_ptr = &msh_data;
 	while (1)

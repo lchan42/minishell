@@ -6,11 +6,23 @@
 /*   By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 11:52:17 by slahlou           #+#    #+#             */
-/*   Updated: 2022/08/08 12:50:55 by slahlou          ###   ########.fr       */
+/*   Updated: 2022/08/08 18:30:33 by slahlou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+char	*__sig_stat(int sig_id)
+{
+	char	*ret;
+	char	*tmp;
+
+	ret = ft_itoa(sig_id + 128);
+	tmp = ret;
+	ret = ft_strjoin("?=", ret);
+	free(tmp);
+	return (ret);
+}
 
 int	__error_pipe_gen(int **pipe_army, int i)
 {
@@ -62,10 +74,15 @@ char	*__imperial_wait(int pid, int fd_i, char *old_status)
 		{
 			if (old_status)
 				free(old_status);
-			ret = ft_itoa(status >> 8);
-			tmp = ret;
-			ret = ft_strjoin("?=", ret);
-			free(tmp);
+			if (!WIFSIGNALED(status))
+			{
+				ret = ft_itoa(status >> 8);
+				tmp = ret;
+				ret = ft_strjoin("?=", ret);
+				free(tmp);
+			}
+			else
+				ret = __sig_stat(WTERMSIG(status));
 		}
 		fd_i -= 2;
 	}

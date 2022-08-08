@@ -6,7 +6,7 @@
 /*   By: slahlou <slahlou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 12:26:23 by slahlou           #+#    #+#             */
-/*   Updated: 2022/08/08 12:47:34 by slahlou          ###   ########.fr       */
+/*   Updated: 2022/08/08 18:08:13 by slahlou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ int	__los_bambinos_del_imperator(
 		else if (!pid)
 		{
 			signal(SIGINT, SIG_DFL);
+			signal(SIGQUIT, SIG_DFL);
 			if (!parser->cmd.cmd_words)
 				parser->cmd.type = CMD_ERR;
 			__imperial_bambino(msh_data, parser, fds, left_size);
